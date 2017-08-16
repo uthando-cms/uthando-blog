@@ -1,0 +1,65 @@
+<?php $this->headTitle($this->escapeHtml($this->model->getTitle()));?>
+<?php $postHelper = $this->postHelper();?>
+
+<div class="col-sm-8">
+    <nav>
+        <ol class="breadcrumb">
+            <li><a href="<?=$this->url('home')?>">Home</a></li>
+            <li><a href="<?=$this->url('blog')?>">Posts</a></li>
+            <li class="active"><?=$this->escapeHtml($this->model->getTitle());?></li>
+        </ol>
+    </nav>
+    <article>
+        <h3><?=$this->escapeHtml($this->model->getTitle());?></h3>
+        <?=$this->model->getContent();?>
+    </article>
+    <hr>
+    <span><b>Author:</b> <?=$this->escapeHtml($this->model->getUser()->getFullName());?></span>
+    <span><b>Date:</b> <?=$this->formatDate($this->model->getDateCreated());?></span>
+    <hr>
+    <?php
+    $previous = $postHelper->getPrevious($this->model->getPostId());
+    $next = $postHelper->getNext($this->model->getPostId());
+    ?>
+
+    <ul class="pager">
+        <li class="previous<?php if (!$previous) echo " disabled"; ?>">
+            <a class="noborder" href="<?=$this->url('blog', [
+                'post-item' => (!$previous) ? '' : $previous->getSlug()
+            ]);?>">&larr; Previous</a>
+        </li>
+        <li class="next<?php if (!$next) echo " disabled"; ?>">
+            <a class="noborder" href="<?=$this->url('blog', [
+                'post-item' => (!$next) ? '' : $next->getSlug()
+            ]);?>">Next &rarr;</a>
+        </li>
+    </ul>
+</div>
+
+<div class="col-sm-4">
+    <div class="panel panel-default">
+        <div class="panel-heading">Recent News</div>
+        <div class="panel-body">
+            <?php foreach($postHelper->getRecent() as $postItem):?>
+                <h4><a href="<?=$this->url('blog', [
+                        'post-item' => $this->escapeHtml($postItem->getSlug()),
+                    ]);?>" class=""><?=$this->escapeHtml($postItem->getTitle());?></h4>
+                <p><?=$this->formatDate($postItem->getDateCreated());?></a</p>
+                <hr>
+            <?php endforeach;?>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Popular News</div>
+        <div class="panel-body">
+            <?php foreach($postHelper->getPopular() as $postItem):?>
+                <h4><a href="<?=$this->url('blog', [
+                        'post-item' => $this->escapeHtml($postItem->getSlug()),
+                    ]);?>"><?=$this->escapeHtml($postItem->getTitle());?></a></h4>
+                <p><?=$this->formatDate($postItem->getDateCreated());?></p>
+                <hr>
+            <?php endforeach;?>
+        </div>
+    </div>
+</div>

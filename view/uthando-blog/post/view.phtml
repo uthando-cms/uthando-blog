@@ -1,0 +1,66 @@
+<?php $this->headTitle('Blog');?>
+<?php $postHelper = $this->postHelper();?>
+
+<div class="col-sm-8">
+    <?php if ($this->models->count() > 0):?>
+        <?php foreach($this->models as $postItem):?>
+            <h3><?=$this->escapeHtml($postItem->getTitle());?></h3>
+            <p><?=$this->escapeHtml($postItem->getLead());?></p>
+            <a href="<?=$this->url('news', [
+                'news-item' => $this->escapeHtml($postItem->getSlug()),
+            ]);?>" class="btn btn-primary">Read More</a><br>
+            <span><b>Author:</b> <?=$this->escapeHtml($postItem->getUser()->getFullName());?></span>
+            <span><b>Date:</b> <?=$this->formatDate($postItem->getDateCreated());?></span>
+            <hr>
+        <?php endforeach;?>
+    <?php elseif ($this->view == 'post-list/search'):?>
+        <h1>No posts found in search.</h1>
+    <?php elseif ($this->view == 'post-list/tags'):?>
+        <h1>No posts found under this tag.</h1>
+    <?php else:?>
+        <h1>No posts has been posted yet. Please stay tuned.</h1>
+    <?php endif;?>
+</div>
+
+<div class="col-sm-4">
+
+    <form action="<?=$this->url('post-list/search');?>" method="post">
+        <div class="input-group">
+            <input type="search" placeholder="Start Searching..." id="search" name="search" class="form-control">
+            <div class="input-group-btn">
+                <button type="submit" class="btn btn-default">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Recent Posts</div>
+        <div class="panel-body">
+            <?php foreach($postHelper->getRecent() as $postItem):?>
+                <h4><a href="<?=$this->url('blog', [
+                        'post-item' => $this->escapeHtml($postItem->getSlug()),
+                    ]);?>" class=""><?=$this->escapeHtml($postItem->getTitle());?></h4>
+                <p><?=$this->formatDate($postItem->getDateCreated());?></a</p>
+                <hr>
+            <?php endforeach;?>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Popular Posts</div>
+        <div class="panel-body">
+            <?php foreach($postHelper->getPopular() as $postItem):?>
+                <h4><a href="<?=$this->url('news', [
+                        'post-item' => $this->escapeHtml($postItem->getSlug()),
+                    ]);?>"><?=$this->escapeHtml($postItem->getTitle());?></a></h4>
+                <p><?=$this->formatDate($postItem->getDateCreated());?></p>
+                <hr>
+            <?php endforeach;?>
+        </div>
+    </div>
+</div>
+

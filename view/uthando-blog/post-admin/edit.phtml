@@ -1,0 +1,76 @@
+<?php $this->headTitle('Edit Post') ?>
+<?php $this->layout()->pageTitle = $this->translate('Edit Post');?>
+
+<?php $this->placeholder('header-buttons')->captureStart();?>
+<button type="submit" form="form-post" data-toggle="tooltip" title="<?=$this->translate('Save');?>" class="btn btn-primary">
+    <i class="fa fa-save"></i>
+</button>
+<a href="<?=$this->url('admin/post');?>" data-toggle="tooltip" title="<?=$this->translate('Cancel');?>" class="btn btn-default">
+    <i class="fa fa-reply"></i>
+</a>
+<?php $this->placeholder('header-buttons')->captureEnd();?>
+
+<?php
+
+$this->form->setAttributes([
+    'method' => 'post',
+    'id' => 'form-post',
+    'action' => $this->url('admin/blog/edit', [
+        'action' => 'edit',
+        'id' => $this->model->getPostId(),
+    ]),
+]);
+
+?>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> <?=$this->translate('Edit Post');?></h3>
+    </div>
+    <div class="panel-body">
+        <?=$this->form($this->form);?>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $('button[name=post-image-button]').on('click', function() {
+            var uploadDialog = bootbox.dialog({
+                message: '<i class="fa fa-spinner fa-spin"></i> Loading',
+                title: "Upload Image",
+                show: false,
+                buttons: {
+                    default: {
+                        label: "Close",
+                        className: "btn-default",
+                        callback: function (e) {
+                            if (admin.upload && admin.upload.status) {
+                                $('#post-image').val(admin.upload.image.name);
+                            }
+                        }
+                    }
+                }
+            });
+
+            uploadDialog.on('show.bs.modal', function () {
+                $(this).find('.modal-body').load('<?=$this->url('admin/uploader', [
+                    'action'    => 'upload-form',
+                ]);?>');
+            });
+
+            uploadDialog.modal('show');
+        });
+
+        $('textarea.editable-textarea').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style', 'bold', 'underline', 'clear']],
+                ['font', ['fontname', 'fontsize']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+    });
+</script>

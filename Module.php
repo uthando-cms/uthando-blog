@@ -11,12 +11,30 @@
 
 namespace UthandoBlog;
 
+use UthandoBlog\Event\SiteMapListener;
+use UthandoCommon\Config\ConfigInterface;
+use UthandoCommon\Config\ConfigTrait;
+use Zend\Mvc\MvcEvent;
+
 /**
  * Class Module
  * @package UthandoBlog
  */
-class Module
+class Module implements ConfigInterface
 {
+    use ConfigTrait;
+
+    /**
+     * @param MvcEvent $e
+     */
+    public function onBootStrap(MvcEvent $e)
+    {
+        $app = $e->getApplication();
+        $eventManager = $app->getEventManager();
+
+        $eventManager->attachAggregate(new SiteMapListener());
+    }
+
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
