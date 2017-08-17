@@ -2,6 +2,7 @@
 return [
     'modules' => [
         'Application',
+        'UthandoCommon',
         'UthandoBlog',
     ],
     'module_listener_options' => [
