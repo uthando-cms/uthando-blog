@@ -61,7 +61,7 @@ class Post extends AbstractDbMapper
     {
         $select = $this->getSelect();
         $select = $this->setLimit($select, $limit, 0);
-        $select = $this->setSortOrder($select, '-pageHits');
+        $select = $this->setSortOrder($select, '-hits');
 
         $rowSet = $this->fetchResult($select);
 

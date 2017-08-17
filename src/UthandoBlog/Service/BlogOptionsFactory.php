@@ -24,7 +24,7 @@ class BlogOptionsFactory implements FactoryInterface
     {
         $config     = $serviceLocator->get('config');
         $config     = $config['uthando_blog']['options'] ?? [];
-        $options    = new NewsOptions($config);
+        $options    = new BlogOptions($config);
 
         return $options;
     }

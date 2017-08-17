@@ -126,9 +126,9 @@ class Post extends AbstractRelationalMapperService
      */
     public function addPageHit(PostModel $postModel)
     {
-        $pageHits = $postModel->getPageHits();
+        $pageHits = $postModel->getHits();
         $pageHits++;
-        $postModel->setPageHits($pageHits);
+        $postModel->setHits($pageHits);
         $this->save($postModel);
     }
 

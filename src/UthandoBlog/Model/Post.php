@@ -34,6 +34,11 @@ class Post implements ModelInterface
     protected $postId;
 
     /**
+     * @var int
+     */
+    protected $categoryId;
+
+    /**
      * @var string
      */
     protected $title;
@@ -56,7 +61,7 @@ class Post implements ModelInterface
     /**
      * @var int
      */
-    protected $pageHits = 0;
+    protected $hits = 0;
 
     /**
      * @var string
@@ -88,6 +93,24 @@ class Post implements ModelInterface
     public function setPostId($postId)
     {
         $this->postId = $postId;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * @param int $categoryId
+     * @return Post
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
         return $this;
     }
 
@@ -166,18 +189,18 @@ class Post implements ModelInterface
     /**
      * @return int
      */
-    public function getPageHits()
+    public function getHits()
     {
-        return $this->pageHits;
+        return $this->hits;
     }
 
     /**
-     * @param int $pageHits
+     * @param int $hits
      * @return Post
      */
-    public function setPageHits($pageHits)
+    public function setHits($hits)
     {
-        $this->pageHits = $pageHits;
+        $this->hits = $hits;
         return $this;
     }
 

@@ -6,7 +6,7 @@ return array(
     'UthandoBlog\Controller\Feed'                => __DIR__ . '/src/UthandoBlog/Controller/Feed.php',
     'UthandoBlog\Controller\Settings'            => __DIR__ . '/src/UthandoBlog/Controller/Settings.php',
     'UthandoBlog\View\Helper\Comments'           => __DIR__ . '/src/UthandoBlog/View/Helper/Comments.php',
-    'UthandoBlog\View\Helper\PostHelper' => __DIR__ . '/src/UthandoBlog/View/Helper/PostHelper.php',
+    'UthandoBlog\View\Helper\PostHelper'         => __DIR__ . '/src/UthandoBlog/View/Helper/PostHelper.php',
     'UthandoBlog\View\Helper\Tags'               => __DIR__ . '/src/UthandoBlog/View/Helper/Tags.php',
     'UthandoBlog\View\Helper\Categories'         => __DIR__ . '/src/UthandoBlog/View/Helper/Categories.php',
     'UthandoBlog\Options\FeedOptions'            => __DIR__ . '/src/UthandoBlog/Options/FeedOptions.php',

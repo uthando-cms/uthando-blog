@@ -45,11 +45,12 @@ class Post extends AbstractHydrator
         return [
             'postId'        => $object->getPostId(),
             'userId'        => $object->getUserId(),
+            'categoryId'    => $object->getCategoryId(),
             'title'         => $object->getTitle(),
             'slug'          => $object->getSlug(),
             'content'       => $object->getContent(),
             'description'   => $object->getDescription(),
-            'pageHits'      => $object->getPageHits(),
+            'hits'          => $object->getHits(),
             'image'         => $object->getImage(),
             'layout'        => $object->getLayout(),
             'lead'          => $object->getLead(),

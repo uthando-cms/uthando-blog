@@ -31,4 +31,40 @@ class Tag implements ModelInterface
      * @var string
      */
     protected $tag;
+
+    /**
+     * @return int
+     */
+    public function getTagId()
+    {
+        return $this->tagId;
+    }
+
+    /**
+     * @param int $tagId
+     * @return Tag
+     */
+    public function setTagId($tagId)
+    {
+        $this->tagId = $tagId;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+    /**
+     * @param string $tag
+     * @return Tag
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+        return $this;
+    }
 }
