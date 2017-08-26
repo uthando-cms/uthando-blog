@@ -30,6 +30,7 @@ return array(
     'UthandoBlog\Form\BlogFeedFieldSet'          => __DIR__ . '/src/UthandoBlog/Form/BlogFeedFieldSet.php',
     'UthandoBlog\Form\BlogOptionsFieldSet'       => __DIR__ . '/src/UthandoBlog/Form/BlogOptionsFieldSet.php',
     'UthandoBlog\Form\TagFieldSet'               => __DIR__ . '/src/UthandoBlog/Form/TagFieldSet.php',
+    'UthandoBlog\Form\Element\CategorySelect'    => __DIR__ . '/src/UthandoBlog/Form/Element/CategorySelect.php',
     'UthandoBlog\Form\BlogSettings'              => __DIR__ . '/src/UthandoBlog/Form/BlogSettings.php',
     'UthandoBlog\Form\Post'                      => __DIR__ . '/src/UthandoBlog/Form/Post.php',
     'UthandoBlog\Form\Comment'                   => __DIR__ . '/src/UthandoBlog/Form/Comment.php',

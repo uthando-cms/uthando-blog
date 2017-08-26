@@ -1,5 +1,6 @@
 <?php
 
+use UthandoBlog\Form\Element\CategorySelect;
 use UthandoBlog\Form\TagFieldSet;
 use UthandoBlog\View\Helper\PostHelper;
 
@@ -25,6 +26,8 @@ return [
             'UthandoBlogSettings'           => 'UthandoBlog\Form\BlogSettings',
 
             TagFieldSet::class              => TagFieldSet::class,
+
+            CategorySelect::class           => CategorySelect::class,
         ],
     ],
     'hydrators' => [

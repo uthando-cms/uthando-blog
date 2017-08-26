@@ -12,6 +12,7 @@
 namespace UthandoBlog\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
+use UthandoBlog\Form\Element\CategorySelect;
 use Zend\Form\Element\Button;
 use Zend\Form\Form;
 
@@ -72,6 +73,19 @@ class Post extends Form
             ],
             'attributes' => [
                 'placeholder' => 'Description',
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'categoryId',
+            'type' => CategorySelect::class,
+            'options' => [
+                'label' => 'Category',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'sm-10',
+                'label_attributes' => [
+                    'class' => 'col-sm-2',
+                ],
             ],
         ]);
 
