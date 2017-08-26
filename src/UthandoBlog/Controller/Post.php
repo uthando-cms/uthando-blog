@@ -27,7 +27,7 @@ class Post extends AbstractActionController
 
     public function __construct()
     {
-        $this->setServiceName('UthandoPost');
+        $this->setServiceName('UthandoBlogPost');
     }
 
     public function viewAction()
@@ -78,7 +78,7 @@ class Post extends AbstractActionController
             $viewModel->setTemplate('uthando-blog/blog/404');
             return $viewModel;
         } else {
-            $layout = ($model->getLayout()) ?: 'uthando-news/blog/post-item';
+            $layout = ($model->getLayout()) ?: 'uthando-blog/post/post-item';
             $viewModel->setTemplate($layout);
         }
 

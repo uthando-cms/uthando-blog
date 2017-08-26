@@ -30,7 +30,7 @@ class Category extends NestedSet
     /**
      * @var string
      */
-    protected $category;
+    protected $name;
 
     /**
      * @return int
@@ -53,18 +53,18 @@ class Category extends NestedSet
     /**
      * @return string
      */
-    public function getCategory()
+    public function getName()
     {
-        return $this->category;
+        return $this->name;
     }
 
     /**
-     * @param string $category
+     * @param string $name
      * @return Category
      */
-    public function setCategory($category)
+    public function setName($name)
     {
-        $this->category = $category;
+        $this->name = $name;
         return $this;
     }
 }

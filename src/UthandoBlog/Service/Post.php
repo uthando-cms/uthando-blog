@@ -24,7 +24,7 @@ use Zend\EventManager\Event;
  */
 class Post extends AbstractRelationalMapperService
 {
-    protected $serviceAlias = 'UthandoPost';
+    protected $serviceAlias = 'UthandoBlogPost';
 
     /**
      * @var array

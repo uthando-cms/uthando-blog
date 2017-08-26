@@ -79,6 +79,16 @@ class Post implements ModelInterface
     protected $lead;
 
     /**
+     * @var Category
+     */
+    protected $category;
+
+    /**
+     * @var array
+     */
+    protected $tags;
+
+    /**
      * @return int
      */
     public function getPostId()
@@ -255,6 +265,42 @@ class Post implements ModelInterface
     public function setLead($lead)
     {
         $this->lead = $lead;
+        return $this;
+    }
+
+    /**
+     * @return Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category $category
+     * @return Post
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param array $tags
+     * @return Post
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
         return $this;
     }
 }

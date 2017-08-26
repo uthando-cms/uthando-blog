@@ -1,30 +1,45 @@
 <?php
 
+use UthandoBlog\Form\TagFieldSet;
+use UthandoBlog\View\Helper\PostHelper;
+
 return [
     'controllers' => [
         'invokables' => [
+            'UthandoBlog\Controller\Category'   => 'UthandoBlog\Controller\Category',
+            'UthandoBlog\Controller\Comment'    => 'UthandoBlog\Controller\Comment',
             'UthandoBlog\Controller\Feed'       => 'UthandoBlog\Controller\Feed',
             'UthandoBlog\Controller\Post'       => 'UthandoBlog\Controller\Post',
             'UthandoBlog\Controller\PostAdmin'  => 'UthandoBlog\Controller\PostAdmin',
             'UthandoBlog\Controller\Settings'   => 'UthandoBlog\Controller\Settings',
+            'UthandoBlog\Controller\Tag'        => 'UthandoBlog\Controller\Tag',
         ],
     ],
     'form_elements' => [
         'invokables' => [
-            'UthandoPost'                   => 'UthandoBlog\Form\Post',
+            'UthandoBlogCategory'           => 'UthandoBlog\Form\Category',
+            'UthandoBlogComment'            => 'UthandoBlog\Form\Comment',
+            'UthandoBlogPost'               => 'UthandoBlog\Form\Post',
             'UthandoBlogFeedFieldSet'       => 'UthandoBlog\Form\BlogFeedFieldSet',
             'UthandoBlogOptionsFieldSet'    => 'UthandoBlog\Form\BlogOptionsFieldSet',
             'UthandoBlogSettings'           => 'UthandoBlog\Form\BlogSettings',
+
+            TagFieldSet::class              => TagFieldSet::class,
         ],
     ],
     'hydrators' => [
         'invokables' => [
-            'UthandoPost' => 'UthandoBlog\Hydrator\Post',
+            'UthandoBlogCategory'   => 'UthandoBlog\Hydrator\Category',
+            'UthandoBlogComment'    => 'UthandoBlog\Hydrator\Comment',
+            'UthandoBlogPost'       => 'UthandoBlog\Hydrator\Post',
+            'UthandoBlogTag'        => 'UthandoBlog\Hydrator\Tag',
         ],
     ],
     'input_filters' => [
         'invokables' => [
-            'UthandoPost' => 'UthandoBlog\InputFilter\Post',
+            'UthandoBlogCategory'   => 'UthandoBlog\InputFilter\Category',
+            'UthandoBlogComment'    => 'UthandoBlog\InputFilter\Comment',
+            'UthandoBlogPost'       => 'UthandoBlog\InputFilter\Post',
         ],
     ],
     'service_manager' => [
@@ -35,22 +50,32 @@ return [
     ],
     'uthando_mappers' => [
         'invokables' => [
-            'UthandoPost' => 'UthandoBlog\Mapper\Post',
+            'UthandoBlogCategory'   => 'UthandoBlog\Mapper\Category',
+            'UthandoBlogComment'    => 'UthandoBlog\Mapper\Comment',
+            'UthandoBlogPost'       => 'UthandoBlog\Mapper\Post',
+            'UthandoBlogTag'        => 'UthandoBlog\Mapper\Tag',
+
         ],
     ],
     'uthando_models' => [
         'invokables' => [
-            'UthandoPost' => 'UthandoBlog\Model\Post',
+            'UthandoBlogCategory'   => 'UthandoBlog\Model\Category',
+            'UthandoBlogComment'    => 'UthandoBlog\Model\Comment',
+            'UthandoBlogPost'       => 'UthandoBlog\Model\Post',
+            'UthandoBlogTag'        => 'UthandoBlog\Model\Tag',
         ]
     ],
     'uthando_services' => [
         'invokables' => [
-            'UthandoPost' => 'UthandoBlog\Service\Post',
+            'UthandoBlogCategory'   => 'UthandoBlog\Service\Category',
+            'UthandoBlogComment'    => 'UthandoBlog\Service\Comment',
+            'UthandoBlogPost'       => 'UthandoBlog\Service\Post',
+            'UthandoBlogTag'        => 'UthandoBlog\Service\Tag',
         ],
     ],
     'view_helpers' => [
         'invokables' => [
-            'PostHelper' => \UthandoBlog\View\Helper\PostHelper::class
+            'PostHelper' => PostHelper::class
         ],
     ],
     'view_manager' => [
@@ -150,7 +175,7 @@ return [
             'blog-feed' => [
                 'type' => 'Literal',
                 'options' => [
-                    'route' => '/news/feed',
+                    'route' => '/blog/feed',
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoBlog\Controller',
                         'controller'    => 'Feed',

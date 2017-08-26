@@ -45,6 +45,16 @@ class Post extends InputFilter
         ]);
 
         $this->add([
+            'name' => 'categoryId',
+            'required' => false,
+            'filters' => [
+                ['name' => 'StringTrim'],
+                ['name' => 'StripTags'],
+                ['name' => 'Digits']
+            ],
+        ]);
+
+        $this->add([
             'name' => 'title',
             'required'      => true,
             'filters'       => [

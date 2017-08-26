@@ -4,23 +4,23 @@
  *
  * @author      Shaun Freeman <shaun@shaunfreeman.co.uk>
  * @link        https://github.com/uthando-cms for the canonical source repository
- * @copyright   Copyright (c) 2017 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @copyright   Copyright (c) 22/08/17 Shaun Freeman. (http://www.shaunfreeman.co.uk)
  * @license     see LICENSE
  */
 
 namespace UthandoBlog\Controller;
 
+
 use UthandoCommon\Controller\AbstractCrudController;
 
 /**
- * Class PostAdmin
- *
+ * Class Category
  * @package UthandoBlog\Controller
  */
-class PostAdmin extends AbstractCrudController
+class Category extends AbstractCrudController
 {
-    protected $controllerSearchOverrides = ['sort' => 'postId'];
-    protected $serviceName = 'UthandoBlogPost';
-    protected $route = 'admin/blog';
+    protected $controllerSearchOverrides = ['sort' => 'categoryId'];
+    protected $serviceName = 'UthandoBlogCategory';
+    protected $route = 'admin/blog/category';
     protected $routes = [];
 }

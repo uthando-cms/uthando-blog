@@ -88,7 +88,7 @@ class PostHelper extends AbstractViewHelper
             $service = $this->getServiceLocator()
                 ->getServiceLocator()
                 ->get('UthandoServiceManager')
-                ->get('UthandoPost');
+                ->get('UthandoBlogPost');
             $this->setService($service);
         }
 

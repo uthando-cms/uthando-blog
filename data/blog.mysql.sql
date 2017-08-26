@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 
 DROP TABLE IF EXISTS `blogCategory`;
 CREATE TABLE `blogCategory` (
-  `id` int(11) NOT NULL,
+  `categoryId` int(11) NOT NULL,
   `name` varchar(128) DEFAULT NULL,
   `lft` int(10) UNSIGNED DEFAULT NULL,
   `rgt` int(10) UNSIGNED DEFAULT NULL
