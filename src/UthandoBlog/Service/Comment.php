@@ -13,10 +13,10 @@ namespace UthandoBlog\Service;
 use UthandoCommon\Service\AbstractMapperService;
 
 /**
- * Class Category
+ * Class Comment
  * @package UthandoBlog\Service
  */
-class Category extends AbstractMapperService
+class Comment extends AbstractMapperService
 {
-    protected $serviceAlias = 'UthandoBlogCategory';
+    protected $serviceAlias = 'UthandoBlogComment';
 }

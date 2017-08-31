@@ -19,7 +19,7 @@ use UthandoCommon\Controller\AbstractCrudController;
  */
 class Category extends AbstractCrudController
 {
-    protected $controllerSearchOverrides = ['sort' => 'categoryId'];
+    protected $controllerSearchOverrides = ['sort' => 'lft'];
     protected $serviceName = 'UthandoBlogCategory';
     protected $route = 'admin/blog/category';
     protected $routes = [];

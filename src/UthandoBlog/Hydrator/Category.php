@@ -19,6 +19,8 @@ use UthandoCommon\Hydrator\AbstractHydrator;
  */
 class Category extends AbstractHydrator
 {
+    protected $addDepth = false;
+
     /**
      * @param CategoryModel $object
      * @return array
@@ -28,8 +30,18 @@ class Category extends AbstractHydrator
         return [
             'categoryId'    => $object->getCategoryId(),
             'name'          => $object->getName(),
+            'seo'           => $object->getSeo(),
             'lft'           => $object->getLft(),
             'rgt'           => $object->getRgt(),
         ];
+
+        if (true === $this->addDepth) {
+            $data['depth'] = $object->getDepth();
+        }
+    }
+
+    public function addDepth()
+    {
+        $this->addDepth = true;
     }
 }

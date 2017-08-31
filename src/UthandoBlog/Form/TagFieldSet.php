@@ -16,7 +16,6 @@ use UthandoBlog\Model\Tag as TagModel;
 use Zend\Filter\Digits;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
-use Zend\Form\Element\Csrf;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Text;
 use Zend\Form\Fieldset;
@@ -57,20 +56,34 @@ class TagFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
 
         $this->add([
-            'name' => 'categoryId',
-            'type' => Hidden::class,
+            'name' => 'seo',
+            'type' => Text::class,
+            'attributes' => [
+                'placeholder' => 'SEO',
+                'autofocus' => true,
+                'autocapitalize' => 'off'
+            ],
+            'options' => [
+                'label' => 'SEO',
+                'help-block' => 'If you leave this blank the the tag name will be used for the seo.',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'sm-10',
+                'label_attributes' => [
+                    'class' => 'col-sm-2',
+                ],
+            ],
         ]);
 
         $this->add([
-            'name' => 'security',
-            'type' => Csrf::class,
+            'name' => 'tagId',
+            'type' => Hidden::class,
         ]);
     }
 
     public function getInputFilterSpecification()
     {
         return [
-            'categoryId' => [
+            'tagId' => [
                 'required' => false,
                 'filters' => [
                     ['name' => StringTrim::class],
@@ -90,6 +103,21 @@ class TagFieldSet extends Fieldset implements InputFilterProviderInterface
                         'min' => 2,
                         'max' => 255
                     ]],
+                ],
+                'seo' => [
+                    'required'   => true,
+                    'filters'    => [
+                        ['name' => 'StripTags'],
+                        ['name' => 'StringTrim'],
+                        ['name' => 'UthandoSlug']
+                    ],
+                    'validators' => [
+                        ['name' => 'StringLength', 'options' => [
+                            'encoding' => 'UTF-8',
+                            'min'      => 2,
+                            'max'      => 255,
+                        ]],
+                    ],
                 ],
             ],
         ];

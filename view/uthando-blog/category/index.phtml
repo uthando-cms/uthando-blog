@@ -1,11 +1,11 @@
-<?php $this->headTitle('Posts') ?>
-<?php $this->layout()->pageTitle = $this->translate('Posts');?>
+<?php $this->headTitle('Categories') ?>
+<?php $this->layout()->pageTitle = $this->translate('Categories');?>
 
 <?php $this->placeholder('header-buttons')->captureStart();?>
 <a href="<?=$this->url('admin/blog/settings');?>" data-toggle="tooltip" title="<?=$this->translate('Settings');?>" class="btn btn-primary">
     <i class="fa fa-cog"></i>
 </a>
-<a href="<?=$this->url('admin/blog/post/edit', [
+<a href="<?=$this->url('admin/blog/category/edit', [
     'action' => 'add'
 ]);?>" type="submit" data-toggle="tooltip" title="<?=$this->translate('Add Post');?>" class="btn btn-primary">
     <i class="fa fa-plus"></i>
@@ -14,18 +14,18 @@
 
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> <?=$this->translate('Post List');?></h3>
+        <h3 class="panel-title"><i class="fa fa-list"></i> <?=$this->translate('Category List');?></h3>
     </div>
     <div class="panel-body">
         <?=$this->partial('uthando-admin/partial/search', [
-            'name'			=> 'post',
+            'name'			=> 'category',
             'searchInputs'	=> [
-                $this->translate('Post') => 'title',
+                $this->translate('Category') => 'name',
             ],
         ]);?>
     </div>
-    <div id="table-post" class="admin-table">
-        <?=$this->partial('uthando-blog/post-admin/list', [
+    <div id="table-category" class="admin-table">
+        <?=$this->partial('uthando-blog/category/list', [
             'models' => $this->models
         ]); ?>
     </div>
@@ -33,10 +33,10 @@
 
 <script>
     $(document).ready(function(){
-        $('#table-news').dataGrid({
-            url : 'blog/post/list',
-            query: { sort : 'postId' },
-            searchForm : $('#search-post'),
+        $('#table-category').dataGrid({
+            url : 'category/list',
+            query: { sort : 'lft' },
+            searchForm : $('#search-category'),
             paging : 'links',
             columnSort: true
         });

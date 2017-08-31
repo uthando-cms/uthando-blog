@@ -26,6 +26,11 @@ class Comment extends NestedSet
         DateCreatedTrait,
         DateModifiedTrait;
 
+    const STATUS_APPROVED   = 1;
+    const STATUS_PENDING    = 0;
+    const STATUS_SPAM       = 1;
+    const STATUS_HAM        = 0;
+
     /**
      * @var int
      */
@@ -49,12 +54,22 @@ class Comment extends NestedSet
     /**
      * @var string
      */
+    protected $authorIp;
+
+    /**
+     * @var string
+     */
     protected $email;
 
     /**
      * @var string
      */
     protected $website;
+
+    /**
+     * @var bool
+     */
+    protected $approved;
 
     /**
      * @return int
@@ -131,6 +146,24 @@ class Comment extends NestedSet
     /**
      * @return string
      */
+    public function getAuthorIp()
+    {
+        return $this->authorIp;
+    }
+
+    /**
+     * @param string $authorIp
+     * @return Comment
+     */
+    public function setAuthorIp($authorIp)
+    {
+        $this->authorIp = $authorIp;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
     public function getEmail()
     {
         return $this->email;
@@ -164,4 +197,29 @@ class Comment extends NestedSet
         return $this;
     }
 
+    /**
+     * @return bool
+     */
+    public function isApproved()
+    {
+        return $this->getApproved();
+    }
+
+    /**
+     * @return bool
+     */
+    public function getApproved()
+    {
+        return $this->approved;
+    }
+
+    /**
+     * @param bool $approved
+     * @return Comment
+     */
+    public function setApproved($approved)
+    {
+        $this->approved = $approved;
+        return $this;
+    }
 }

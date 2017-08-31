@@ -1,5 +1,6 @@
 <?php
 
+use UthandoBlog\Form\Element\CategoryItemRadio;
 use UthandoBlog\Form\Element\CategorySelect;
 use UthandoBlog\Form\TagFieldSet;
 use UthandoBlog\View\Helper\PostHelper;
@@ -21,12 +22,14 @@ return [
             'UthandoBlogCategory'           => 'UthandoBlog\Form\Category',
             'UthandoBlogComment'            => 'UthandoBlog\Form\Comment',
             'UthandoBlogPost'               => 'UthandoBlog\Form\Post',
+            'UthandoBlogTag'                => 'UthandoBlog\Form\Tag',
             'UthandoBlogFeedFieldSet'       => 'UthandoBlog\Form\BlogFeedFieldSet',
             'UthandoBlogOptionsFieldSet'    => 'UthandoBlog\Form\BlogOptionsFieldSet',
             'UthandoBlogSettings'           => 'UthandoBlog\Form\BlogSettings',
 
             TagFieldSet::class              => TagFieldSet::class,
 
+            CategoryItemRadio::class        => CategoryItemRadio::class,
             CategorySelect::class           => CategorySelect::class,
         ],
     ],

@@ -33,6 +33,11 @@ class Tag implements ModelInterface
     protected $tag;
 
     /**
+     * @var string
+     */
+    protected $seo;
+
+    /**
      * @return int
      */
     public function getTagId()
@@ -65,6 +70,24 @@ class Tag implements ModelInterface
     public function setTag($tag)
     {
         $this->tag = $tag;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeo()
+    {
+        return $this->seo;
+    }
+
+    /**
+     * @param $seo
+     * @return $this
+     */
+    public function setSeo($seo)
+    {
+        $this->seo = $seo;
         return $this;
     }
 }

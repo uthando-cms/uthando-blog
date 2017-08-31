@@ -1,0 +1,47 @@
+<?php if (count($this->models) > 0): ?>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered table-condensed">
+            <thead>
+            <tr>
+                <th data-field="categoryId">Category Id</th>
+                <th data-field="name">Name</th>
+                <th data-field="lft">lft</th>
+                <th data-field="rgt">rgt</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /* @var $row \UthandoBlog\Model\Category */ ?>
+            <?php foreach($this->models as $row): ?>
+                <tr>
+                    <td><?=$this->escapeHtml($row->getCategoryId()); ?></td>
+                    <td>
+                        <?php echo str_repeat('&nbsp;&ndash;', ($row->getDepth())) . '&ndash;'; ?>
+                        <?=$this->escapeHtml($row->getName()); ?>
+                    </td>
+                    <td><?=$this->escapeHtml($row->getLft());?></td>
+                    <td><?=$this->escapeHtml($row->getRgt()); ?></td>
+                    <td>
+                        <?=$this->partial('uthando-admin/partial/edit-actions', [
+                            'pk'		=> 'categoryId',
+                            'id'		=> $row->getCategoryId(),
+                            'tableName'	=> 'post',
+                            'route'		=> 'admin/blog/category/edit',
+                        ]);?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <?=$this->paginationControl(
+        $this->models,
+        'Elastic',
+        'application/partial/paginate',
+        ['route' => 'admin/blog/category/page']
+    ); ?>
+
+<?php else: ?>
+    <h4>There are no Categories yet.</h4>
+<?php endif; ?>

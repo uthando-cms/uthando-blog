@@ -20,4 +20,16 @@ class Category extends AbstractNestedSet
 {
     protected $table = 'blogCategory';
     protected $primary = 'categoryId';
+
+    /**
+     * @param array $search
+     * @param string $sort
+     * @param Select $select
+     * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
+     */
+    public function search(array $search, $sort, $select = null)
+    {
+        $select = $this->getFullTree();
+        return parent::search($search, $sort, $select);
+    }
 }

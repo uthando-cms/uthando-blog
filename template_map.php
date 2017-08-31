@@ -1,6 +1,10 @@
 <?php
 return [
     'uthando-blog/settings/index' => __DIR__ . '/./view/uthando-blog/settings/index.phtml',
+    'uthando-blog/comment/list' => __DIR__ . '/./view/uthando-blog/comment/list.phtml',
+    'uthando-blog/comment/edit' => __DIR__ . '/./view/uthando-blog/comment/edit.phtml',
+    'uthando-blog/comment/index' => __DIR__ . '/./view/uthando-blog/comment/index.phtml',
+    'uthando-blog/comment/add' => __DIR__ . '/./view/uthando-blog/comment/add.phtml',
     'uthando-blog/post-admin/list' => __DIR__ . '/./view/uthando-blog/post-admin/list.phtml',
     'uthando-blog/post-admin/edit' => __DIR__ . '/./view/uthando-blog/post-admin/edit.phtml',
     'uthando-blog/post-admin/index' => __DIR__ . '/./view/uthando-blog/post-admin/index.phtml',
@@ -8,4 +12,12 @@ return [
     'uthando-blog/post/post-item' => __DIR__ . '/./view/uthando-blog/post/post-item.phtml',
     'uthando-blog/post/view' => __DIR__ . '/./view/uthando-blog/post/view.phtml',
     'uthando-blog/post/404' => __DIR__ . '/./view/uthando-blog/post/404.phtml',
+    'uthando-blog/category/list' => __DIR__ . '/./view/uthando-blog/category/list.phtml',
+    'uthando-blog/category/edit' => __DIR__ . '/./view/uthando-blog/category/edit.phtml',
+    'uthando-blog/category/index' => __DIR__ . '/./view/uthando-blog/category/index.phtml',
+    'uthando-blog/category/add' => __DIR__ . '/./view/uthando-blog/category/add.phtml',
+    'uthando-blog/tag/list' => __DIR__ . '/./view/uthando-blog/tag/list.phtml',
+    'uthando-blog/tag/edit' => __DIR__ . '/./view/uthando-blog/tag/edit.phtml',
+    'uthando-blog/tag/index' => __DIR__ . '/./view/uthando-blog/tag/index.phtml',
+    'uthando-blog/tag/add' => __DIR__ . '/./view/uthando-blog/tag/add.phtml',
 ];

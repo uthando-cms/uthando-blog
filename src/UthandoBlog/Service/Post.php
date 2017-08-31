@@ -17,7 +17,7 @@ use UthandoBlog\Model\Post as PostModel;
 use Zend\EventManager\Event;
 
 /**
- * Class Blog
+ * Class Post
  *
  * @package UthandoBlog\Service
  * @method PostMapper getMapper($mapperClass = null, array $options = [])

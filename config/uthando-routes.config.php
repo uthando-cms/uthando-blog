@@ -6,9 +6,9 @@ return [
             'admin' => [
                 'child_routes' => [
                     'blog' => [
-                        'type' => 'Literal',
+                        'type' => 'Segment',
                         'options' => [
-                            'route' => '/post',
+                            'route' => '/blog',
                             'constraints'   => [
                                 'action'    => '[a-zA-Z][a-zA-Z0-9_-]*',
                             ],
@@ -21,35 +21,181 @@ return [
                         ],
                         'may_terminate' => true,
                         'child_routes' => [
-                            'edit' => [
-                                'type'    => 'Segment',
+                            'post' => [
+                                'type' => 'Segment',
                                 'options' => [
-                                    'route'         => '/[:action[/id/[:id]]]',
-                                    'constraints'   => [
-                                        'action'    => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                        'id'		=> '\d+'
-                                    ],
-                                    'defaults'      => [
-                                        'action'        => 'edit',
-                                        'force-ssl'     => 'ssl'
-                                    ],
+                                    'route' => '/post',
+                                    'defaults' => [
+                                        'controller' => 'PostAdmin',
+                                        'action' => 'index',
+                                        'force-ssl' => 'ssl'
+                                    ]
                                 ],
                                 'may_terminate' => true,
+                                'child_routes' => [
+                                    'edit' => [
+                                        'type'    => 'Segment',
+                                        'options' => [
+                                            'route'         => '/[:action[/id/[:id]]]',
+                                            'constraints'   => [
+                                                'action'    => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                                'id'		=> '\d+'
+                                            ],
+                                            'defaults'      => [
+                                                'action'        => 'edit',
+                                                'force-ssl'     => 'ssl'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                    'page' => [
+                                        'type'    => 'Segment',
+                                        'options' => [
+                                            'route'         => '/page/[:page]',
+                                            'constraints'   => [
+                                                'page' => '\d+'
+                                            ],
+                                            'defaults'      => [
+                                                'action'        => 'list',
+                                                'page'          => 1,
+                                                'force-ssl'     => 'ssl'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                ],
                             ],
-                            'page' => [
-                                'type'    => 'Segment',
+                            'category' => [
+                                'type' => 'Segment',
                                 'options' => [
-                                    'route'         => '/page/[:page]',
-                                    'constraints'   => [
-                                        'page' => '\d+'
-                                    ],
-                                    'defaults'      => [
-                                        'action'        => 'list',
-                                        'page'          => 1,
-                                        'force-ssl'     => 'ssl'
-                                    ],
+                                    'route' => '/category',
+                                    'defaults' => [
+                                        'controller' => 'Category',
+                                        'action' => 'index',
+                                        'force-ssl' => 'ssl'
+                                    ]
                                 ],
                                 'may_terminate' => true,
+                                'child_routes' => [
+                                    'edit' => [
+                                        'type'    => 'Segment',
+                                        'options' => [
+                                            'route'         => '/[:action[/id/[:id]]]',
+                                            'constraints'   => [
+                                                'action'    => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                                'id'		=> '\d+'
+                                            ],
+                                            'defaults'      => [
+                                                'action'        => 'edit',
+                                                'force-ssl'     => 'ssl'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                    'page' => [
+                                        'type'    => 'Segment',
+                                        'options' => [
+                                            'route'         => '/page/[:page]',
+                                            'constraints'   => [
+                                                'page' => '\d+'
+                                            ],
+                                            'defaults'      => [
+                                                'action'        => 'list',
+                                                'page'          => 1,
+                                                'force-ssl'     => 'ssl'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                ],
+                            ],
+                            'comment' => [
+                                'type' => 'Segment',
+                                'options' => [
+                                    'route' => '/comment',
+                                    'defaults' => [
+                                        'controller' => 'Comment',
+                                        'action' => 'index',
+                                        'force-ssl' => 'ssl'
+                                    ]
+                                ],
+                                'may_terminate' => true,
+                                'child_routes' => [
+                                    'edit' => [
+                                        'type'    => 'Segment',
+                                        'options' => [
+                                            'route'         => '/[:action[/id/[:id]]]',
+                                            'constraints'   => [
+                                                'action'    => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                                'id'		=> '\d+'
+                                            ],
+                                            'defaults'      => [
+                                                'action'        => 'edit',
+                                                'force-ssl'     => 'ssl'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                    'page' => [
+                                        'type'    => 'Segment',
+                                        'options' => [
+                                            'route'         => '/page/[:page]',
+                                            'constraints'   => [
+                                                'page' => '\d+'
+                                            ],
+                                            'defaults'      => [
+                                                'action'        => 'list',
+                                                'page'          => 1,
+                                                'force-ssl'     => 'ssl'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                ],
+                            ],
+                            'tag' => [
+                                'type' => 'Segment',
+                                'options' => [
+                                    'route' => '/tag',
+                                    'defaults' => [
+                                        'controller' => 'Tag',
+                                        'action' => 'index',
+                                        'force-ssl' => 'ssl'
+                                    ]
+                                ],
+                                'may_terminate' => true,
+                                'child_routes' => [
+                                    'edit' => [
+                                        'type'    => 'Segment',
+                                        'options' => [
+                                            'route'         => '/[:action[/id/[:id]]]',
+                                            'constraints'   => [
+                                                'action'    => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                                'id'		=> '\d+'
+                                            ],
+                                            'defaults'      => [
+                                                'action'        => 'edit',
+                                                'force-ssl'     => 'ssl'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                    'page' => [
+                                        'type'    => 'Segment',
+                                        'options' => [
+                                            'route'         => '/page/[:page]',
+                                            'constraints'   => [
+                                                'page' => '\d+'
+                                            ],
+                                            'defaults'      => [
+                                                'action'        => 'list',
+                                                'page'          => 1,
+                                                'force-ssl'     => 'ssl'
+                                            ],
+                                        ],
+                                        'may_terminate' => true,
+                                    ],
+                                ],
                             ],
                             'settings' => [
                                 'type' => 'Segment',

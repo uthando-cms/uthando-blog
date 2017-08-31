@@ -33,6 +33,11 @@ class Category extends NestedSet
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $seo;
+
+    /**
      * @return int
      */
     public function getCategoryId()
@@ -65,6 +70,24 @@ class Category extends NestedSet
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSeo()
+    {
+        return $this->seo;
+    }
+
+    /**
+     * @param $seo
+     * @return $this
+     */
+    public function setSeo($seo)
+    {
+        $this->seo = $seo;
         return $this;
     }
 }

@@ -28,6 +28,7 @@ class Tag extends AbstractHydrator
         return [
             'tagId' => $object->getTag(),
             'tag'   => $object->getTag(),
+            'seo'   => $object->getSeo(),
         ];
     }
 }
