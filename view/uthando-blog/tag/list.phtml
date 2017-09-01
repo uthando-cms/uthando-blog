@@ -3,29 +3,25 @@
         <table class="table table-hover table-bordered table-condensed">
             <thead>
             <tr>
-                <th data-field="postId">Post Id</th>
-                <th data-field="title">Title</th>
-                <th data-field="userId">Created By</th>
-                <th data-field="dateCreated">Date Created</th>
-                <th data-field="dateModified">Date Modified</th>
+                <th data-field="tagId">Tag Id</th>
+                <th data-field="name">Name</th>
+                <th data-field="seo">SEO</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            <?php /* @var $row \UthandoBlog\Model\Post */ ?>
+            <?php /* @var $row \UthandoBlog\Model\Tag */ ?>
             <?php foreach($this->models as $row): ?>
                 <tr>
-                    <td><?=$this->escapeHtml($row->getPostId()); ?></td>
-                    <td><?=$this->escapeHtml($row->getTitle()); ?></td>
-                    <td><?=$this->escapeHtml($row->getUser()->getFullName());?></td>
-                    <td><?=$this->escapeHtml($this->formatDate($row->getDateCreated())); ?></td>
-                    <td><?=$this->escapeHtml($this->formatDate($row->getDateModified())); ?></td>
+                    <td><?=$this->escapeHtml($row->getTagId()); ?></td>
+                    <td><?=$this->escapeHtml($row->getName()); ?></td>
+                    <td><?=$this->escapeHtml($row->getSeo());?></td>
                     <td>
                         <?=$this->partial('uthando-admin/partial/edit-actions', [
-                            'pk'		=> 'postId',
-                            'id'		=> $row->getPostId(),
+                            'pk'		=> 'tagId',
+                            'id'		=> $row->getTagId(),
                             'tableName'	=> 'post',
-                            'route'		=> 'admin/blog/post/edit',
+                            'route'		=> 'admin/blog/tag/edit',
                         ]);?>
                     </td>
                 </tr>
@@ -38,9 +34,9 @@
         $this->models,
         'Elastic',
         'application/partial/paginate',
-        ['route' => 'admin/blog/post/page']
+        ['route' => 'admin/blog/tag/page']
     ); ?>
 
 <?php else: ?>
-    <h4>There are no Posts yet.</h4>
+    <h4>There are no Tags yet.</h4>
 <?php endif; ?>

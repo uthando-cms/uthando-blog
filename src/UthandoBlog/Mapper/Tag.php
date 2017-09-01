@@ -11,6 +11,7 @@
 namespace UthandoBlog\Mapper;
 
 use UthandoCommon\Mapper\AbstractDbMapper;
+use Zend\Db\Sql\Select;
 
 /**
  * Class Tag
@@ -20,4 +21,22 @@ class Tag extends AbstractDbMapper
 {
     protected $table = 'blogTag';
     protected  $primary = 'tagId';
+
+    /**
+     * @param $id
+     * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
+     */
+    public function getTagsByPostId($id)
+    {
+        $id = (int) $id;
+        $select = $this->getSelect();
+        $select->join(
+            'blogPostTag',
+            'blogTag.tagId=blogPostTag.tagId',
+            [],
+            Select::JOIN_LEFT
+        )->where->equalTo('blogPostTag.postId', $id);
+
+        return $this->fetchResult($select);
+    }
 }

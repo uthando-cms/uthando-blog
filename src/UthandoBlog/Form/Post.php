@@ -13,6 +13,7 @@ namespace UthandoBlog\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
 use UthandoBlog\Form\Element\CategorySelect;
+use UthandoBlog\Form\Element\TagSelect;
 use Zend\Form\Element\Button;
 use Zend\Form\Form;
 
@@ -86,6 +87,29 @@ class Post extends Form
                 'label_attributes' => [
                     'class' => 'col-sm-2',
                 ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'tags',
+            'type' => TagSelect::class,
+            'options' => [
+                'label' => 'Tags',
+                'required' => true,
+                'empty_option' => null,
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'sm-10',
+                'label_attributes' => [
+                    'class' => 'col-sm-2',
+                ],
+                'help-block' => '<ul class="text-info">
+                  <li>For Windows & Linux: Hold down the control (ctrl) button to select multiple options</li>
+                  <li>For Mac: Hold down the command button to select multiple options</li>
+                </ul>'
+            ],
+            'attributes' => [
+                'multiple' => true,
+                'size' => 10
             ],
         ]);
 

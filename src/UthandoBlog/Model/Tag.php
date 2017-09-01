@@ -30,7 +30,7 @@ class Tag implements ModelInterface
     /**
      * @var string
      */
-    protected $tag;
+    protected $name;
 
     /**
      * @var string
@@ -58,18 +58,18 @@ class Tag implements ModelInterface
     /**
      * @return string
      */
-    public function getTag()
+    public function getName()
     {
-        return $this->tag;
+        return $this->name;
     }
 
     /**
-     * @param string $tag
+     * @param string $name
      * @return Tag
      */
-    public function setTag($tag)
+    public function setName($name)
     {
-        $this->tag = $tag;
+        $this->name = $name;
         return $this;
     }
 

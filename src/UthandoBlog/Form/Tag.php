@@ -11,7 +11,10 @@
 namespace UthandoBlog\Form;
 
 
+use TwbBundle\Form\View\Helper\TwbBundleForm;
 use Zend\Form\Element\Csrf;
+use Zend\Form\Element\Hidden;
+use Zend\Form\Element\Text;
 use Zend\Form\Form;
 
 /**
@@ -23,15 +26,44 @@ class Tag extends Form
     public function init()
     {
         $this->add([
-            'type' => TagFieldSet::class,
-            'name' => 'tags',
+            'name' => 'name',
+            'type' => Text::class,
             'options' => [
-                'label' => 'Tags',
-                'use_as_base_fieldset' => true,
+                'label'     => 'Name',
+                'required'  => true,
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'sm-10',
+                'label_attributes' => [
+                    'class' => 'col-sm-2',
+                ],
             ],
             'attributes' => [
-                'class' => 'col-md-12',
+                'placeholder' => 'Tag Name',
             ],
+        ]);
+
+        $this->add([
+            'name' => 'seo',
+            'type' => Text::class,
+            'attributes' => [
+                'placeholder' => 'SEO',
+                'autofocus' => true,
+                'autocapitalize' => 'off'
+            ],
+            'options' => [
+                'label' => 'SEO',
+                'help-block' => 'If you leave this blank the the tag name will be used for the seo.',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'sm-10',
+                'label_attributes' => [
+                    'class' => 'col-sm-2',
+                ],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'tagId',
+            'type' => Hidden::class,
         ]);
 
         $this->add([

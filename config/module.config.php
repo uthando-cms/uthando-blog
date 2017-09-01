@@ -2,7 +2,7 @@
 
 use UthandoBlog\Form\Element\CategoryItemRadio;
 use UthandoBlog\Form\Element\CategorySelect;
-use UthandoBlog\Form\TagFieldSet;
+use UthandoBlog\Form\Element\TagSelect;
 use UthandoBlog\View\Helper\PostHelper;
 
 return [
@@ -27,10 +27,9 @@ return [
             'UthandoBlogOptionsFieldSet'    => 'UthandoBlog\Form\BlogOptionsFieldSet',
             'UthandoBlogSettings'           => 'UthandoBlog\Form\BlogSettings',
 
-            TagFieldSet::class              => TagFieldSet::class,
-
             CategoryItemRadio::class        => CategoryItemRadio::class,
             CategorySelect::class           => CategorySelect::class,
+            TagSelect::class                => TagSelect::class,
         ],
     ],
     'hydrators' => [
@@ -46,6 +45,7 @@ return [
             'UthandoBlogCategory'   => 'UthandoBlog\InputFilter\Category',
             'UthandoBlogComment'    => 'UthandoBlog\InputFilter\Comment',
             'UthandoBlogPost'       => 'UthandoBlog\InputFilter\Post',
+            'UthandoBlogTag'        => 'UthandoBlog\InputFilter\Tag',
         ],
     ],
     'service_manager' => [

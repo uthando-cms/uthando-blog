@@ -11,9 +11,11 @@
 
 namespace UthandoBlog\Service;
 
+use UthandoBlog\Model\Tag as TagModel;
 use UthandoCommon\Service\AbstractRelationalMapperService;
 use UthandoBlog\Mapper\Post as PostMapper;
 use UthandoBlog\Model\Post as PostModel;
+use Zend\Db\Sql\Where;
 use Zend\EventManager\Event;
 
 /**
@@ -30,6 +32,15 @@ class Post extends AbstractRelationalMapperService
      * @var array
      */
     protected $referenceMap = [
+        'category' => [
+            'refCol' => 'categoryId',
+            'service' => 'UthandoBlogCategory',
+        ],
+        'tags' => [
+            'refCol' => 'postId',
+            'service' => 'UthandoBlogTag',
+            'getMethod' => 'getTagsByPostId'
+        ],
         'user' => [
             'refCol' => 'userId',
             'service' => 'UthandoUser',
@@ -46,8 +57,47 @@ class Post extends AbstractRelationalMapperService
         ], [$this, 'setSlug']);
 
         $this->getEventManager()->attach([
+            'pre.form'
+        ], [$this, 'setTagsArray']);
+
+        $this->getEventManager()->attach([
             'pre.add', 'pre.edit'
         ], [$this, 'setValidation']);
+
+        $this->getEventManager()->attach([
+            'post.add', 'post.edit'
+        ], [$this, 'saveTags']);
+
+        $this->getEventManager()->attach([
+            'post.delete'
+        ], [$this, 'removePostTag']);
+    }
+
+    public function removePostTag(Event $e)
+    {
+        $id = $e->getParam('id');
+
+        $where = new Where();
+        $where->equalTo('postId', $id);
+        $this->getMapper()->delete($where, 'blogPostTag');
+    }
+
+    public function setTagsArray(Event $e)
+    {
+        $model = $e->getParam('model');
+        $tags = $model->getTags();
+
+        $tagsArray = [];
+
+        foreach ($tags as $tag) {
+            if ($tag instanceof TagModel) {
+                $tagsArray[] = $tag->getTagId();
+            } else {
+                $tagsArray[] = $tag;
+            }
+        }
+
+        $model->setTags($tagsArray);
     }
 
     /**
@@ -85,9 +135,49 @@ class Post extends AbstractRelationalMapperService
 
         $form->setValidationGroup([
             'postId', 'userId', 'title', 'slug',
-            'content', 'description',
-            'image', 'lead', 'layout',
+            'content', 'description', 'categoryId',
+            'tags', 'image', 'lead', 'layout',
         ]);
+    }
+
+    /**
+     * @param Event $e
+     */
+    public function saveTags(Event $e)
+    {
+        $model      = $e->getParam('model');
+        $post       = $e->getParam('post');
+        $saved      = $e->getParam('saved');
+        $tags       = $model->getTags();
+
+        /* @var Tag $tagService */
+        $tagService = $this->getRelatedService('tags');
+        $mapper     = $tagService->getMapper();
+        $id         = $model->getPostId() ?? $saved;
+
+        $currentTags = $tagService->getTagsByPostId($id);
+        $keptTags = [];
+
+        /* @var TagModel $tag */
+        foreach ($currentTags as $tag) {
+            if (!in_array($tag->getTagId(), $tags)) {
+                $where = new Where();
+                $where->equalTo('tagId', $tag->getTagId())
+                    ->and->equalTo('postId', $id);
+                $mapper->delete($where, 'blogPostTag');
+            } else {
+                $keptTags[] = $tag->getTagId();
+            }
+        }
+
+        $tags = array_diff($tags, $keptTags);
+
+        foreach ($tags as $tag) {
+            $mapper->insert([
+                'tagId' => $tag,
+                'postId' => $id
+            ], 'blogPostTag');
+        }
     }
 
     /**
@@ -110,7 +200,6 @@ class Post extends AbstractRelationalMapperService
     public function getBySlug($slug)
     {
         $slug = (string) $slug;
-        /* @var $mapper PostMapper */
         $mapper = $this->getMapper();
         $model = $mapper->getBySlug($slug);
 
