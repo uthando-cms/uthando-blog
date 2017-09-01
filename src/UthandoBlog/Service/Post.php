@@ -85,6 +85,11 @@ class Post extends AbstractRelationalMapperService
     public function setTagsArray(Event $e)
     {
         $model = $e->getParam('model');
+
+        if (!$model instanceof PostModel) {
+            return;
+        }
+
         $tags = $model->getTags();
 
         $tagsArray = [];
@@ -145,7 +150,7 @@ class Post extends AbstractRelationalMapperService
      */
     public function saveTags(Event $e)
     {
-        $model      = $e->getParam('model');
+        $model      = $e->getParam('model', new PostModel());
         $post       = $e->getParam('post');
         $saved      = $e->getParam('saved');
         $tags       = $model->getTags();
@@ -153,10 +158,13 @@ class Post extends AbstractRelationalMapperService
         /* @var Tag $tagService */
         $tagService = $this->getRelatedService('tags');
         $mapper     = $tagService->getMapper();
+
         $id         = $model->getPostId() ?? $saved;
 
         $currentTags = $tagService->getTagsByPostId($id);
         $keptTags = [];
+
+
 
         /* @var TagModel $tag */
         foreach ($currentTags as $tag) {

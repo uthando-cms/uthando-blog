@@ -86,7 +86,7 @@ class Post implements ModelInterface
     /**
      * @var array
      */
-    protected $tags;
+    protected $tags = [];
 
     /**
      * @return int

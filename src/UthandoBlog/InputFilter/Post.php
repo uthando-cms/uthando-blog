@@ -50,7 +50,15 @@ class Post extends InputFilter
             'filters' => [
                 ['name' => 'StringTrim'],
                 ['name' => 'StripTags'],
-                ['name' => 'Digits']
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'tags',
+            'required'      => false,
+            'filters'       => [
+                ['name' => 'StripTags'],
+                ['name' => 'StringTrim'],
             ],
         ]);
 

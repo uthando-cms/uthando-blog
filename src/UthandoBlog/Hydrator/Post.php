@@ -14,6 +14,7 @@ namespace UthandoBlog\Hydrator;
 use UthandoCommon\Hydrator\AbstractHydrator;
 use UthandoCommon\Hydrator\Strategy\DateTime as DateTimeStrategy;
 use UthandoBlog\Model\Post as PostModel;
+use UthandoCommon\Hydrator\Strategy\NullStrategy;
 
 /**
  * Class Blog
@@ -30,6 +31,7 @@ class Post extends AbstractHydrator
 
         $this->addStrategy('dateCreated', $dateTime);
         $this->addStrategy('dateModified', $dateTime);
+        $this->addStrategy('categoryId', new NullStrategy());
 
         return $this;
     }
@@ -45,7 +47,7 @@ class Post extends AbstractHydrator
         return [
             'postId'        => $object->getPostId(),
             'userId'        => $object->getUserId(),
-            'categoryId'    => $object->getCategoryId(),
+            'categoryId'    => $this->extractValue('categoryId',$object->getCategoryId()),
             'title'         => $object->getTitle(),
             'slug'          => $object->getSlug(),
             'content'       => $object->getContent(),

@@ -82,6 +82,7 @@ class Post extends Form
             'type' => CategorySelect::class,
             'options' => [
                 'label' => 'Category',
+                'empty_option' => 'No category',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
                 'column-size' => 'sm-10',
                 'label_attributes' => [
