@@ -21,7 +21,7 @@ class Feed extends AbstractActionController
 
     public function __construct()
     {
-        $this->setServiceName('UthandoPost');
+        $this->setServiceName('UthandoBlogPost');
     }
 
     public function feedAction()

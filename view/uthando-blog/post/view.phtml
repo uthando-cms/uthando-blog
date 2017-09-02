@@ -6,8 +6,8 @@
         <?php foreach($this->models as $postItem):?>
             <h3><?=$this->escapeHtml($postItem->getTitle());?></h3>
             <p><?=$this->escapeHtml($postItem->getLead());?></p>
-            <a href="<?=$this->url('news', [
-                'news-item' => $this->escapeHtml($postItem->getSlug()),
+            <a href="<?=$this->url('blog', [
+                'post-item' => $this->escapeHtml($postItem->getSlug()),
             ]);?>" class="btn btn-primary">Read More</a><br>
             <span><b>Author:</b> <?=$this->escapeHtml($postItem->getUser()->getFullName());?></span>
             <span><b>Date:</b> <?=$this->formatDate($postItem->getDateCreated());?></span>

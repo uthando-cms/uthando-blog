@@ -4,6 +4,7 @@ use UthandoBlog\Form\Element\CategoryItemRadio;
 use UthandoBlog\Form\Element\CategorySelect;
 use UthandoBlog\Form\Element\TagSelect;
 use UthandoBlog\View\Helper\PostHelper;
+use UthandoBlog\View\Helper\Tags;
 
 return [
     'controllers' => [
@@ -81,7 +82,8 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'PostHelper' => PostHelper::class
+            'PostHelper' => PostHelper::class,
+            'TagHelper'  => Tags::class
         ],
     ],
     'view_manager' => [
@@ -115,6 +117,21 @@ return [
                             'defaults'      => [
                                 'action'        => 'view',
                                 'search'        => '',
+                                'page'          => 1,
+                            ],
+                        ],
+                    ],
+                    'category' => [
+                        'type'    => 'Segment',
+                        'options' => [
+                            'route'         => '/category/[:category][/[:page]]',
+                            'constraints'   => [
+                                'category'   => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                'page' => '\d+',
+                            ],
+                            'defaults'      => [
+                                'action'        => 'view',
+                                'tag'           => '',
                                 'page'          => 1,
                             ],
                         ],
@@ -179,7 +196,7 @@ return [
                 ],
             ],
             'blog-feed' => [
-                'type' => 'Literal',
+                'type' => 'Segment',
                 'options' => [
                     'route' => '/blog/feed',
                     'defaults' => [

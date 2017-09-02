@@ -38,15 +38,6 @@ CREATE TABLE `blogCategory` (
   `rgt` int(10) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `blogCategory`
---
-
-INSERT INTO `blogCategory` (`categoryId`, `name`, `seo`, `lft`, `rgt`) VALUES
-(5, 'PHP', 'php', 1, 4),
-(7, 'Linux', 'linux', 5, 6),
-(8, 'Zend Framework', 'zend-framework', 2, 3);
-
 -- --------------------------------------------------------
 
 --

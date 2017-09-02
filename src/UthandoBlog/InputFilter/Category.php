@@ -16,14 +16,18 @@ use Zend\Filter\Digits;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\InputFilter\InputFilter;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\Validator\StringLength;
 
 /**
  * Class Category
  * @package UthandoBlog\InputFilter
  */
-class Category extends InputFilter
+class Category extends InputFilter implements ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
     public function init()
     {
         $this->add([
@@ -84,5 +88,24 @@ class Category extends InputFilter
                 ]],
             ],
         ]);
+    }
+
+    public function addSeoNoRecordExists($exclude = null)
+    {
+        $exclude = (!$exclude) ?: [
+            'field' => 'seo',
+            'value' => $exclude,
+        ];
+
+        $this->get('seo')
+            ->getValidatorChain()
+            ->attachByName('Zend\Validator\Db\NoRecordExists', [
+                'table' => 'blogCategory',
+                'field' => 'seo',
+                'adapter' => $this->getServiceLocator()->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
+                'exclude' => $exclude,
+            ]);
+
+        return $this;
     }
 }

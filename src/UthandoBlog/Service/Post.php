@@ -131,12 +131,18 @@ class Post extends AbstractRelationalMapperService
     public function setValidation(Event $e)
     {
         $form = $e->getParam('form');
-        $model = $e->getParam('model');
+        $model = $e->getParam('model', new PostModel());
         $post = $e->getParam('post');
 
         if ($model instanceof PostModel) {
             $model->setDateModified();
         }
+
+        $slug = ($model->getSlug() === $post['slug']) ? $model->getSlug() : null;
+
+        /* @var \UthandoBlog\InputFilter\Post $inputFilter */
+        $inputFilter = $form->getInputFilter();
+        $inputFilter->addSlugNoRecordExists($slug);
 
         $form->setValidationGroup([
             'postId', 'userId', 'title', 'slug',

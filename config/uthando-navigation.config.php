@@ -69,6 +69,7 @@ return [
                         'label' => 'Comments',
                         'route' => 'admin/blog/comment',
                         'resource' => 'menu:admin',
+                        'visible' => false,
                         'pages' => [
                             'add' => [
                                 'label'     => 'Add Comment',

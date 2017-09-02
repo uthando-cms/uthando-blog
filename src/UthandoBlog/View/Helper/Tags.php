@@ -10,13 +10,32 @@
 
 namespace UthandoBlog\View\Helper;
 
+use UthandoBlog\Model\Tag as TagModel;
+use UthandoCommon\View\AbstractViewHelper;
 
 /**
  * Class Tags
  *
  * @package UthandoBlog\View\Helper
  */
-class Tags
+class Tags extends AbstractViewHelper
 {
+    public function __invoke($tags)
+    {
+        $html       = '';
+        $tagArray   = [];
 
+        $urlHelper = $this->getView()->plugin('url');
+
+        /* @var TagModel $tag */
+        foreach ($tags as $tag) {
+            $tagArray[] = '<a href="' . $urlHelper('post-list/tag', [
+                    'tag' => $tag->getSeo(),
+                ]) . '">' . $tag->getName() . '</a>';
+        }
+
+        $html = $html . implode(', ', $tagArray);
+
+        return $html;
+    }
 }

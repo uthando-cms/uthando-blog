@@ -11,6 +11,7 @@
 namespace UthandoBlog\Service;
 
 use Exception;
+use UthandoBlog\InputFilter\Category as CategoryInputFilter;
 use UthandoBlog\Mapper\Category as CategoryMapper;
 use UthandoBlog\Model\Category as CategoryModel;
 use UthandoCommon\Mapper\AbstractNestedSet;
@@ -45,6 +46,10 @@ class Category extends AbstractMapperService
 
         $form = $this->prepareForm($model, $post, true, true);
 
+        /* @var CategoryInputFilter $inputFilter */
+        $inputFilter = $form->getInputFilter();
+        $inputFilter->addSeoNoRecordExists();
+
         if (!$form->isValid()) {
             return $form;
         }
@@ -78,6 +83,12 @@ class Category extends AbstractMapperService
         if (!$post['seo']) {
             $post['seo'] = $post['name'];
         }
+
+        $seo = ($model->getSeo() === $post['seo']) ? $model->getSeo() : null;
+
+        /* @var CategoryInputFilter $inputFilter */
+        $inputFilter = $form->getInputFilter();
+        $inputFilter->addSeoNoRecordExists($seo);
 
         $form = $this->prepareForm($model, $post, true, true);
 

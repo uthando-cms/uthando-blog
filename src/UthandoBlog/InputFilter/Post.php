@@ -12,14 +12,18 @@
 namespace UthandoBlog\InputFilter;
 
 use Zend\InputFilter\InputFilter;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Class Blog
  *
  * @package UthandoBlog\InputFilter
  */
-class Post extends InputFilter
+class Post extends InputFilter implements ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
     public function init()
     {
         $this->add([
@@ -68,7 +72,6 @@ class Post extends InputFilter
             'filters'       => [
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
-                ['name' => 'UthandoCommon\Filter\Ucwords'],
             ],
             'validators'    => [
                 ['name' => 'StringLength', 'options' => [
@@ -155,5 +158,24 @@ class Post extends InputFilter
                 ]],
             ],
         ]);
+    }
+
+    public function addSlugNoRecordExists($exclude = null)
+    {
+        $exclude = (!$exclude) ?: [
+            'field' => 'slug',
+            'value' => $exclude,
+        ];
+
+        $this->get('slug')
+            ->getValidatorChain()
+            ->attachByName('Zend\Validator\Db\NoRecordExists', [
+                'table' => 'blogPost',
+                'field' => 'slug',
+                'adapter' => $this->getServiceLocator()->getServiceLocator()->get('Zend\Db\Adapter\Adapter'),
+                'exclude' => $exclude,
+            ]);
+
+        return $this;
     }
 } 

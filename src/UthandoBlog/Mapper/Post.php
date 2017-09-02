@@ -49,7 +49,42 @@ class Post extends AbstractDbMapper
     public function search(array $search, $sort, $select = null)
     {
         $select = $this->getSelect();
-    
+
+        foreach ($search as $key => $val) {
+            if (!$val['searchString']) {
+                continue;
+            }
+
+            switch ($val['columns'][0]) {
+                case 'tag':
+                    $select->join(
+                        'blogPostTag',
+                        'blogPost.postId=blogPostTag.postId',
+                        [],
+                        Select::JOIN_LEFT
+                    )->join(
+                        'blogTag',
+                        'blogPostTag.tagId=blogTag.tagId',
+                        [],
+                        Select::JOIN_LEFT
+                    );
+
+                    $search[$key]['columns'][0] = 'blogTag.seo';
+                    break;
+                case 'category':
+                    $select->join(
+                        'blogCategory',
+                        'blogPost.categoryId=blogCategory.categoryId',
+                        [],
+                        Select::JOIN_LEFT
+                    );
+                    $search[$key]['columns'][0] = 'blogCategory.seo';
+                    break;
+            }
+        }
+
+
+
         return parent::search($search, $sort, $select);
     }
 

@@ -52,6 +52,7 @@ class Tag extends AbstractMapperService
     {
         $data = $e->getParam('post');
         $form = $e->getParam('form');
+        $model = $e->getParam('model', new TagModel());
 
         if (null === $data) {
             return;
@@ -62,6 +63,12 @@ class Tag extends AbstractMapperService
         } elseif (is_array($data)) {
             $data['seo'] = $data['name'];
         }
+
+        $seo = ($model->getSeo() === $data['seo']) ? $model->getSeo() : null;
+
+        /* @var \UthandoBlog\InputFilter\Tag $inputFilter */
+        $inputFilter = $form->getInputFilter();
+        $inputFilter->addSeoNoRecordExists($seo);
 
         $form->setData($data);
 

@@ -14,8 +14,16 @@
         <?=$this->model->getContent();?>
     </article>
     <hr>
-    <span><b>Author:</b> <?=$this->escapeHtml($this->model->getUser()->getFullName());?></span>
-    <span><b>Date:</b> <?=$this->formatDate($this->model->getDateCreated());?></span>
+    <span><i class="fa fa-calendar"></i> <?=$this->formatDate($this->model->getDateCreated());?></span>
+    <span><i class="fa fa-user"></i> <?=$this->escapeHtml($this->model->getUser()->getFullName());?></span>
+
+    <span>
+        <b>Filed Under:</b> <?=$this->escapeHtml($this->model->getCategory()->getName());?>
+    </span>
+    <span>
+        <i class="fa fa-tag"></i>
+        <?=$this->tagHelper($this->model->getTags()); ?>
+    </span>
     <hr>
     <?php
     $previous = $postHelper->getPrevious($this->model->getPostId());
@@ -38,7 +46,7 @@
 
 <div class="col-sm-4">
     <div class="panel panel-default">
-        <div class="panel-heading">Recent News</div>
+        <div class="panel-heading">Recent Posts</div>
         <div class="panel-body">
             <?php foreach($postHelper->getRecent() as $postItem):?>
                 <h4><a href="<?=$this->url('blog', [
@@ -51,7 +59,7 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading">Popular News</div>
+        <div class="panel-heading">Popular Posts</div>
         <div class="panel-body">
             <?php foreach($postHelper->getPopular() as $postItem):?>
                 <h4><a href="<?=$this->url('blog', [

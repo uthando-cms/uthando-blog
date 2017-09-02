@@ -41,7 +41,8 @@ class Post extends AbstractActionController
             'count' => $options->getItemsPerPage(),
             'page'  => $this->params()->fromRoute('page'),
             'title-description' => $search,
-            //'tag'   => $this->params()->fromRoute('tag'),
+            'tag'   => $this->params()->fromRoute('tag', null),
+            'category'   => $this->params()->fromRoute('category', null),
         ];
 
         $service = $this->getService();
