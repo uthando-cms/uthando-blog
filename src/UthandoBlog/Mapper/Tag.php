@@ -10,6 +10,7 @@
 
 namespace UthandoBlog\Mapper;
 
+use UthandoBlog\Model\Post as PostModel;
 use UthandoCommon\Mapper\AbstractDbMapper;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\Sql\Expression;
@@ -52,6 +53,9 @@ class Tag extends AbstractDbMapper
         return $result->current();
     }
 
+    /**
+     * @return \Zend\Db\ResultSet\HydratingResultSet|ResultSet|\Zend\Paginator\Paginator
+     */
     public function getTagCloud()
     {
         $select = $this->getSelect();
@@ -65,11 +69,18 @@ class Tag extends AbstractDbMapper
             'blogTag.tagId=blogPostTag.tagId',
             [],
             Select::JOIN_LEFT
+        )->join(
+            'blogPost',
+            'blogPostTag.postId=blogPost.postId',
+            [],
+            Select::JOIN_LEFT
         )->group([
             'name', 'seo'
         ])->order([
             'name ' . Select::ORDER_ASCENDING,
-        ]);
+        ])->where->equalTo(
+            'status', PostModel::STATUS_PUBLISHED
+        );
 
         $result = $this->fetchResult($select, new ResultSet());
 
