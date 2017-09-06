@@ -117,4 +117,9 @@ class Category extends AbstractMapperService
 
         return $result;
     }
+
+    public function getCategoryBySeo($seo)
+    {
+        return $this->getMapper()->getCategoryBySeo($seo);
+    }
 }

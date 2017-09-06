@@ -87,4 +87,14 @@ class Tag extends AbstractMapperService
 
         return $tags;
     }
+
+    public function getTagBySeo($seo)
+    {
+        return $this->getMapper()->getTagBySeo($seo);
+    }
+
+    public function getTagCloud()
+    {
+        return $this->getMapper()->getTagCloud();
+    }
 }

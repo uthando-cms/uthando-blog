@@ -1,5 +1,4 @@
 <?php $this->headTitle($this->escapeHtml($this->model->getTitle()));?>
-<?php $postHelper = $this->postHelper();?>
 
 <div class="col-sm-8">
     <nav>
@@ -18,16 +17,16 @@
     <span><i class="fa fa-user"></i> <?=$this->escapeHtml($this->model->getUser()->getFullName());?></span>
 
     <span>
-        <b>Filed Under:</b> <?=$this->escapeHtml($this->model->getCategory()->getName());?>
+        <b>Filed Under:</b> <?=$this->CategoryHelper($this->model->getCategory());?>
     </span>
     <span>
         <i class="fa fa-tag"></i>
-        <?=$this->tagHelper($this->model->getTags()); ?>
+        <?=$this->tagHelper()->tagLinks($this->model->getTags()); ?>
     </span>
     <hr>
     <?php
-    $previous = $postHelper->getPrevious($this->model->getPostId());
-    $next = $postHelper->getNext($this->model->getPostId());
+    $previous = $this->postHelper()->getPrevious($this->model->getPostId());
+    $next = $this->postHelper()->getNext($this->model->getPostId());
     ?>
 
     <ul class="pager">
@@ -45,29 +44,5 @@
 </div>
 
 <div class="col-sm-4">
-    <div class="panel panel-default">
-        <div class="panel-heading">Recent Posts</div>
-        <div class="panel-body">
-            <?php foreach($postHelper->getRecent() as $postItem):?>
-                <h4><a href="<?=$this->url('blog', [
-                        'post-item' => $this->escapeHtml($postItem->getSlug()),
-                    ]);?>" class=""><?=$this->escapeHtml($postItem->getTitle());?></h4>
-                <p><?=$this->formatDate($postItem->getDateCreated());?></a</p>
-                <hr>
-            <?php endforeach;?>
-        </div>
-    </div>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">Popular Posts</div>
-        <div class="panel-body">
-            <?php foreach($postHelper->getPopular() as $postItem):?>
-                <h4><a href="<?=$this->url('blog', [
-                        'post-item' => $this->escapeHtml($postItem->getSlug()),
-                    ]);?>"><?=$this->escapeHtml($postItem->getTitle());?></a></h4>
-                <p><?=$this->formatDate($postItem->getDateCreated());?></p>
-                <hr>
-            <?php endforeach;?>
-        </div>
-    </div>
+    <?=$this->partial('uthando-blog/post/side-bar');?>
 </div>

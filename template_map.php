@@ -12,6 +12,7 @@ return [
     'uthando-blog/post/post-item' => __DIR__ . '/./view/uthando-blog/post/post-item.phtml',
     'uthando-blog/post/view' => __DIR__ . '/./view/uthando-blog/post/view.phtml',
     'uthando-blog/post/404' => __DIR__ . '/./view/uthando-blog/post/404.phtml',
+    'uthando-blog/post/side-bar' => __DIR__ . '/./view/uthando-blog/post/side-bar.phtml',
     'uthando-blog/category/list' => __DIR__ . '/./view/uthando-blog/category/list.phtml',
     'uthando-blog/category/edit' => __DIR__ . '/./view/uthando-blog/category/edit.phtml',
     'uthando-blog/category/index' => __DIR__ . '/./view/uthando-blog/category/index.phtml',

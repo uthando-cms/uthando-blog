@@ -58,6 +58,7 @@ class Post extends AbstractHydrator
             'lead'          => $object->getLead(),
             'dateCreated'   => $this->extractValue('dateCreated', $object->getDateCreated()),
             'dateModified'  => $this->extractValue('dateModified', $object->getDateModified()),
+            'status'        => $object->getStatus(),
         ];
     }
 }

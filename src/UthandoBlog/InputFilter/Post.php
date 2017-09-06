@@ -32,7 +32,7 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'filters' => [
                 ['name' => 'StringTrim'],
                 ['name' => 'StripTags'],
-                ['name' => 'Digits']
+                ['name' => 'Digits'],
             ],
         ]);
 
@@ -42,6 +42,7 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'filters'       => [
                 ['name' => 'StripTags'],
                 ['name' => 'StringTrim'],
+                ['name' => 'Digits'],
             ],
             'validators'    => [
 
@@ -54,6 +55,7 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'filters' => [
                 ['name' => 'StringTrim'],
                 ['name' => 'StripTags'],
+                ['name' => 'Digits'],
             ],
         ]);
 

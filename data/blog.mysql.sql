@@ -56,7 +56,8 @@ CREATE TABLE `blogComment` (
   `dateCreated` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `appoved` tinyint(1) UNSIGNED NOT NULL,
   `lft` int(10) UNSIGNED DEFAULT NULL,
-  `rgt` int(10) UNSIGNED DEFAULT NULL
+  `rgt` int(10) UNSIGNED DEFAULT NULL,
+  `status` int(1) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -80,7 +81,8 @@ CREATE TABLE `blogPost` (
   `lead` tinytext,
   `hits` int(10) UNSIGNED NOT NULL,
   `dateCreated` datetime NOT NULL,
-  `dateModified` datetime NOT NULL
+  `dateModified` datetime NOT NULL,
+  `status` int(1) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

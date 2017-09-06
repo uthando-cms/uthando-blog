@@ -35,6 +35,11 @@ class PostHelper extends AbstractViewHelper
         return $this;
     }
 
+    public function getArchiveList()
+    {
+        return $this->getService()->getArchiveList();
+    }
+
     /**
      * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
      */

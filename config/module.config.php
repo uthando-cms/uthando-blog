@@ -3,6 +3,7 @@
 use UthandoBlog\Form\Element\CategoryItemRadio;
 use UthandoBlog\Form\Element\CategorySelect;
 use UthandoBlog\Form\Element\TagSelect;
+use UthandoBlog\View\Helper\Categories;
 use UthandoBlog\View\Helper\PostHelper;
 use UthandoBlog\View\Helper\Tags;
 
@@ -82,6 +83,7 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
+            'CategoryHelper' => Categories::class,
             'PostHelper' => PostHelper::class,
             'TagHelper'  => Tags::class
         ],
@@ -151,7 +153,7 @@ return [
                             ],
                         ],
                     ],
-                    'archives' => [
+                    'archive' => [
                         'type'    => 'Segment',
                         'options' => [
                             'route'         => '/[:year]/[:month][/[:page]]',

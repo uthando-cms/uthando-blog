@@ -32,4 +32,14 @@ class Category extends AbstractNestedSet
         $select = $this->getFullTree();
         return parent::search($search, $sort, $select);
     }
+
+    public function getCategoryBySeo($seo)
+    {
+        $seo = (string) $seo;
+        $select = $this->getSelect();
+        $select->where->equalTo('seo', $seo);
+        $result = $this->fetchResult($select);
+
+        return $result->current();
+    }
 }

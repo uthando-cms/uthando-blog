@@ -11,6 +11,7 @@
 
 namespace UthandoBlog\Controller;
 
+use UthandoBlog\Model\Post as PostModel;
 use UthandoCommon\Service\ServiceTrait;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -36,25 +37,41 @@ class Post extends AbstractActionController
         $options = $this->getService('UthandoBlogOptions');
         $search = $this->params()->fromPost('search', null);
 
+        $tag = $this->params()->fromRoute('tag', null);
+        $category = $this->params()->fromRoute('category', null);
+        $year = $this->params()->fromRoute('year', null);
+        $month = $this->params()->fromRoute('month', null);
+
         $params = [
-            'sort'  => $options->getSortOrder(),
-            'count' => $options->getItemsPerPage(),
-            'page'  => $this->params()->fromRoute('page'),
             'title-description' => $search,
-            'tag'   => $this->params()->fromRoute('tag', null),
-            'category'   => $this->params()->fromRoute('category', null),
+            'tag'               => $tag,
+            'category'          => $category,
+            'archive'           => [$month, $year],
         ];
 
         $service = $this->getService();
 
+        if ($tag) {
+            $tag = $this->getService('UthandoBlogTag')
+                ->getTagBySeo($tag);
+        }
+
+        if ($category) {
+            $category = $this->getService('UthandoBlogCategory')
+                ->getCategoryBySeo($category);
+        }
+
         $service->usePaginator([
-            'limit' => $params['count'],
-            'page' => $params['page'],
+            'limit' => $options->getItemsPerPage(),
+            'page' => $this->params()->fromRoute('page', 1),
         ]);
 
         $viewModel = new ViewModel([
-            'models'    => $service->search($params),
+            'models'    => $service->searchPosts($params, $options->getSortOrder()),
             'view'      => $this->getEvent()->getRouteMatch()->getMatchedRouteName(),
+            'tag'       => $tag,
+            'category'  => $category,
+            'archive'   => $year . $month . '01',
         ]);
 
         if ($this->getRequest()->isXmlHttpRequest()) {

@@ -1,0 +1,59 @@
+
+<form action="<?=$this->url('post-list/search');?>" method="post">
+    <div class="input-group">
+        <input type="search" placeholder="Start Searching..." id="search" name="search" class="form-control">
+        <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<hr>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Tag Cloud</div>
+    <!-- List group -->
+    <div class="panel-body">
+        <?=$this->tagHelper()->tagCloud();?>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Recent Posts</div>
+    <div class="list-group">
+        <?php foreach($this->postHelper()->getRecent() as $postItem):?>
+        <a href="<?=$this->url('blog', [
+            'post-item' => $this->escapeHtml($postItem->getSlug()),
+        ]);?>" class="list-group-item"><?=$this->escapeHtml($postItem->getTitle());?>
+            <?php endforeach;?>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Popular Posts</div>
+    <div class="list-group">
+        <?php foreach($this->postHelper()->getPopular() as $postItem):?>
+            <a href="<?=$this->url('blog', [
+                'post-item' => $this->escapeHtml($postItem->getSlug()),
+            ]);?>" class="list-group-item"><?=$this->escapeHtml($postItem->getTitle());?></a>
+        <?php endforeach;?>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Archives</div>
+    <!-- List group -->
+    <div class="list-group">
+        <?php foreach($this->postHelper()->getArchiveList() as $item):?>
+            <a href="<?=$this->url('post-list/archive', [
+                'month' => $item->month,
+                'year'  => $item->year,
+            ]);?>" class="list-group-item">
+                <?=$this->formatDate($item->date, 'F Y');?>
+                <span class="badge"><?=$item->count;?></span>
+            </a>
+        <?php endforeach;?>
+    </div>
+</div>

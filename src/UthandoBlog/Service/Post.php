@@ -147,7 +147,7 @@ class Post extends AbstractRelationalMapperService
         $form->setValidationGroup([
             'postId', 'userId', 'title', 'slug',
             'content', 'description', 'categoryId',
-            'tags', 'image', 'lead', 'layout',
+            'tags', 'image', 'lead', 'layout', 'status'
         ]);
     }
 
@@ -169,8 +169,6 @@ class Post extends AbstractRelationalMapperService
 
         $currentTags = $tagService->getTagsByPostId($id);
         $keptTags = [];
-
-
 
         /* @var TagModel $tag */
         foreach ($currentTags as $tag) {
@@ -205,6 +203,37 @@ class Post extends AbstractRelationalMapperService
         $this->populate($model, true);
 
         return $model;
+    }
+
+    public function searchPosts($post, $sort)
+    {
+        $searches = [];
+        $type = [];
+
+        foreach ($post as $key => $value) {
+            switch ($key) {
+                case 'tag':
+                case 'category':
+                case 'archive':
+                    if (!$value || (is_array($value) && !array_filter($value))) continue;
+                    $type = [$key, $value];
+                    break;
+                default:
+                    $searches[] = [
+                        'searchString' => $value,
+                        'columns' => explode('-', $key),
+                    ];
+                    break;
+            }
+        }
+
+        $models = $this->getMapper()->searchPosts($searches, $sort, $type);
+
+        foreach ($models as $model) {
+            $this->populate($model, true);
+        }
+
+        return $models;
     }
 
     /**
@@ -258,5 +287,13 @@ class Post extends AbstractRelationalMapperService
 
         return $models;
 
+    }
+
+    public function getArchiveList()
+    {
+        $mapper = $this->getMapper();
+        $archiveList = $mapper->getArchiveList();
+
+        return $archiveList;
     }
 } 

@@ -11,7 +11,9 @@
 namespace UthandoBlog\View\Helper;
 
 use UthandoBlog\Model\Tag as TagModel;
+use UthandoBlog\Service\Tag as TagService;
 use UthandoCommon\View\AbstractViewHelper;
+use Zend\Tag\Cloud;
 
 /**
  * Class Tags
@@ -20,7 +22,17 @@ use UthandoCommon\View\AbstractViewHelper;
  */
 class Tags extends AbstractViewHelper
 {
-    public function __invoke($tags)
+    /**
+     * @var TagService
+     */
+    protected $service;
+
+    public function __invoke()
+    {
+        return $this;
+    }
+
+    public function tagLinks($tags = null)
     {
         $html       = '';
         $tagArray   = [];
@@ -37,5 +49,76 @@ class Tags extends AbstractViewHelper
         $html = $html . implode(', ', $tagArray);
 
         return $html;
+    }
+
+    public function tagCloud()
+    {
+        $tags = $this->getService()->getTagCloud();
+        $urlHelper = $this->getView()->plugin('url');
+
+        $tagArray = [
+            'cloudDecorator' => [
+                'decorator' => 'htmlCloud',
+                'options'   => [
+                    'htmlTags'    => [
+                        'ul' => ['class' => 'list-inline'],
+                    ],
+                    'separator' => '&nbsp;',
+                ],
+            ],
+            'tagDecorator' => [
+                'decorator' => 'htmlTag',
+                'options'   => [
+                    'minFontSize' => '10',
+                    'maxFontSize' => '30',
+                    'htmlTags'    => [
+                        'li' => ['class' => ''],
+                    ],
+                ],
+            ],
+        ];
+
+        foreach ($tags as $tag) {
+            $tagArray['tags'][] = [
+                'title' => $tag->name,
+                'weight' => $tag->count,
+                'params' => [
+                    'url' => $urlHelper('post-list/tag', [
+                        'tag' => $tag->seo,
+                    ]),
+                ],
+            ];
+        }
+
+        $tagCloud = new Cloud($tagArray);
+
+        return $tagCloud;
+    }
+
+    /**
+     * @return TagService
+     */
+    public function getService()
+    {
+        if (!$this->service instanceof TagService) {
+
+            $service = $this->getServiceLocator()
+                ->getServiceLocator()
+                ->get('UthandoServiceManager')
+                ->get('UthandoBlogTag');
+            $this->setService($service);
+        }
+
+        return $this->service;
+    }
+
+    /**
+     * @param TagService $service
+     * @return $this
+     */
+    public function setService(TagService $service)
+    {
+        $this->service = $service;
+        return $this;
     }
 }

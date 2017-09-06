@@ -10,13 +10,26 @@
 
 namespace UthandoBlog\View\Helper;
 
+use UthandoBlog\Model\Category;
+use UthandoCommon\View\AbstractViewHelper;
 
 /**
  * Class Categories
  *
  * @package UthandoBlog\View\Helper
  */
-class Categories
+class Categories extends AbstractViewHelper
 {
+    public function __invoke(Category $cat)
+    {
+        $html = '';
 
+        $urlHelper = $this->getView()->plugin('url');
+
+        $html .= '<a href="' . $urlHelper('post-list/category', [
+                'category' => $cat->getSeo(),
+            ]) . '">' . $cat->getName() . '</a>';
+
+        return $html;
+    }
 }

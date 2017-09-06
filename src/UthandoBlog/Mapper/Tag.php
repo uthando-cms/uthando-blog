@@ -11,6 +11,8 @@
 namespace UthandoBlog\Mapper;
 
 use UthandoCommon\Mapper\AbstractDbMapper;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Select;
 
 /**
@@ -38,5 +40,39 @@ class Tag extends AbstractDbMapper
         )->where->equalTo('blogPostTag.postId', $id);
 
         return $this->fetchResult($select);
+    }
+
+    public function getTagBySeo($seo)
+    {
+        $seo = (string) $seo;
+        $select = $this->getSelect();
+        $select->where->equalTo('seo', $seo);
+        $result = $this->fetchResult($select);
+
+        return $result->current();
+    }
+
+    public function getTagCloud()
+    {
+        $select = $this->getSelect();
+
+        $select->columns([
+            'name',
+            'seo',
+            'count' => new Expression("COUNT('" . Select::SQL_STAR . "')"),
+        ])->join(
+            'blogPostTag',
+            'blogTag.tagId=blogPostTag.tagId',
+            [],
+            Select::JOIN_LEFT
+        )->group([
+            'name', 'seo'
+        ])->order([
+            'name ' . Select::ORDER_ASCENDING,
+        ]);
+
+        $result = $this->fetchResult($select, new ResultSet());
+
+        return $result;
     }
 }

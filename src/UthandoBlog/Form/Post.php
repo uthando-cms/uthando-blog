@@ -14,7 +14,9 @@ namespace UthandoBlog\Form;
 use TwbBundle\Form\View\Helper\TwbBundleForm;
 use UthandoBlog\Form\Element\CategorySelect;
 use UthandoBlog\Form\Element\TagSelect;
+use UthandoBlog\Model\Post as PostModel;
 use Zend\Form\Element\Button;
+use Zend\Form\Element\Select;
 use Zend\Form\Form;
 
 /**
@@ -26,6 +28,23 @@ class Post extends Form
 {
     public function init()
     {
+        $this->add([
+            'type'  => Select::class,
+            'name' => 'status',
+            'options' => [
+                'label' => 'Status',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'column-size' => 'sm-10',
+                'label_attributes' => [
+                    'class' => 'col-sm-2',
+                ],
+                'value_options' => [
+                    PostModel::STATUS_DRAFT => 'Draft',
+                    PostModel::STATUS_PUBLISHED => 'Published',
+                ]
+            ],
+        ]);
+
         $this->add([
             'name' => 'title',
             'type' => 'text',

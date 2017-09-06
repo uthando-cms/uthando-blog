@@ -23,6 +23,9 @@ use UthandoUser\Model\UserTrait;
  */
 class Post implements ModelInterface
 {
+    const STATUS_DRAFT      = 0;
+    const STATUS_PUBLISHED  = 1;
+
     use Model,
         UserTrait,
         DateCreatedTrait,
@@ -37,6 +40,11 @@ class Post implements ModelInterface
      * @var int
      */
     protected $categoryId;
+
+    /**
+     * @var int
+     */
+    protected $status;
 
     /**
      * @var string
@@ -122,6 +130,22 @@ class Post implements ModelInterface
     {
         $this->categoryId = $categoryId;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param int $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 
     /**

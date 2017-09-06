@@ -13,6 +13,8 @@ namespace UthandoBlog\Mapper;
 
 use UthandoCommon\Mapper\AbstractDbMapper;
 use UthandoBlog\Model\Post as PostModel;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\Sql\Expression;
 use Zend\Db\Sql\Select;
 
 /**
@@ -32,7 +34,7 @@ class Post extends AbstractDbMapper
     public function getBySlug($slug)
     {
         $select = $this->getSelect();
-        $select->where(['slug' => $slug]);
+        $select->where->equalTo('slug', $slug);
 
         $rowSet = $this->fetchResult($select);
         $row = $rowSet->current();
@@ -42,20 +44,17 @@ class Post extends AbstractDbMapper
 
     /**
      * @param array $search
-     * @param string $sort
-     * @param null $select
-     * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
+     * @param $sort
+     * @param array $type
+     * @return \Zend\Db\ResultSet\HydratingResultSet|ResultSet|\Zend\Paginator\Paginator
      */
-    public function search(array $search, $sort, $select = null)
+    public function searchPosts(array $search, $sort, $type = [])
     {
         $select = $this->getSelect();
+        $select->where->equalTo('status', PostModel::STATUS_PUBLISHED);
 
-        foreach ($search as $key => $val) {
-            if (!$val['searchString']) {
-                continue;
-            }
-
-            switch ($val['columns'][0]) {
+        if (!empty($type)) {
+            switch ($type[0]) {
                 case 'tag':
                     $select->join(
                         'blogPostTag',
@@ -67,9 +66,7 @@ class Post extends AbstractDbMapper
                         'blogPostTag.tagId=blogTag.tagId',
                         [],
                         Select::JOIN_LEFT
-                    );
-
-                    $search[$key]['columns'][0] = 'blogTag.seo';
+                    )->where->equalTo('blogTag.seo', $type[1]);
                     break;
                 case 'category':
                     $select->join(
@@ -77,15 +74,41 @@ class Post extends AbstractDbMapper
                         'blogPost.categoryId=blogCategory.categoryId',
                         [],
                         Select::JOIN_LEFT
-                    );
-                    $search[$key]['columns'][0] = 'blogCategory.seo';
+                    )->where->equalTo('blogCategory.seo', $type[1]);
+                    break;
+                case 'archive':
+                    $select->where
+                        ->equalTo(new Expression('MONTH(dateCreated)'), $type[1][0])
+                        ->and
+                        ->equalTo(new Expression('YEAR(dateCreated)'), $type[1][1]);
                     break;
             }
         }
 
-
-
         return parent::search($search, $sort, $select);
+    }
+
+    /**
+     * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
+     */
+    public function getArchiveList()
+    {
+        $select = $this->getSelect();
+        $select->columns([
+            'date'          => new Expression("MIN(dateCreated)"),
+            'month'         => new Expression("DATE_FORMAT(dateCreated, '%m')"),
+            'year'          => new Expression("DATE_FORMAT(dateCreated, '%Y')"),
+            'count'         => new Expression("COUNT('" . Select::SQL_STAR . "')"),
+        ])->group([
+            'year', 'month'
+        ])->order([
+            'year ' . Select::ORDER_DESCENDING,
+            'month ' . Select::ORDER_DESCENDING,
+        ])->where->equalTo('status', PostModel::STATUS_PUBLISHED);
+
+        $rowSet = $this->fetchResult($select, new ResultSet());
+
+        return $rowSet;
     }
 
     /**
@@ -97,6 +120,7 @@ class Post extends AbstractDbMapper
         $select = $this->getSelect();
         $select = $this->setLimit($select, $limit, 0);
         $select = $this->setSortOrder($select, '-hits');
+        $select->where->equalTo('status' , 1);
 
         $rowSet = $this->fetchResult($select);
 
@@ -113,6 +137,7 @@ class Post extends AbstractDbMapper
         $select = $this->getSelect();
         $select = $this->setLimit($select, $limit, 0);
         $select = $this->setSortOrder($select, $sort . 'dateCreated');
+        $select->where->equalTo('status' , 1);
 
         $rowSet = $this->fetchResult($select);
 
