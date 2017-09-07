@@ -13,6 +13,14 @@
 <hr>
 
 <div class="panel panel-default">
+    <div class="panel-heading">Categories</div>
+    <!-- List group -->
+    <div class="panel-body">
+        <?=$this->categoryHelper()->categoryMenu();?>
+    </div>
+</div>
+
+<div class="panel panel-default">
     <div class="panel-heading">Tag Cloud</div>
     <!-- List group -->
     <div class="panel-body">
@@ -26,7 +34,9 @@
         <?php foreach($this->postHelper()->getRecent() as $postItem):?>
         <a href="<?=$this->url('blog', [
             'post-item' => $this->escapeHtml($postItem->getSlug()),
-        ]);?>" class="list-group-item"><?=$this->escapeHtml($postItem->getTitle());?>
+        ]);?>" class="list-group-item">
+            <span class="text-primary"><?=$this->escapeHtml($postItem->getTitle());?></span>
+        </a>
             <?php endforeach;?>
     </div>
 </div>
@@ -37,7 +47,9 @@
         <?php foreach($this->postHelper()->getPopular() as $postItem):?>
             <a href="<?=$this->url('blog', [
                 'post-item' => $this->escapeHtml($postItem->getSlug()),
-            ]);?>" class="list-group-item"><?=$this->escapeHtml($postItem->getTitle());?></a>
+            ]);?>" class="list-group-item">
+                <span class="text-primary"><?=$this->escapeHtml($postItem->getTitle());?></span>
+            </a>
         <?php endforeach;?>
     </div>
 </div>
@@ -51,7 +63,7 @@
                 'month' => $item->month,
                 'year'  => $item->year,
             ]);?>" class="list-group-item">
-                <?=$this->formatDate($item->date, 'F Y');?>
+                <span class="text-primary"><?=$this->formatDate($item->date, 'F Y');?></span>
                 <span class="badge"><?=$item->count;?></span>
             </a>
         <?php endforeach;?>

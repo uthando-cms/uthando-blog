@@ -27,14 +27,6 @@ class PostHelper extends AbstractViewHelper
      */
     protected $service;
 
-    /**
-     * @return PostHelper
-     */
-    public function __invoke()
-    {
-        return $this;
-    }
-
     public function getArchiveList()
     {
         return $this->getService()->getArchiveList();

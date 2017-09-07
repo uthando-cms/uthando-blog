@@ -1,5 +1,6 @@
 <?php
 return [
+    'uthando-blog/partial/category-menu' => __DIR__ . '/./view/uthando-blog/partial/category-menu.phtml',
     'uthando-blog/settings/index' => __DIR__ . '/./view/uthando-blog/settings/index.phtml',
     'uthando-blog/comment/list' => __DIR__ . '/./view/uthando-blog/comment/list.phtml',
     'uthando-blog/comment/edit' => __DIR__ . '/./view/uthando-blog/comment/edit.phtml',

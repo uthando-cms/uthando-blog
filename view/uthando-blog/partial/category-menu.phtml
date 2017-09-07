@@ -1,0 +1,42 @@
+
+<?php
+$count = -1;
+$maxDepth = $this->categories->count() - 1;
+$arrayCopy = [];
+
+/** @var \UthandoBlog\Model\Category $category */
+foreach ($this->categories as $category) {
+    $arrayCopy[] = $category;
+}
+
+?>
+
+<ul class="list-unstyled">
+<?php foreach ($arrayCopy as $category):?>
+    <?php $count++; ?>
+    <?php if ($category->hasChildren()):?>
+
+    <li>
+        <?=$this->categoryHelper()->categoryLink($category);?>
+        <ul class="children">
+    <?php else:?>
+        <li>
+            <?=$this->categoryHelper()->categoryLink($category);?>
+    <?php endif;?>
+
+    <?php if ($category->getDepth() > 0):?>
+
+        <?php if ($count == $maxDepth): ?>
+            <?=str_repeat('</li></ul>', $category->getDepth()); ?></li>
+        <?php elseif ($arrayCopy[$count + 1]->getDepth() < $category->getDepth()): ?>
+            <?=str_repeat('</li></ul>', ($category->getDepth() - $arrayCopy[$count + 1]->getDepth())); ?></li>
+        <?php elseif(!$category->hasChildren()): ?>
+            </li>
+        <?php endif;?>
+
+    <?php elseif(!$category->hasChildren()):?>
+        </li>
+    <?php endif;?>
+
+<?php endforeach;?>
+</ul>

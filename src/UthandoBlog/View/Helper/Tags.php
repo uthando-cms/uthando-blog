@@ -27,11 +27,6 @@ class Tags extends AbstractViewHelper
      */
     protected $service;
 
-    public function __invoke()
-    {
-        return $this;
-    }
-
     public function tagLinks($tags = null)
     {
         $html       = '';
@@ -86,6 +81,7 @@ class Tags extends AbstractViewHelper
                     'url' => $urlHelper('post-list/tag', [
                         'tag' => $tag->seo,
                     ]),
+                    'title' => $tag->count . ' topic',
                 ],
             ];
         }

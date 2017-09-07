@@ -20,7 +20,7 @@ $this->headMeta()->appendName('description',$this->escapeHtml($this->model->getD
     <span><i class="fa fa-user"></i> <?=$this->escapeHtml($this->model->getUser()->getFullName());?></span>
 
     <span>
-        <b>Filed Under:</b> <?=$this->CategoryHelper($this->model->getCategory());?>
+        <b>Filed Under:</b> <?=$this->CategoryHelper()->CategoryLink($this->model->getCategory());?>
     </span>
     <span>
         <i class="fa fa-tag"></i>

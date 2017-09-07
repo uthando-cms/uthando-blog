@@ -10,7 +10,8 @@
 
 namespace UthandoBlog\View\Helper;
 
-use UthandoBlog\Model\Category;
+use UthandoBlog\Model\Category as CategoryModel;
+use UthandoBlog\Service\Category as CategoryService;
 use UthandoCommon\View\AbstractViewHelper;
 
 /**
@@ -20,7 +21,9 @@ use UthandoCommon\View\AbstractViewHelper;
  */
 class Categories extends AbstractViewHelper
 {
-    public function __invoke(Category $cat)
+    protected $service;
+
+    public function categoryLink(CategoryModel $cat)
     {
         $html = '';
 
@@ -31,5 +34,44 @@ class Categories extends AbstractViewHelper
             ]) . '">' . $cat->getName() . '</a>';
 
         return $html;
+    }
+
+    public function categoryMenu()
+    {
+        $categories = $this->getService()->fetchAll('lft');
+        $categories->getHydrator()->addDepth(true);
+
+        $partialHelper = $this->getView()->plugin('partial');
+
+        return $partialHelper('uthando-blog/partial/category-menu', [
+            'categories' => $categories,
+        ]);
+    }
+
+    /**
+     * @return CategoryService
+     */
+    public function getService()
+    {
+        if (!$this->service instanceof CategoryService) {
+
+            $service = $this->getServiceLocator()
+                ->getServiceLocator()
+                ->get('UthandoServiceManager')
+                ->get('UthandoBlogCategory');
+            $this->setService($service);
+        }
+
+        return $this->service;
+    }
+
+    /**
+     * @param CategoryService $service
+     * @return $this
+     */
+    public function setService(CategoryService $service)
+    {
+        $this->service = $service;
+        return $this;
     }
 }
