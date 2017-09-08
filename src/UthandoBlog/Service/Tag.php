@@ -50,29 +50,25 @@ class Tag extends AbstractMapperService
 
     public function checkSeo(Event $e)
     {
-        $data = $e->getParam('post');
+        $post = $e->getParam('post');
         $form = $e->getParam('form');
         $model = $e->getParam('model', new TagModel());
 
-        if (null === $data) {
+        if (null === $post) {
             return;
         }
 
-        if ($data instanceof TagModel) {
-            $data->setSeo($data->getName());
-        } elseif (is_array($data)) {
-            $data['seo'] = $data['name'];
+        if (!$post['seo']) {
+            $post['seo'] = $post['name'];
         }
-
-        $seo = ($model->getSeo() === $data['seo']) ? $model->getSeo() : null;
 
         /* @var \UthandoBlog\InputFilter\Tag $inputFilter */
         $inputFilter = $form->getInputFilter();
-        $inputFilter->addSeoNoRecordExists($seo);
+        $inputFilter->addSeoNoRecordExists($model->getSeo());
 
-        $form->setData($data);
+        $form->setData($post);
 
-        $e->setParam('post', $data);
+        $e->setParam('post', $post);
     }
 
     public function getTagsByPostId($id)

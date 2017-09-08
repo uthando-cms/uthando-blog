@@ -84,13 +84,11 @@ class Category extends AbstractMapperService
             $post['seo'] = $post['name'];
         }
 
-        $seo = ($model->getSeo() === $post['seo']) ? $model->getSeo() : null;
+        $form = $this->prepareForm($model, $post, true, true);
 
         /* @var CategoryInputFilter $inputFilter */
         $inputFilter = $form->getInputFilter();
-        $inputFilter->addSeoNoRecordExists($seo);
-
-        $form = $this->prepareForm($model, $post, true, true);
+        $inputFilter->addSeoNoRecordExists($model->getSeo());
 
         if (!$form->isValid()) {
             return $form;

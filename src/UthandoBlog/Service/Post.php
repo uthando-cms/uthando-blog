@@ -54,10 +54,6 @@ class Post extends AbstractRelationalMapperService
     {
         $this->getEventManager()->attach([
             'pre.form'
-        ], [$this, 'setSlug']);
-
-        $this->getEventManager()->attach([
-            'pre.form'
         ], [$this, 'setTagsArray']);
 
         $this->getEventManager()->attach([
@@ -108,26 +104,6 @@ class Post extends AbstractRelationalMapperService
     /**
      * @param Event $e
      */
-    public function setSlug(Event $e)
-    {
-        $data = $e->getParam('data');
-
-        if (null === $data) {
-            return;
-        }
-
-        if ($data instanceof PostModel) {
-            $data->setSlug($data->getTitle());
-        } elseif (is_array($data)) {
-            $data['slug'] = $data['title'];
-        }
-
-        $e->setParam('data', $data);
-    }
-
-    /**
-     * @param Event $e
-     */
     public function setValidation(Event $e)
     {
         $form = $e->getParam('form');
@@ -138,17 +114,23 @@ class Post extends AbstractRelationalMapperService
             $model->setDateModified();
         }
 
-        $slug = ($model->getSlug() === $post['slug']) ? $model->getSlug() : null;
+        if (!$post['slug']) {
+            $post['slug'] = $post['title'];
+        }
 
         /* @var \UthandoBlog\InputFilter\Post $inputFilter */
         $inputFilter = $form->getInputFilter();
-        $inputFilter->addSlugNoRecordExists($slug);
+        $inputFilter->addSlugNoRecordExists($model->getSlug());
 
         $form->setValidationGroup([
             'postId', 'userId', 'title', 'slug',
             'content', 'description', 'categoryId',
             'tags', 'image', 'lead', 'layout', 'status'
         ]);
+
+        $form->setData($post);
+
+        $e->setParam('post', $post);
     }
 
     /**
