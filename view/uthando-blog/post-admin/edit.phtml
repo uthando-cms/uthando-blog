@@ -32,9 +32,6 @@ $this->form->setAttributes([
     </div>
 </div>
 
-<?=$this->fileManager()->legacyUpload([
-    'divId' =>  'post-image',
-    'buttonName' => 'post-image-button',
-]);?>
+<?=$this->fileManager()->uploadButton('post-image', 'post-image-button');?>
 
 <?=$this->textEditor()->summernote();?>
