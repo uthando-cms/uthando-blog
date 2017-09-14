@@ -14,11 +14,13 @@ use UthandoBlog\Model\Post as PostModel;
 use UthandoBlog\Service\Post as PostService;
 use UthandoCommon\Model\ModelInterface;
 use UthandoCommon\View\AbstractViewHelper;
+use Zend\View\Renderer\PhpRenderer;
 
 /**
  * Class Posts
  *
- * @package UthandoBlog\View\Helper
+ * @package UthandoBlog\View\
+ * @method PhpRenderer getView()
  */
 class PostHelper extends AbstractViewHelper
 {
