@@ -33,45 +33,5 @@ $this->form->get('userId')->setValue($this->identity()->getUserId());
     </div>
 </div>
 
-<script>
-    $(document).ready(function() {
-        $('button[name=post-image-button]').on('click', function() {
-            var uploadDialog = bootbox.dialog({
-                message: '<i class="fa fa-spinner fa-spin"></i> Loading',
-                title: "Upload Image",
-                show: false,
-                buttons: {
-                    default: {
-                        label: "Close",
-                        className: "btn-default",
-                        callback: function (e) {
-                            if (admin.upload && admin.upload.status) {
-                                $('#post-image').val(admin.upload.image.name);
-                            }
-                        }
-                    }
-                }
-            });
-
-            uploadDialog.on('show.bs.modal', function () {
-                $(this).find('.modal-body').load('<?=$this->url('admin/uploader', [
-                    'action'    => 'upload-form',
-                ]);?>');
-            });
-
-            uploadDialog.modal('show');
-        });
-
-        $('textarea.editable-textarea').summernote({
-            height: 300,
-            toolbar: [
-                ['style', ['style', 'bold', 'underline', 'clear']],
-                ['font', ['fontname', 'fontsize']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
-    });
-</script>
+<?=$this->textEditor()->summernote();?>
+<?=$this->fileManager()->uploadButton('post-image', 'post-image-button');?>
