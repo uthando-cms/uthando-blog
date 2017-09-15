@@ -32,19 +32,19 @@ class TagSelect extends Select implements ServiceLocatorAwareInterface
 
     public function init()
     {
-        $zones = $this->getServiceLocator()
+        $tags = $this->getServiceLocator()
             ->getServiceLocator()
             ->get('UthandoServiceManager')
             ->get('UthandoBlogTag')
             ->fetchAll();
 
-        $zoneOptions = [];
+        $tagOptions = [];
 
-        /* @var $zone \UthandoBlog\Model\Tag*/
-        foreach($zones as $zone) {
-            $zoneOptions[$zone->getTagId()] = $zone->getName();
+        /* @var $tag \UthandoBlog\Model\Tag*/
+        foreach($tags as $tag) {
+            $tagOptions[$tag->getTagId()] = $tag->getName();
         }
 
-        $this->setValueOptions($zoneOptions);
+        $this->setValueOptions($tagOptions);
     }
 }
