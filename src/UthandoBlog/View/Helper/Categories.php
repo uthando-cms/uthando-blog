@@ -27,9 +27,7 @@ class Categories extends AbstractViewHelper
     {
         $html = '';
 
-        $urlHelper = $this->getView()->plugin('url');
-
-        $html .= '<a href="' . $urlHelper('post-list/category', [
+        $html .= '<a href="' . $this->getView()->url('post-list/category', [
                 'category' => $cat->getSeo(),
             ]) . '">' . $cat->getName() . '</a>';
 
@@ -41,9 +39,7 @@ class Categories extends AbstractViewHelper
         $categories = $this->getService()->fetchAll('lft');
         $categories->getHydrator()->addDepth(true);
 
-        $partialHelper = $this->getView()->plugin('partial');
-
-        return $partialHelper('uthando-blog/partial/category-menu', [
+        return $this->getView()->partial('uthando-blog/partial/category-menu', [
             'categories' => $categories,
         ]);
     }

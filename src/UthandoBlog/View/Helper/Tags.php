@@ -32,11 +32,9 @@ class Tags extends AbstractViewHelper
         $html       = '';
         $tagArray   = [];
 
-        $urlHelper = $this->getView()->plugin('url');
-
         /* @var TagModel $tag */
         foreach ($tags as $tag) {
-            $tagArray[] = '<a href="' . $urlHelper('post-list/tag', [
+            $tagArray[] = '<a href="' . $this->getView()->url('post-list/tag', [
                     'tag' => $tag->getSeo(),
                 ]) . '">' . $tag->getName() . '</a>';
         }
@@ -49,7 +47,6 @@ class Tags extends AbstractViewHelper
     public function tagCloud()
     {
         $tags = $this->getService()->getTagCloud();
-        $urlHelper = $this->getView()->plugin('url');
 
         $tagArray = [
             'cloudDecorator' => [
@@ -78,7 +75,7 @@ class Tags extends AbstractViewHelper
                 'title' => $tag->name,
                 'weight' => $tag->count,
                 'params' => [
-                    'url' => $urlHelper('post-list/tag', [
+                    'url' => $this->getView()->url('post-list/tag', [
                         'tag' => $tag->seo,
                     ]),
                     'title' => $tag->count . ' topic',
