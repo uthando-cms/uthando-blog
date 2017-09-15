@@ -7,7 +7,7 @@
 </a>
 <a href="<?=$this->url('admin/blog/tag/edit', [
     'action' => 'add'
-]);?>" type="submit" data-toggle="tooltip" title="<?=$this->translate('Add Post');?>" class="btn btn-primary">
+]);?>" type="submit" data-toggle="tooltip" title="<?=$this->translate('Add Tag');?>" class="btn btn-primary">
     <i class="fa fa-plus"></i>
 </a>
 <?php $this->placeholder('header-buttons')->captureEnd();?>
@@ -33,7 +33,7 @@
 
 <script>
     $(document).ready(function(){
-        $('#table-news').dataGrid({
+        $('#table-tag').dataGrid({
             url : 'tag/list',
             query: { sort : 'tagId' },
             searchForm : $('#search-tag'),
