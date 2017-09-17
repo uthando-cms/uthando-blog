@@ -93,7 +93,7 @@ class Post extends AbstractActionController
         $model      = $this->getService()->getBySlug($slug);
 
         if (!$model) {
-            $viewModel->setTemplate('uthando-blog/blog/404');
+            $viewModel->setTemplate('uthando-blog/post/404');
             return $viewModel;
         } else {
             $layout = ($model->getLayout()) ?: 'uthando-blog/post/post-item';

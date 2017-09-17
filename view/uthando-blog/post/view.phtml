@@ -1,72 +1,74 @@
 <?php $this->headTitle('Blog');?>
 
-<div class="col-sm-8">
-    <?php if ($this->view == 'post-list/category'):?>
-        <h1>Posts Categorised: <?=$this->escapeHtml($this->category->getName());?></h1>
-    <?php elseif ($this->view == 'post-list/tag'):?>
-        <h1>Posts Tagged: <?=$this->escapeHtml($this->tag->getName());?></h1>
-    <?php elseif ($this->view == 'post-list/archive'):?>
-        <h1>Monthly Archives: <?=$this->escapeHtml($this->formatDate($this->archive, 'F Y'));?></h1>
-    <?php endif;?>
-    <?php if ($this->models->count() > 0):?>
-        <?php foreach($this->models as $postItem):?>
-            <article>
-                <header>
-                    <h3>
-                        <a href="<?=$this->url('blog', [
-                            'post-item' => $this->escapeHtml($postItem->getSlug()),
-                        ]);?>" class="">
-                            <?=$this->escapeHtml($postItem->getTitle());?>
-                        </a>
-                    </h3>
-                </header>
-                <section class="row">
-                    <div class="col-xs-6 col-sm-3">
-                        <a href="<?=$this->url('blog', [
-                            'post-item' => $this->escapeHtml($postItem->getSlug()),
-                        ]);?>" class="thumbnail">
-                            <img src="<?=$this->escapeHtml($postItem->getImage());?>" alt="<?=$this->escapeHtml($postItem->getTitle());?>">
-                        </a>
-                    </div>
-                    <div class="col-xs-6 col-sm-9">
-                        <p class="lead"><?=$this->escapeHtml($postItem->getLead());?></p>
-                    </div>
-                </section>
-                <footer>
-                    <span>
-                        <i class="fa fa-user"></i>
-                        <?=$this->escapeHtml($postItem->getUser()->getFullName());?>
-                    </span>
-                    <span>
-                        <i class="fa fa-calendar"></i>
-                        <?=$this->formatDate($postItem->getDateCreated(), 'j<\s\up>S</\s\up> F Y');?>
-                    </span>
-                    <span>
-                        <b>Filed Under:</b>
-                        <?=$this->CategoryHelper()->CategoryLink($postItem->getCategory());?>
-                    </span>
-                    <span>
-                        <i class="fa fa-tag"></i>
-                        <?=$this->tagHelper()->tagLinks($postItem->getTags()); ?>
-                    </span>
-                </footer>
-                <hr>
-            </article>
-        <?php endforeach;?>
-    <?php elseif ($this->view == 'post-list/search'):?>
-        <h1>No posts found in search.</h1>
-    <?php elseif ($this->view == 'post-list/category'):?>
-        <h1>No posts found under this category.</h1>
-    <?php elseif ($this->view == 'post-list/tag'):?>
-        <h1>No posts found under this tag.</h1>
-    <?php elseif ($this->view == 'post-list/archive'):?>
-        <h1>No posts found under this archive date.</h1>
-    <?php else:?>
-        <h1>No posts has been posted yet. Please stay tuned.</h1>
-    <?php endif;?>
-</div>
+<div class="row">
+    <div class="col-sm-8">
+        <?php if ($this->view == 'post-list/category'):?>
+            <h1>Posts Categorised: <?=$this->escapeHtml($this->category->getName());?></h1>
+        <?php elseif ($this->view == 'post-list/tag'):?>
+            <h1>Posts Tagged: <?=$this->escapeHtml($this->tag->getName());?></h1>
+        <?php elseif ($this->view == 'post-list/archive'):?>
+            <h1>Monthly Archives: <?=$this->escapeHtml($this->formatDate($this->archive, 'F Y'));?></h1>
+        <?php endif;?>
+        <?php if ($this->models->count() > 0):?>
+            <?php foreach($this->models as $postItem):?>
+                <article>
+                    <header>
+                        <h3>
+                            <a href="<?=$this->url('blog', [
+                                'post-item' => $this->escapeHtml($postItem->getSlug()),
+                            ]);?>" class="">
+                                <?=$this->escapeHtml($postItem->getTitle());?>
+                            </a>
+                        </h3>
+                    </header>
+                    <section class="row">
+                        <div class="col-xs-6 col-sm-3">
+                            <a href="<?=$this->url('blog', [
+                                'post-item' => $this->escapeHtml($postItem->getSlug()),
+                            ]);?>" class="thumbnail">
+                                <img src="<?=$this->escapeHtml($postItem->getImage());?>" alt="<?=$this->escapeHtml($postItem->getTitle());?>">
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-sm-9">
+                            <p class="lead"><?=$this->escapeHtml($postItem->getLead());?></p>
+                        </div>
+                    </section>
+                    <footer>
+                        <span>
+                            <i class="fa fa-user"></i>
+                            <?=$this->escapeHtml($postItem->getUser()->getFullName());?>
+                        </span>
+                        <span>
+                            <i class="fa fa-calendar"></i>
+                            <?=$this->formatDate($postItem->getDateCreated(), 'j<\s\up>S</\s\up> F Y');?>
+                        </span>
+                        <span>
+                            <b>Filed Under:</b>
+                            <?=$this->CategoryHelper()->CategoryLink($postItem->getCategory());?>
+                        </span>
+                        <span>
+                            <i class="fa fa-tag"></i>
+                            <?=$this->tagHelper()->tagLinks($postItem->getTags()); ?>
+                        </span>
+                    </footer>
+                    <hr>
+                </article>
+            <?php endforeach;?>
+        <?php elseif ($this->view == 'post-list/search'):?>
+            <h1>No posts found in search.</h1>
+        <?php elseif ($this->view == 'post-list/category'):?>
+            <h1>No posts found under this category.</h1>
+        <?php elseif ($this->view == 'post-list/tag'):?>
+            <h1>No posts found under this tag.</h1>
+        <?php elseif ($this->view == 'post-list/archive'):?>
+            <h1>No posts found under this archive date.</h1>
+        <?php else:?>
+            <h1>No posts has been posted yet. Please stay tuned.</h1>
+        <?php endif;?>
+    </div>
 
-<div class="col-sm-4">
-    <?=$this->partial('uthando-blog/post/side-bar');?>
+    <div class="col-sm-4">
+        <?=$this->partial('uthando-blog/post/side-bar');?>
+    </div>
 </div>
 

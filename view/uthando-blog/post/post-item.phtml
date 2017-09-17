@@ -3,49 +3,56 @@ $this->headTitle($this->escapeHtml($this->model->getTitle()));
 $this->headMeta()->appendName('description',$this->escapeHtml($this->model->getDescription()));
 ?>
 
-<div class="col-sm-8">
-    <nav>
-        <ol class="breadcrumb">
-            <li><a href="<?=$this->url('home')?>">Home</a></li>
-            <li><a href="<?=$this->url('blog')?>">Posts</a></li>
-            <li class="active"><?=$this->escapeHtml($this->model->getTitle());?></li>
-        </ol>
-    </nav>
-    <article>
-        <h3><?=$this->escapeHtml($this->model->getTitle());?></h3>
-        <?=$this->model->getContent();?>
-    </article>
-    <hr>
-    <span><i class="fa fa-calendar"></i> <?=$this->formatDate($this->model->getDateCreated());?></span>
-    <span><i class="fa fa-user"></i> <?=$this->escapeHtml($this->model->getUser()->getFullName());?></span>
+<div class="row">
+    <div class="col-sm-8 col-lg-9">
+        <nav>
+            <ol class="breadcrumb">
+                <li><a href="<?=$this->url('home')?>">Home</a></li>
+                <li><a href="<?=$this->url('blog')?>">Posts</a></li>
+                <li class="active"><?=$this->escapeHtml($this->model->getTitle());?></li>
+            </ol>
+        </nav>
+        <article>
+            <h1><?=$this->escapeHtml($this->model->getTitle());?></h1>
+            <a href="<?=$this->url('blog', [
+                'post-item' => $this->escapeHtml($this->model->getSlug()),
+            ]);?>" class="col-sm-3 col-md-4 col-lg-3">
+                <img class="img-thumbnail" src="<?=$this->escapeHtml($this->model->getImage());?>" alt="<?=$this->escapeHtml($this->model->getTitle());?>">
+            </a>
+            <?=$this->model->getContent();?>
+        </article>
+        <hr>
+        <span><i class="fa fa-calendar"></i> <?=$this->formatDate($this->model->getDateCreated());?></span>
+        <span><i class="fa fa-user"></i> <?=$this->escapeHtml($this->model->getUser()->getFullName());?></span>
 
-    <span>
-        <b>Filed Under:</b> <?=$this->CategoryHelper()->CategoryLink($this->model->getCategory());?>
-    </span>
-    <span>
-        <i class="fa fa-tag"></i>
-        <?=$this->tagHelper()->tagLinks($this->model->getTags()); ?>
-    </span>
-    <hr>
-    <?php
-    $previous = $this->postHelper()->getPrevious($this->model->getPostId());
-    $next = $this->postHelper()->getNext($this->model->getPostId());
-    ?>
+        <span>
+            <b>Filed Under:</b> <?=$this->CategoryHelper()->CategoryLink($this->model->getCategory());?>
+        </span>
+        <span>
+            <i class="fa fa-tag"></i>
+            <?=$this->tagHelper()->tagLinks($this->model->getTags()); ?>
+        </span>
+        <hr>
+        <?php
+        $previous = $this->postHelper()->getPrevious($this->model->getPostId());
+        $next = $this->postHelper()->getNext($this->model->getPostId());
+        ?>
 
-    <ul class="pager">
-        <li class="previous<?php if (!$previous) echo " disabled"; ?>">
-            <a class="noborder" href="<?=$this->url('blog', [
-                'post-item' => (!$previous) ? '' : $previous->getSlug()
-            ]);?>">&larr; Previous</a>
-        </li>
-        <li class="next<?php if (!$next) echo " disabled"; ?>">
-            <a class="noborder" href="<?=$this->url('blog', [
-                'post-item' => (!$next) ? '' : $next->getSlug()
-            ]);?>">Next &rarr;</a>
-        </li>
-    </ul>
-</div>
+        <ul class="pager">
+            <li class="previous<?php if (!$previous) echo " disabled"; ?>">
+                <a class="noborder" href="<?=$this->url('blog', [
+                    'post-item' => (!$previous) ? '' : $previous->getSlug()
+                ]);?>">&larr; Previous</a>
+            </li>
+            <li class="next<?php if (!$next) echo " disabled"; ?>">
+                <a class="noborder" href="<?=$this->url('blog', [
+                    'post-item' => (!$next) ? '' : $next->getSlug()
+                ]);?>">Next &rarr;</a>
+            </li>
+        </ul>
+    </div>
 
-<div class="col-sm-4">
-    <?=$this->partial('uthando-blog/post/side-bar');?>
+    <div class="col-sm-4 col-lg-3">
+        <?=$this->partial('uthando-blog/post/side-bar');?>
+    </div>
 </div>
