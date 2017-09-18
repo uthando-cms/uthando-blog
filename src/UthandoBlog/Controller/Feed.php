@@ -31,10 +31,17 @@ class Feed extends AbstractActionController
         /* @var \UthandoBlog\Options\FeedOptions $feedOptions */
         $feedOptions = $this->getService('UthandoBlogFeedOptions');
 
+        $type = $this->params()->fromRoute('type', null);
+        $param = $this->params()->fromRoute('param', null);
+
+        $post = [];
+
+        if (null !== $type) {
+            $post[$type] = $param;
+        }
+
         $newService = $this->getService();
-        $newsItems = $newService->search([
-            'sort' => $options->getSortOrder(),
-        ]);
+        $newsItems = $newService->searchPosts($post, $options->getSortOrder());
 
         $uri = $this->getRequest()->getUri();
         $base = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());

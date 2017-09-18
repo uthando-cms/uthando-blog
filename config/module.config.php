@@ -188,7 +188,7 @@ return [
                 'options' => [
                     'route' => '/blog/[:post-item]',
                     'constraints' => [
-                        'blog-item'  => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'post-item'  => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ],
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoBlog\Controller',
@@ -200,7 +200,11 @@ return [
             'blog-feed' => [
                 'type' => 'Segment',
                 'options' => [
-                    'route' => '/blog/feed',
+                    'route' => '/blog/feed[/[:type]/[:param]]',
+                    'constraints' => [
+                        'type'  => 'category|tag',
+                        'param'  => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ],
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoBlog\Controller',
                         'controller'    => 'Feed',
