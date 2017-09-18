@@ -26,22 +26,18 @@ class Feed extends AbstractActionController
 
     public function feedAction()
     {
-        /* @var \UthandoBlog\Options\BlogOptions $options */
-        $options = $this->getService('UthandoBlogOptions');
-        /* @var \UthandoBlog\Options\FeedOptions $feedOptions */
-        $feedOptions = $this->getService('UthandoBlogFeedOptions');
-
-        $type = $this->params()->fromRoute('type', null);
-        $param = $this->params()->fromRoute('param', null);
-
-        $post = [];
+        $options        = $this->getService('UthandoBlogOptions');
+        $feedOptions    = $this->getService('UthandoBlogFeedOptions');
+        $type           = $this->params()->fromRoute('type', null);
+        $param          = $this->params()->fromRoute('param', null);
+        $post           = [];
 
         if (null !== $type) {
             $post[$type] = $param;
         }
 
         $newService = $this->getService();
-        $newsItems = $newService->searchPosts($post, $options->getSortOrder());
+        $newsItems  = $newService->searchPosts($post, $options->getSortOrder());
 
         $uri = $this->getRequest()->getUri();
         $base = sprintf('%s://%s', $uri->getScheme(), $uri->getHost());

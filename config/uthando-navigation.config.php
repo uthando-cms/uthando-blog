@@ -3,46 +3,33 @@
 return [
     'navigation' => [
         'admin' => [
-            'admin' => [
-                'pages' => [
-                    'settings' => [
-                        'pages' => [
-                            'blog-settings' => [
-                                'label' => 'Blog',
-                                'action' => 'index',
-                                'route' => 'admin/blog/settings',
-                                'resource' => 'menu:admin',
-                            ],
-                        ],
-                    ],
-                ],
-            ],
             'blog' => [
                 'label' => 'Blog',
                 'params' => [
                     'icon' => 'fa-edit',
                 ],
                 'pages' => [
-                    'list' => [
+                    'post' => [
                         'label'     => 'Posts',
                         'action'    => 'index',
                         'route'     => 'admin/blog/post',
                         'resource'  => 'menu:admin',
-                        'visible' => true,
-                    ],
-                    'add' => [
-                        'label'     => 'Add Post',
-                        'action'    => 'add',
-                        'route'     => 'admin/blog/post/edit',
-                        'resource'  => 'menu:admin',
-                        'visible' => false,
-                    ],
-                    'edit' => [
-                        'label'     => 'Edit Post',
-                        'action'    => 'edit',
-                        'route'     => 'admin/blog/post/edit',
-                        'resource'  => 'menu:admin',
-                        'visible' => false,
+                        'pages' => [
+                            'add' => [
+                                'label'     => 'Add Post',
+                                'action'    => 'add',
+                                'route'     => 'admin/blog/post/edit',
+                                'resource'  => 'menu:admin',
+                                'visible' => false,
+                            ],
+                            'edit' => [
+                                'label'     => 'Edit Post',
+                                'action'    => 'edit',
+                                'route'     => 'admin/blog/post/edit',
+                                'resource'  => 'menu:admin',
+                                'visible' => false,
+                            ],
+                        ]
                     ],
                     'category' => [
                         'label' => 'Categories',
@@ -113,7 +100,6 @@ return [
                         'action' => 'index',
                         'route' => 'admin/blog/settings',
                         'resource' => 'menu:admin',
-                        'visible' => false,
                     ],
                 ],
                 'route'     => 'admin/blog',
