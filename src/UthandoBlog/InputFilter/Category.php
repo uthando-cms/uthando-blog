@@ -10,8 +10,6 @@
 
 namespace UthandoBlog\InputFilter;
 
-
-use UthandoCommon\Filter\Ucwords;
 use Zend\Filter\Digits;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;

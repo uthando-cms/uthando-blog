@@ -12,9 +12,12 @@ namespace UthandoBlog\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
 use UthandoNews\Options\FeedOptions;
+use Zend\Filter\StringTrim;
+use Zend\Filter\StripTags;
 use Zend\Form\Fieldset;
 use Zend\Hydrator\ClassMethods;
 use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\Validator\StringLength;
 
 class BlogFeedFieldSet extends Fieldset implements InputFilterProviderInterface
 {
@@ -57,6 +60,35 @@ class BlogFeedFieldSet extends Fieldset implements InputFilterProviderInterface
 
     public function getInputFilterSpecification()
     {
-        return [];
+        return [
+            'title' => [
+                'required'      => true,
+                'filters'       => [
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
+                ],
+                'validators'    => [
+                    ['name' => StringLength::class, 'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 2,
+                        'max' => 255
+                    ]],
+                ],
+            ],
+            'description' => [
+                'required'      => true,
+                'filters'       => [
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
+                ],
+                'validators'    => [
+                    ['name' => StringLength::class, 'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 2,
+                        'max' => 255
+                    ]],
+                ],
+            ],
+        ];
     }
 }
