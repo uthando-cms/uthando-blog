@@ -1,4 +1,4 @@
-<?php $this->headTitle('Posts') ?>
+<?php $this->headTitle('Comments') ?>
 <?php $this->layout()->pageTitle = $this->translate('Posts');?>
 
 <?php $this->placeholder('header-buttons')->captureStart();?>
@@ -34,7 +34,7 @@
 <script>
     $(document).ready(function(){
         $('#table-news').dataGrid({
-            url : 'blog/post/list',
+            url : 'comment/list',
             query: { sort : 'postId' },
             searchForm : $('#search-post'),
             paging : 'links',
