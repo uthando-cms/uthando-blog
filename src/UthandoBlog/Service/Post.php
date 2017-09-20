@@ -63,19 +63,6 @@ class Post extends AbstractRelationalMapperService
         $this->getEventManager()->attach([
             'post.add', 'post.edit'
         ], [$this, 'saveTags']);
-
-        $this->getEventManager()->attach([
-            'post.delete'
-        ], [$this, 'removePostTag']);
-    }
-
-    public function removePostTag(Event $e)
-    {
-        $id = $e->getParam('id');
-
-        $where = new Where();
-        $where->equalTo('postId', $id);
-        $this->getMapper()->delete($where, 'blogPostTag');
     }
 
     public function setTagsArray(Event $e)
@@ -141,12 +128,11 @@ class Post extends AbstractRelationalMapperService
         $model      = $e->getParam('model', new PostModel());
         $post       = $e->getParam('post');
         $saved      = $e->getParam('saved');
-        $tags       = $model->getTags();
+        $tags       = $post['tags'];
 
         /* @var Tag $tagService */
         $tagService = $this->getRelatedService('tags');
         $mapper     = $tagService->getMapper();
-
         $id         = $model->getPostId() ?? $saved;
 
         $currentTags = $tagService->getTagsByPostId($id);
@@ -163,6 +149,8 @@ class Post extends AbstractRelationalMapperService
                 $keptTags[] = $tag->getTagId();
             }
         }
+
+        if (!empty($keptTags))
 
         $tags = array_diff($tags, $keptTags);
 

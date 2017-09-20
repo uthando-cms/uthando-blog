@@ -33,19 +33,6 @@ class Tag extends AbstractMapperService
         $this->getEventManager()->attach([
             'pre.add', 'pre.edit'
         ], [$this, 'checkSeo']);
-
-        $this->getEventManager()->attach([
-            'post.delete'
-        ], [$this, 'removePostTag']);
-    }
-
-    public function removePostTag(Event $e)
-    {
-        $id = $e->getParam('id');
-
-        $where = new Where();
-        $where->equalTo('tagId', $id);
-        $this->getMapper()->delete($where, 'blogPostTag');
     }
 
     public function checkSeo(Event $e)
