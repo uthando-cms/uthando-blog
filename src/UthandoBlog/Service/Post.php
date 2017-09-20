@@ -150,8 +150,6 @@ class Post extends AbstractRelationalMapperService
             }
         }
 
-        if (!empty($keptTags))
-
         $tags = array_diff($tags, $keptTags);
 
         foreach ($tags as $tag) {
