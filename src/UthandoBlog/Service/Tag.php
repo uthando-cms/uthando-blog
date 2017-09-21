@@ -25,6 +25,10 @@ class Tag extends AbstractMapperService
 {
     protected $serviceAlias = 'UthandoBlogTag';
 
+    protected $tags = [
+        'blog-tags', 'blog-post'
+    ];
+
     /**
      * Attach events
      */

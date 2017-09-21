@@ -27,6 +27,10 @@ class Category extends AbstractMapperService
 {
     protected $serviceAlias = 'UthandoBlogCategory';
 
+    protected $tags = [
+        'blog-category', 'blog-post',
+    ];
+
     /**
      * @param array $post
      * @param Form $form

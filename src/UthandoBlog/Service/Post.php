@@ -47,6 +47,10 @@ class Post extends AbstractRelationalMapperService
         ],
     ];
 
+    protected $tags = [
+        'blog-post',
+    ];
+
     /**
      * Attach events
      */
