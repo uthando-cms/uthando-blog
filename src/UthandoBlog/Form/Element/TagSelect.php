@@ -19,8 +19,6 @@ class TagSelect extends Select implements ServiceLocatorAwareInterface
 {
     use ServiceLocatorAwareTrait;
 
-    protected $emptyOption = '---Please select tags---';
-
     public function setOptions($options)
     {
         parent::setOptions($options);
