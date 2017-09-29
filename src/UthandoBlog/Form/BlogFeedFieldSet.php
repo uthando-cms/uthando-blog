@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -14,6 +14,7 @@ use TwbBundle\Form\View\Helper\TwbBundleForm;
 use UthandoNews\Options\FeedOptions;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
+use Zend\Form\Element\Text;
 use Zend\Form\Fieldset;
 use Zend\Hydrator\ClassMethods;
 use Zend\InputFilter\InputFilterProviderInterface;
@@ -33,7 +34,7 @@ class BlogFeedFieldSet extends Fieldset implements InputFilterProviderInterface
     {
         $this->add([
             'name' => 'title',
-            'type' => 'text',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Title',
                 'column-size' => 'md-8',
@@ -46,7 +47,7 @@ class BlogFeedFieldSet extends Fieldset implements InputFilterProviderInterface
 
         $this->add([
             'name' => 'description',
-            'type' => 'text',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Description',
                 'column-size' => 'md-8',
@@ -58,7 +59,7 @@ class BlogFeedFieldSet extends Fieldset implements InputFilterProviderInterface
         ]);
     }
 
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'title' => [

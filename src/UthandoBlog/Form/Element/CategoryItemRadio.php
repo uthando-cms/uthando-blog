@@ -1,9 +1,11 @@
-<?php
+<?php declare(strict_types=1);
 /**
- * Created by PhpStorm.
- * User: shaun
- * Date: 19/03/2017
- * Time: 21:45
+ * Uthando CMS (http://www.shaunfreeman.co.uk/)
+ *
+ * @author      Shaun Freeman <shaun@shaunfreeman.co.uk>
+ * @link        https://github.com/uthando-cms for the canonical source repository
+ * @copyright   Copyright (c) 26/08/17 Shaun Freeman. (http://www.shaunfreeman.co.uk)
+ * @license     see LICENSE
  */
 
 namespace UthandoBlog\Form\Element;
@@ -13,9 +15,6 @@ use Zend\Form\Element\Radio;
 
 class CategoryItemRadio extends Radio
 {
-    /**
-     * init
-     */
     public function init()
     {
         $valueOptions = [

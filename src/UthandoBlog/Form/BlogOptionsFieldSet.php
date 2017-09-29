@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -15,6 +15,8 @@ use UthandoNews\Options\NewsOptions;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\Filter\ToInt;
+use Zend\Form\Element\Number;
+use Zend\Form\Element\Text;
 use Zend\Form\Fieldset;
 use Zend\Hydrator\ClassMethods;
 use Zend\InputFilter\InputFilterProviderInterface;
@@ -35,7 +37,7 @@ class BlogOptionsFieldSet extends Fieldset implements InputFilterProviderInterfa
     {
         $this->add([
             'name' => 'sort_order',
-            'type' => 'text',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Sort Order',
                 'column-size' => 'md-8',
@@ -48,7 +50,7 @@ class BlogOptionsFieldSet extends Fieldset implements InputFilterProviderInterfa
 
         $this->add([
             'name' => 'items_per_page',
-            'type' => 'number',
+            'type' => Number::class,
             'options' => [
                 'label' => 'Posts Per Page',
                 'column-size' => 'md-8',
@@ -60,7 +62,7 @@ class BlogOptionsFieldSet extends Fieldset implements InputFilterProviderInterfa
         ]);
     }
 
-    public function getInputFilterSpecification()
+    public function getInputFilterSpecification(): array
     {
         return [
             'sort_order' => [

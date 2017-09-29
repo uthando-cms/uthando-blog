@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -10,14 +10,15 @@
 
 namespace UthandoBlog\Form\Element;
 
-
 use Zend\Form\Element\Select;
+use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Class CategorySelect
  * @package UthandoBlog\Form\Element
+ * @method AbstractPluginManager getServiceLocator()
  */
 class CategorySelect extends Select implements ServiceLocatorAwareInterface
 {
@@ -25,9 +26,6 @@ class CategorySelect extends Select implements ServiceLocatorAwareInterface
 
     protected $emptyOption = '---Select a category---';
 
-    /**
-     * @var bool
-     */
     protected $addTop = false;
 
     public function setOptions($options)
@@ -43,13 +41,13 @@ class CategorySelect extends Select implements ServiceLocatorAwareInterface
         }
     }
 
-    public function getValueOptions()
+    public function getValueOptions(): array
     {
-        $options = ($this->valueOptions) ?: $this->getOptionList();
+        $options = $this->valueOptions ?: $this->getOptionList();
         return $options;
     }
 
-    public function getOptionList()
+    public function getOptionList(): array
     {
         /* @var $categoryService \UthandoBlog\Service\Category */
         $categoryService = $this->getServiceLocator()
@@ -82,7 +80,7 @@ class CategorySelect extends Select implements ServiceLocatorAwareInterface
     /**
      * @return boolean
      */
-    public function isAddTop()
+    public function isAddTop(): bool
     {
         return $this->addTop;
     }
@@ -91,7 +89,7 @@ class CategorySelect extends Select implements ServiceLocatorAwareInterface
      * @param boolean $addTopOption
      * @return $this
      */
-    public function setAddTop($addTopOption)
+    public function setAddTop(bool $addTopOption): CategorySelect
     {
         $this->addTop = $addTopOption;
         return $this;

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  * 
@@ -16,7 +16,12 @@ use UthandoBlog\Form\Element\CategorySelect;
 use UthandoBlog\Form\Element\TagSelect;
 use UthandoBlog\Model\Post as PostModel;
 use Zend\Form\Element\Button;
+use Zend\Form\Element\Csrf;
+use Zend\Form\Element\DateTime;
+use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Select;
+use Zend\Form\Element\Text;
+use Zend\Form\Element\Textarea;
 use Zend\Form\Form;
 
 /**
@@ -47,7 +52,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'title',
-            'type' => 'text',
+            'type' => Text::class,
             'options' => [
                 'label'     => 'Title',
                 'required'  => true,
@@ -64,7 +69,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'slug',
-            'type' => 'text',
+            'type' => Text::class,
             'options' => [
                 'label'       => 'Slug',
                 'required'    => false,
@@ -82,7 +87,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'description',
-            'type' => 'text',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Description',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -135,7 +140,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'image',
-            'type' => 'text',
+            'type' => Text::class,
             'attributes' => [
                 'class' => 'form-control',
                 'placeholder' => 'Image',
@@ -156,7 +161,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'layout',
-            'type' => 'text',
+            'type' => Text::class,
             'options' => [
                 'label' => 'Layout',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -172,7 +177,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'lead',
-            'type' => 'textarea',
+            'type' => Textarea::class,
             'options' => [
                 'label' => 'Lead Text',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -190,7 +195,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'content',
-            'type' => 'textarea',
+            'type' => Textarea::class,
             'options' => [
                 'label' => 'HTML Content',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -209,7 +214,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'dateCreated',
-            'type' => 'DateTime',
+            'type' => DateTime::class,
             'options' => [
                 'label' => 'Date Created',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -226,7 +231,7 @@ class Post extends Form
 
         $this->add([
             'name' => 'dateModified',
-            'type' => 'DateTime',
+            'type' => DateTime::class,
             'options' => [
                 'label' => 'Date Modified',
                 'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
@@ -243,17 +248,17 @@ class Post extends Form
 
         $this->add([
             'name' => 'postId',
-            'type' => 'hidden',
+            'type' => Hidden::class,
         ]);
 
         $this->add([
             'name' => 'userId',
-            'type' => 'hidden',
+            'type' => Hidden::class,
         ]);
 
         $this->add([
             'name' => 'security',
-            'type' => 'csrf',
+            'type' => Csrf::class,
         ]);
     }
 } 

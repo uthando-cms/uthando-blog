@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  * 
@@ -11,14 +11,23 @@
 
 namespace UthandoBlog\InputFilter;
 
+use UthandoCommon\Filter\HtmlPurifierFilter;
+use UthandoCommon\Filter\Slug;
+use Zend\Filter\StringTrim;
+use Zend\Filter\StripTags;
+use Zend\Filter\ToInt;
 use Zend\InputFilter\InputFilter;
+use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
+use Zend\Validator\Digits;
+use Zend\Validator\StringLength;
 
 /**
  * Class Blog
  *
  * @package UthandoBlog\InputFilter
+ * @method AbstractPluginManager getServiceLocator()
  */
 class Post extends InputFilter implements ServiceLocatorAwareInterface
 {
@@ -30,9 +39,12 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'postId',
             'required' => false,
             'filters' => [
-                ['name' => 'StringTrim'],
-                ['name' => 'StripTags'],
-                ['name' => 'Digits'],
+                ['name' => StringTrim::class],
+                ['name' => StripTags::class],
+                ['name' => ToInt::class],
+            ],
+            'validators'    => [
+                ['name' => Digits::class],
             ],
         ]);
 
@@ -40,22 +52,26 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'userId',
             'required'      => true,
             'filters'       => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-                ['name' => 'Digits'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+                ['name' => ToInt::class],
             ],
             'validators'    => [
-
+                ['name' => Digits::class],
             ],
         ]);
 
         $this->add([
             'name' => 'categoryId',
             'required' => false,
+            'allow_empty' => true,
             'filters' => [
-                ['name' => 'StringTrim'],
-                ['name' => 'StripTags'],
-                ['name' => 'Digits'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+                ['name' => ToInt::class],
+            ],
+            'validators'    => [
+                ['name' => Digits::class],
             ],
         ]);
 
@@ -63,8 +79,8 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'tags',
             'required'      => false,
             'filters'       => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
         ]);
 
@@ -72,11 +88,11 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'title',
             'required'      => true,
             'filters'       => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
             'validators'    => [
-                ['name' => 'StringLength', 'options' => [
+                ['name' => StringLength::class, 'options' => [
                     'encoding' => 'UTF-8',
                     'min' => 2,
                     'max' => 255
@@ -88,12 +104,12 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'slug',
             'required'      => true,
             'filters'       => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
-                ['name' => 'UthandoCommon\Filter\Slug'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+                ['name' => Slug::class],
             ],
             'validators'    => [
-                ['name' => 'StringLength', 'options' => [
+                ['name' => StringLength::class, 'options' => [
                     'encoding' => 'UTF-8',
                     'min' => 2,
                     'max' => 255
@@ -105,11 +121,11 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'image',
             'required' => false,
             'filters' => [
-                ['name' => 'StringTrim'],
-                ['name' => 'StripTags'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
             'validators' => [
-                ['name'    => 'StringLength','options' => [
+                ['name'    => StringLength::class,'options' => [
                     'encoding' => 'UTF-8',
                     'max'      => 255,
                 ]],
@@ -120,11 +136,11 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'layout',
             'required' => false,
             'filters' => [
-                ['name' => 'StringTrim'],
-                ['name' => 'StripTags'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
             'validators' => [
-                ['name'    => 'StringLength','options' => [
+                ['name'    => StringLength::class,'options' => [
                     'encoding' => 'UTF-8',
                     'max'      => 255,
                 ]],
@@ -135,12 +151,28 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'lead',
             'required' => false,
             'filters' => [
-                ['name' => 'StringTrim'],
-                ['name' => 'StripTags'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
             'validators' => [
-                ['name'    => 'StringLength','options' => [
+                ['name'    => StringLength::class,'options' => [
                     'encoding' => 'UTF-8',
+                    'max'       => 1000,
+                ]],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'content',
+            'required' => false,
+            'filters' => [
+                ['name' => StringTrim::class],
+                ['name' => HtmlPurifierFilter::class],
+            ],
+            'validators' => [
+                ['name'    => StringLength::class,'options' => [
+                    'encoding' => 'UTF-8',
+                    'max'       => 50000,
                 ]],
             ],
         ]);
@@ -149,11 +181,11 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             'name' => 'description',
             'required'      => true,
             'filters'       => [
-                ['name' => 'StripTags'],
-                ['name' => 'StringTrim'],
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
             'validators'    => [
-                ['name' => 'StringLength', 'options' => [
+                ['name' => StringLength::class, 'options' => [
                     'encoding' => 'UTF-8',
                     'min' => 30,
                     'max' => 255
@@ -162,7 +194,7 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
         ]);
     }
 
-    public function addSlugNoRecordExists($exclude = null)
+    public function addSlugNoRecordExists($exclude = null): Post
     {
         $exclude = (!$exclude) ?: [
             'field' => 'slug',
