@@ -29,6 +29,21 @@ class PostHelper extends AbstractViewHelper
      */
     protected $service;
 
+    public function getLead(PostModel $postModel): string
+    {
+        $lead = '<p class="lead">';
+
+        if ($postModel->getLead()) {
+            $lead .= $postModel->getLead();
+        } else {
+            $lead .= substr(strip_tags($postModel->getContent()), 0, 180);
+            $lead .= ' ...';
+        }
+        $lead .= '</p>';
+
+        return $lead;
+    }
+
     public function getArchiveList()
     {
         return $this->getService()->getArchiveList();

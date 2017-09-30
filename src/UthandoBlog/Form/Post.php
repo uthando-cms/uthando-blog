@@ -222,11 +222,8 @@ class Post extends Form
                 'label_attributes' => [
                     'class' => 'col-sm-2',
                 ],
-                'format' => 'd/m/Y H:i:s'
+                'format' => 'd/m/Y H:i'
             ],
-            'attributes' => [
-                'disabled' => true,
-            ]
         ]);
 
         $this->add([
@@ -239,11 +236,11 @@ class Post extends Form
                 'label_attributes' => [
                     'class' => 'col-sm-2',
                 ],
-                'format' => 'd/m/Y H:m:s'
+                'format' => 'd/m/Y H:i'
             ],
             'attributes' => [
                 'disabled' => true,
-            ],
+            ]
         ]);
 
         $this->add([

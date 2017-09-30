@@ -113,10 +113,18 @@ class Post extends AbstractRelationalMapperService
         $inputFilter = $form->getInputFilter();
         $inputFilter->addSlugNoRecordExists($model->getSlug());
 
+        $hydrator = $form->getHydrator();
+        /* @var DateTime $dateTimeStrategy */
+        $dateTimeStrategy = $hydrator->getStrategy('dateCreated');
+        $dateTimeStrategy->setHydrateFormat('d/m/Y H:i');
+        $dateTimeStrategy = $hydrator->getStrategy('dateModified');
+        $dateTimeStrategy->setHydrateFormat('d/m/Y H:i');
+
         $form->setValidationGroup([
             'postId', 'userId', 'title', 'slug',
             'content', 'description', 'categoryId',
-            'tags', 'image', 'lead', 'layout', 'status'
+            'tags', 'image', 'lead', 'layout', 'status',
+            'dateCreated'
         ]);
 
         $form->setData($post);

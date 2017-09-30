@@ -179,7 +179,7 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
 
         $this->add([
             'name' => 'description',
-            'required'      => true,
+            'required'      => false,
             'filters'       => [
                 ['name' => StripTags::class],
                 ['name' => StringTrim::class],

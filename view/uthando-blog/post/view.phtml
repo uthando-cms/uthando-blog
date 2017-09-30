@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-9">
-                    <p class="lead"><?=$this->escapeHtml($postItem->getLead());?></p>
+                    <?=$this->postHelper()->getLead($postItem);?>
                 </div>
             </section>
             <footer>
@@ -63,3 +63,38 @@
 <?php else:?>
     <h1>No posts has been posted yet. Please stay tuned.</h1>
 <?php endif;?>
+
+<?php
+    if ($this->view == 'post-list/category') {
+        $route = [
+            'route' => 'post-list/category',
+            'routeParams' => [
+                'category' => $this->category,
+            ],
+        ];
+    } elseif ($this->view == 'post-list/tag') {
+        $route = [
+            'route' => 'post-list/tag',
+            'routeParams' => [
+                'tag' => $this->tag,
+            ],
+        ];
+    } elseif ($this->view == 'post-list/archive') {
+        $route = [
+            'route' => 'post-list/archive',
+            'routeParams' => [
+                'year' => substr($this->archive, 0, 4),
+                'month' => substr($this->archive, 4, 2),
+            ],
+        ];
+    } else {
+        $route = ['route' => 'post-list/page'];
+    }
+?>
+
+<?=$this->paginationControl(
+    $this->models,
+    'Elastic',
+    'application/partial/paginate',
+    $route
+); ?>
