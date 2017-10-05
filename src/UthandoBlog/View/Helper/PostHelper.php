@@ -31,15 +31,20 @@ class PostHelper extends AbstractViewHelper
 
     public function getLead(PostModel $postModel): string
     {
-        $lead = '<p class="lead">';
+        $lead = '';
 
         if ($postModel->getLead()) {
-            $lead .= $postModel->getLead();
+            $lead = $postModel->getLead();
         } else {
-            $lead .= substr(strip_tags($postModel->getContent()), 0, 180);
-            $lead .= ' ...';
+            /*$lead = substr(
+                $postModel->getContent(),
+                3,
+                strpos($postModel->getContent(), '</p>') - 3
+            );*/
+            $lead = str_replace(PHP_EOL, '', $postModel->getContent());
+            preg_match('/(<p[^>]*>(.*?)<\/p>)/i', $lead, $matches);
+            $lead = $matches[2];
         }
-        $lead .= '</p>';
 
         return $lead;
     }

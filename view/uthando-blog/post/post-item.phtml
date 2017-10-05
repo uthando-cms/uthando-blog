@@ -17,6 +17,9 @@ $this->headMeta()->appendName('description',$this->escapeHtml($this->model->getD
     ]);?>" class="col-sm-3 col-md-4 col-lg-3">
         <img class="img-thumbnail" src="<?=$this->escapeHtml($this->model->getImage());?>" alt="<?=$this->escapeHtml($this->model->getTitle());?>">
     </a>
+    <?php if ($this->model->getLead()):?>
+    <p class="lead"><?=$this->model->getLead();?></p>
+    <?php endif;?>
     <?=$this->model->getContent();?>
 </article>
 <hr>
