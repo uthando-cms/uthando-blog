@@ -31,8 +31,6 @@ class PostHelper extends AbstractViewHelper
 
     public function getLead(PostModel $postModel): string
     {
-        $lead = '';
-
         if ($postModel->getLead()) {
             $lead = $postModel->getLead();
         } else {
@@ -43,7 +41,7 @@ class PostHelper extends AbstractViewHelper
             );*/
             $lead = str_replace(PHP_EOL, '', $postModel->getContent());
             preg_match('/(<p[^>]*>(.*?)<\/p>)/i', $lead, $matches);
-            $lead = $matches[2];
+            $lead = $matches[2] ?? '';
         }
 
         return $lead;
