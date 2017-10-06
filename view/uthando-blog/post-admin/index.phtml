@@ -34,7 +34,9 @@
 <script>
     $(document).ready(function(){
         $('#table-post').dataGrid({
-            url : 'post/list',
+            url : '<?=$this->url('admin/blog/post/edit', [
+                'action' => 'list',
+            ])?>',
             query: { sort : 'postId' },
             searchForm : $('#search-post'),
             paging : 'links',

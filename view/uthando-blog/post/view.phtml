@@ -75,14 +75,14 @@
         $route = [
             'route' => 'post-list/category',
             'routeParams' => [
-                'category' => $this->category,
+                'category' => $this->category->getSeo(),
             ],
         ];
     } elseif ($this->view == 'post-list/tag') {
         $route = [
             'route' => 'post-list/tag',
             'routeParams' => [
-                'tag' => $this->tag,
+                'tag' => $this->tag->getSeo(),
             ],
         ];
     } elseif ($this->view == 'post-list/archive') {

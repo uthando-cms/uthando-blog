@@ -128,7 +128,7 @@ return [
                         'options' => [
                             'route'         => '/category/[:category][/[:page]]',
                             'constraints'   => [
-                                'category'   => '[a-zA-Z][a-zA-Z0-9_-]',
+                                'category'   => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'page' => '\d+',
                             ],
                             'defaults'      => [
@@ -143,7 +143,7 @@ return [
                         'options' => [
                             'route'         => '/tag/[:tag][/[:page]]',
                             'constraints'   => [
-                                'tag'   => '[a-zA-Z][a-zA-Z0-9_-]',
+                                'tag'   => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'page' => '\d+',
                             ],
                             'defaults'      => [
