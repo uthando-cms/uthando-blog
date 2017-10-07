@@ -116,9 +116,9 @@ class Post extends AbstractRelationalMapperService
         $hydrator = $form->getHydrator();
         /* @var DateTime $dateTimeStrategy */
         $dateTimeStrategy = $hydrator->getStrategy('dateCreated');
-        $dateTimeStrategy->setHydrateFormat('d/m/Y H:i');
+        $dateTimeStrategy->setHydrateFormat('d/m/Y H:i:s');
         $dateTimeStrategy = $hydrator->getStrategy('dateModified');
-        $dateTimeStrategy->setHydrateFormat('d/m/Y H:i');
+        $dateTimeStrategy->setHydrateFormat('d/m/Y H:i:s');
 
         $form->setValidationGroup([
             'postId', 'userId', 'title', 'slug',

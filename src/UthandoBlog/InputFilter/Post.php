@@ -16,6 +16,7 @@ use UthandoCommon\Filter\Slug;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\Filter\ToInt;
+use Zend\Validator\Date;
 use Zend\InputFilter\InputFilter;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -189,6 +190,20 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
                     'encoding' => 'UTF-8',
                     'min' => 30,
                     'max' => 255
+                ]],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'dateCreated',
+            'required'      => false,
+            'filters'       => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
+            ],
+            'validators'    => [
+                ['name' => Date::class, 'options' => [
+                    'format' => 'd/m/Y H:i:s',
                 ]],
             ],
         ]);

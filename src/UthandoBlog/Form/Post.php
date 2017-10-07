@@ -222,7 +222,7 @@ class Post extends Form
                 'label_attributes' => [
                     'class' => 'col-sm-2',
                 ],
-                'format' => 'd/m/Y H:i'
+                'format' => 'd/m/Y H:i:s'
             ],
         ]);
 
@@ -236,7 +236,7 @@ class Post extends Form
                 'label_attributes' => [
                     'class' => 'col-sm-2',
                 ],
-                'format' => 'd/m/Y H:i'
+                'format' => 'd/m/Y H:i:s'
             ],
             'attributes' => [
                 'disabled' => true,
