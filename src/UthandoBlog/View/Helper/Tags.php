@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -27,16 +27,29 @@ class Tags extends AbstractViewHelper
      */
     protected $service;
 
-    public function tagLinks($tags = null)
+    public function tags(array $tags): string
+    {
+        $tagArray = [];
+
+        /** @var TagModel $tag */
+        foreach ($tags as $tag) {
+            $tagArray[] = $this->getView()->escapeHtml($tag->getName());
+        }
+
+        return join(', ', $tagArray);
+    }
+
+    public function tagLinks(array $tags = null): string
     {
         $html       = '';
         $tagArray   = [];
+        $view       = $this->getView();
 
         /* @var TagModel $tag */
         foreach ($tags as $tag) {
-            $tagArray[] = '<a href="' . $this->getView()->url('post-list/tag', [
-                    'tag' => $tag->getSeo(),
-                ]) . '">' . $tag->getName() . '</a>';
+            $tagArray[] = '<a href="' . $view->url('post-list/tag', [
+                    'tag' => $view->escapeHtml($tag->getSeo()),
+                ]) . '">' . $view->escapeHtml($tag->getName()) . '</a>';
         }
 
         $html = $html . implode(', ', $tagArray);
@@ -44,9 +57,10 @@ class Tags extends AbstractViewHelper
         return $html;
     }
 
-    public function tagCloud()
+    public function tagCloud(): Cloud
     {
         $tags = $this->getService()->getTagCloud();
+        $view = $this->getView();
 
         $tagArray = [
             'cloudDecorator' => [
@@ -72,13 +86,13 @@ class Tags extends AbstractViewHelper
 
         foreach ($tags as $tag) {
             $tagArray['tags'][] = [
-                'title' => $tag->name,
-                'weight' => $tag->count,
+                'title' => $view->escapeHtml($tag->name),
+                'weight' => $view->escapeHtml($tag->count),
                 'params' => [
-                    'url' => $this->getView()->url('post-list/tag', [
-                        'tag' => $tag->seo,
+                    'url' => $view->url('post-list/tag', [
+                        'tag' => $view->escapeHtml($tag->seo),
                     ]),
-                    'title' => $tag->count . ' topic',
+                    'title' => $view->escapeHtml($tag->count) . ' topic',
                 ],
             ];
         }
@@ -88,10 +102,7 @@ class Tags extends AbstractViewHelper
         return $tagCloud;
     }
 
-    /**
-     * @return TagService
-     */
-    public function getService()
+    public function getService(): TagService
     {
         if (!$this->service instanceof TagService) {
 
@@ -105,11 +116,7 @@ class Tags extends AbstractViewHelper
         return $this->service;
     }
 
-    /**
-     * @param TagService $service
-     * @return $this
-     */
-    public function setService(TagService $service)
+    public function setService(TagService $service): Tags
     {
         $this->service = $service;
         return $this;
