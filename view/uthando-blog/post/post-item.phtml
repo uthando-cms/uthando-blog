@@ -1,7 +1,24 @@
 <?php
 $this->headTitle($this->escapeHtml($this->model->getTitle()));
-$this->headMeta()->appendName('description',$this->escapeHtml($this->model->getDescription()));
+$this->headMeta()
+    ->appendName('description',$this->escapeHtml($this->model->getDescription()))
+    ->appendName('keywords',$this->tagHelper()->tags($this->model->getTags()))
+    ->appendName('robots','nofollow');
 ?>
+
+<?php $this->headMeta()
+    // FaceBook
+    ->appendProperty('og:url', $this->ServerUrl(true))
+    ->appendProperty('og:type', 'article')
+    ->appendProperty('og:title', $this->escapeHtml($this->model->getTitle()))
+    ->appendProperty('og:description', $this->escapeHtml($this->model->getDescription()))
+    ->appendProperty('og:site_name', $this->escapeHtml($this->themeOptions('site_name')))
+    ->appendProperty('og:image', $this->escapeHtml($this->model->getImage()))
+
+    // Twitter
+    ->appendName('twitter:card', 'summary')
+    ->appendName('twitter:creator', '@' . $this->escapeHtml($this->tweetFeed()->getScreenName()))
+;?>
 
 <nav>
     <ol class="breadcrumb">
