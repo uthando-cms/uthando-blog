@@ -29,7 +29,7 @@ class PostHelper extends AbstractViewHelper
      */
     protected $service;
 
-    public function getLead(PostModel $postModel): string
+    public function getLead(PostModel $postModel, int $limit = 0): string
     {
         if ($postModel->getLead()) {
             $lead = $postModel->getLead();
@@ -44,6 +44,11 @@ class PostHelper extends AbstractViewHelper
             $lead = $matches[2] ?? '';
         }
 
+        if ($limit) {
+            $numWords = str_word_count(strip_tags($lead), 1);
+            $lead = implode(' ', array_splice($numWords, 0, $limit)) . ' ...';
+        }
+
         return $lead;
     }
 
@@ -55,19 +60,20 @@ class PostHelper extends AbstractViewHelper
     /**
      * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
      */
-    public function getPopular()
+    public function getPopular(int $numPosts = 5)
     {
         return $this->getService()
-            ->getPopularPosts(5);
+            ->getPopularPosts($numPosts);
     }
 
     /**
+     * @param int $numPosts
      * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
      */
-    public function getRecent()
+    public function getRecent(int $numPosts = 5)
     {
         return $this->getService()
-            ->getRecentPosts(5);
+            ->getRecentPosts($numPosts);
     }
 
     /**
