@@ -120,7 +120,7 @@ class Post extends AbstractDbMapper
         $select = $this->getSelect();
         $select = $this->setLimit($select, $limit, 0);
         $select = $this->setSortOrder($select, '-hits');
-        $select->where->equalTo('status' , 1);
+        $select->where->equalTo('status' , PostModel::STATUS_PUBLISHED);
 
         $rowSet = $this->fetchResult($select);
 
@@ -137,10 +137,29 @@ class Post extends AbstractDbMapper
         $select = $this->getSelect();
         $select = $this->setLimit($select, $limit, 0);
         $select = $this->setSortOrder($select, $sort . 'dateCreated');
-        $select->where->equalTo('status' , 1);
+        $select->where->equalTo('status', PostModel::STATUS_PUBLISHED);
 
         $rowSet = $this->fetchResult($select);
 
         return $rowSet;
+    }
+
+    public function getPrevious($id, Select $select = null)
+    {
+        $select = $this->getSql()->select();
+        $select->where->equalTo('status', PostModel::STATUS_PUBLISHED);
+        return parent::getPrevious($id, $select);
+    }
+
+    /**
+     * @param $id
+     * @param null|Select $select
+     * @return null|ModelInterface
+     */
+    public function getNext($id, Select $select = null)
+    {
+        $select = $this->getSql()->select();
+        $select->where->equalTo('status', PostModel::STATUS_PUBLISHED);
+        return parent::getNext($id, $select);
     }
 } 
