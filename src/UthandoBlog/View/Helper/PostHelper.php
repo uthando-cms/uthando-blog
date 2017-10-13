@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -40,13 +40,14 @@ class PostHelper extends AbstractViewHelper
                 strpos($postModel->getContent(), '</p>') - 3
             );*/
             $lead = str_replace(PHP_EOL, '', $postModel->getContent());
-            preg_match('/(<p[^>]*>(.*?)<\/p>)/i', $lead, $matches);
-            $lead = $matches[2] ?? '';
+            preg_match('/<p.*?>(.*?)<\/p>/i', $lead, $matches);
+            $lead = $matches[1] ?? '';
         }
 
         if ($limit) {
-            $numWords = str_word_count(strip_tags($lead), 1);
+            $numWords = str_word_count(strip_tags($lead), 1, ',.:?!()1234567890\'"');
             $lead = implode(' ', array_splice($numWords, 0, $limit)) . ' ...';
+
         }
 
         return $lead;
@@ -57,29 +58,18 @@ class PostHelper extends AbstractViewHelper
         return $this->getService()->getArchiveList();
     }
 
-    /**
-     * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
-     */
     public function getPopular(int $numPosts = 5)
     {
         return $this->getService()
             ->getPopularPosts($numPosts);
     }
 
-    /**
-     * @param int $numPosts
-     * @return \Zend\Db\ResultSet\HydratingResultSet|\Zend\Db\ResultSet\ResultSet|\Zend\Paginator\Paginator
-     */
     public function getRecent(int $numPosts = 5)
     {
         return $this->getService()
             ->getRecentPosts($numPosts);
     }
 
-    /**
-     * @param $id
-     * @return PostModel|null|ModelInterface
-     */
     public function getPrevious($id)
     {
         $prev = $this->getService()->getMapper()
@@ -101,10 +91,7 @@ class PostHelper extends AbstractViewHelper
         return $next;
     }
 
-    /**
-     * @return PostService
-     */
-    public function getService()
+    public function getService(): PostService
     {
         if (!$this->service instanceof PostService) {
 
@@ -118,11 +105,7 @@ class PostHelper extends AbstractViewHelper
         return $this->service;
     }
 
-    /**
-     * @param PostService $service
-     * @return PostHelper
-     */
-    public function setService(PostService $service)
+    public function setService(PostService $service): PostHelper
     {
         $this->service = $service;
         return $this;
