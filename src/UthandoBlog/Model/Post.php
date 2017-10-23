@@ -26,6 +26,11 @@ class Post implements ModelInterface
     const STATUS_DRAFT      = 0;
     const STATUS_PUBLISHED  = 1;
 
+    protected $statusMap = [
+        self::STATUS_DRAFT      => 'Draft',
+        self::STATUS_PUBLISHED  => 'Published',
+    ];
+
     use Model,
         UserTrait,
         DateCreatedTrait,
@@ -138,6 +143,11 @@ class Post implements ModelInterface
     public function getStatus()
     {
         return $this->status;
+    }
+
+    public function getStatusAsString()
+    {
+        return $this->statusMap[$this->getStatus()];
     }
 
     /**

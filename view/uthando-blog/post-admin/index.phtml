@@ -31,6 +31,7 @@
     </div>
 </div>
 
+<?php $this->placeholder('js-scripts')->captureStart();?>
 <script>
     $(document).ready(function(){
         $('#table-post').dataGrid({
@@ -44,3 +45,4 @@
         });
     });
 </script>
+<?php $this->placeholder('js-scripts')->captureEnd();?>

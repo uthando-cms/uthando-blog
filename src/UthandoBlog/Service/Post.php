@@ -109,6 +109,11 @@ class Post extends AbstractRelationalMapperService
             $post['slug'] = $post['title'];
         }
 
+        if (PostModel::STATUS_PUBLISHED == $post['status'] && PostModel::STATUS_DRAFT == $model->getStatus()) {
+            $post['dateCreated'] = '';
+            $model->setDateCreated();
+        }
+
         /* @var \UthandoBlog\InputFilter\Post $inputFilter */
         $inputFilter = $form->getInputFilter();
         $inputFilter->addSlugNoRecordExists($model->getSlug());

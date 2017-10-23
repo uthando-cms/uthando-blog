@@ -6,6 +6,7 @@
             <tr>
                 <th data-field="postId">Post Id</th>
                 <th data-field="title">Title</th>
+                <th data-field="status">Status</th>
                 <th data-field="userId">Created By</th>
                 <th>Category</th>
                 <th data-field="dateCreated">Date Created</th>
@@ -19,6 +20,7 @@
                 <tr>
                     <td><?=$this->escapeHtml($row->getPostId()); ?></td>
                     <td><?=$this->escapeHtml($row->getTitle()); ?></td>
+                    <td><?=$this->escapeHtml($row->getStatusAsString());?></td>
                     <td><?=$this->escapeHtml($row->getUser()->getFullName());?></td>
                     <td><?=$this->escapeHtml($row->getCategory()->getName());?></td>
                     <td><?=$this->escapeHtml($this->formatDate($row->getDateCreated())); ?></td>

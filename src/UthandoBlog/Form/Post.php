@@ -189,7 +189,7 @@ class Post extends Form
             'attributes' => [
                 'placeholder' => 'Lead Text',
                 'id'          => 'news-lead-textarea',
-                'rows'        => 10,
+                'rows'        => 3,
             ],
         ]);
 
@@ -224,6 +224,9 @@ class Post extends Form
                 ],
                 'format' => 'd/m/Y H:i:s'
             ],
+            'attributes' => [
+                'step' => 'any',
+            ],
         ]);
 
         $this->add([
@@ -239,8 +242,9 @@ class Post extends Form
                 'format' => 'd/m/Y H:i:s'
             ],
             'attributes' => [
-                'disabled' => true,
-            ]
+                'disabled'  => true,
+                'step'      => 'any',
+            ],
         ]);
 
         $this->add([

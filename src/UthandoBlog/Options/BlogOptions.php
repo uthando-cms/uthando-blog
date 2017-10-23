@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -30,6 +30,11 @@ class BlogOptions extends AbstractOptions
     protected $itemsPerPage;
 
     /**
+     * @var string
+     */
+    protected $dateFormat;
+
+    /**
      * @return string
      */
     public function getSortOrder()
@@ -41,7 +46,7 @@ class BlogOptions extends AbstractOptions
      * @param string $sortOrder
      * @return $this
      */
-    public function setSortOrder($sortOrder)
+    public function setSortOrder(string $sortOrder): BlogOptions
     {
         $this->sortOrder = $sortOrder;
         return $this;
@@ -59,9 +64,27 @@ class BlogOptions extends AbstractOptions
      * @param int $itemsPerPage
      * @return $this
      */
-    public function setItemsPerPage($itemsPerPage)
+    public function setItemsPerPage(int $itemsPerPage): BlogOptions
     {
         $this->itemsPerPage = $itemsPerPage;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateFormat()
+    {
+        return $this->dateFormat;
+    }
+
+    /**
+     * @param string $dateFormat
+     * @return BlogOptions
+     */
+    public function setDateFormat(string $dateFormat): BlogOptions
+    {
+        $this->dateFormat = $dateFormat;
         return $this;
     }
 }

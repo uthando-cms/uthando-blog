@@ -201,10 +201,14 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
                 ['name' => StripTags::class],
                 ['name' => StringTrim::class],
             ],
-            'validators'    => [
-                ['name' => Date::class, 'options' => [
-                    'format' => 'd/m/Y H:i:s',
-                ]],
+        ]);
+
+        $this->add([
+            'name' => 'dateModified',
+            'required'      => false,
+            'filters'       => [
+                ['name' => StripTags::class],
+                ['name' => StringTrim::class],
             ],
         ]);
     }

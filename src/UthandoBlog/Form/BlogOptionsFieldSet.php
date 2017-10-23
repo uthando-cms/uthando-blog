@@ -60,6 +60,19 @@ class BlogOptionsFieldSet extends Fieldset implements InputFilterProviderInterfa
                 ],
             ],
         ]);
+
+        $this->add([
+           'name' => 'date_format',
+           'type' => Text::class,
+           'options' => [
+               'label' => 'Date Format',
+               'column-size' => 'md-8',
+               'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+               'label_attributes' => [
+                   'class' => 'col-md-4',
+               ],
+           ],
+        ]);
     }
 
     public function getInputFilterSpecification(): array
@@ -88,6 +101,20 @@ class BlogOptionsFieldSet extends Fieldset implements InputFilterProviderInterfa
                 ],
                 'validators'    => [
                     ['name' => Digits::class],
+                ],
+            ],
+            'date_format' => [
+                'required' => true,
+                'filters' => [
+                    ['name' => StripTags::class],
+                    ['name' => StringTrim::class],
+                ],
+                'validators' => [
+                    ['name' => StringLength::class, 'options' => [
+                        'encoding' => 'UTF-8',
+                        'min' => 1,
+                        'max' => 255,
+                    ]],
                 ],
             ],
         ];

@@ -14,13 +14,11 @@ use UthandoBlog\Model\Post as PostModel;
 use UthandoBlog\Service\Post as PostService;
 use UthandoCommon\Model\ModelInterface;
 use UthandoCommon\View\AbstractViewHelper;
-use Zend\View\Renderer\PhpRenderer;
 
 /**
  * Class Posts
  *
- * @package UthandoBlog\View\
- * @method PhpRenderer getView()
+ * @package UthandoBlog\View
  */
 class PostHelper extends AbstractViewHelper
 {
@@ -40,14 +38,13 @@ class PostHelper extends AbstractViewHelper
                 strpos($postModel->getContent(), '</p>') - 3
             );*/
             $lead = str_replace(PHP_EOL, '', $postModel->getContent());
-            preg_match('/<p.*?>(.*?)<\/p>/i', $lead, $matches);
+            preg_match('/<p.*?>(.*?)<\/p>/', $lead, $matches);
             $lead = $matches[1] ?? '';
         }
 
         if ($limit) {
             $numWords = str_word_count(strip_tags($lead), 1, ',.:?!()1234567890\'"');
             $lead = implode(' ', array_splice($numWords, 0, $limit)) . ' ...';
-
         }
 
         return $lead;
