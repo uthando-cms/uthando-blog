@@ -16,7 +16,6 @@ return [
                                 '__NAMESPACE__' => 'UthandoBlog\Controller',
                                 'controller'    => 'PostAdmin',
                                 'action'        => 'index',
-                                'force-ssl'     => 'ssl'
                             ],
                         ],
                         'may_terminate' => true,
@@ -28,7 +27,6 @@ return [
                                     'defaults' => [
                                         'controller' => 'PostAdmin',
                                         'action' => 'index',
-                                        'force-ssl' => 'ssl'
                                     ]
                                 ],
                                 'may_terminate' => true,
@@ -43,7 +41,6 @@ return [
                                             ],
                                             'defaults'      => [
                                                 'action'        => 'edit',
-                                                'force-ssl'     => 'ssl'
                                             ],
                                         ],
                                         'may_terminate' => true,
@@ -58,7 +55,6 @@ return [
                                             'defaults'      => [
                                                 'action'        => 'list',
                                                 'page'          => 1,
-                                                'force-ssl'     => 'ssl'
                                             ],
                                         ],
                                         'may_terminate' => true,
@@ -72,7 +68,6 @@ return [
                                     'defaults' => [
                                         'controller' => 'Category',
                                         'action' => 'index',
-                                        'force-ssl' => 'ssl'
                                     ]
                                 ],
                                 'may_terminate' => true,
@@ -87,7 +82,6 @@ return [
                                             ],
                                             'defaults'      => [
                                                 'action'        => 'edit',
-                                                'force-ssl'     => 'ssl'
                                             ],
                                         ],
                                         'may_terminate' => true,
@@ -102,7 +96,6 @@ return [
                                             'defaults'      => [
                                                 'action'        => 'list',
                                                 'page'          => 1,
-                                                'force-ssl'     => 'ssl'
                                             ],
                                         ],
                                         'may_terminate' => true,
@@ -116,7 +109,6 @@ return [
                                     'defaults' => [
                                         'controller' => 'Comment',
                                         'action' => 'index',
-                                        'force-ssl' => 'ssl'
                                     ]
                                 ],
                                 'may_terminate' => true,
@@ -131,7 +123,6 @@ return [
                                             ],
                                             'defaults'      => [
                                                 'action'        => 'edit',
-                                                'force-ssl'     => 'ssl'
                                             ],
                                         ],
                                         'may_terminate' => true,
@@ -146,7 +137,6 @@ return [
                                             'defaults'      => [
                                                 'action'        => 'list',
                                                 'page'          => 1,
-                                                'force-ssl'     => 'ssl'
                                             ],
                                         ],
                                         'may_terminate' => true,
@@ -160,7 +150,6 @@ return [
                                     'defaults' => [
                                         'controller' => 'Tag',
                                         'action' => 'index',
-                                        'force-ssl' => 'ssl'
                                     ]
                                 ],
                                 'may_terminate' => true,
@@ -175,7 +164,6 @@ return [
                                             ],
                                             'defaults'      => [
                                                 'action'        => 'edit',
-                                                'force-ssl'     => 'ssl'
                                             ],
                                         ],
                                         'may_terminate' => true,
@@ -190,7 +178,6 @@ return [
                                             'defaults'      => [
                                                 'action'        => 'list',
                                                 'page'          => 1,
-                                                'force-ssl'     => 'ssl'
                                             ],
                                         ],
                                         'may_terminate' => true,
@@ -204,7 +191,6 @@ return [
                                     'defaults' => [
                                         'controller' => 'Settings',
                                         'action' => 'index',
-                                        'force-ssl' => 'ssl'
                                     ]
                                 ],
                                 'may_terminate' => true,
