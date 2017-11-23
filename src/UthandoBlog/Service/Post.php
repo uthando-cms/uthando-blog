@@ -118,12 +118,16 @@ class Post extends AbstractRelationalMapperService
         $inputFilter = $form->getInputFilter();
         $inputFilter->addSlugNoRecordExists($model->getSlug());
 
+        /* @var \UthandoBlog\Options\BlogOptions $options */
+        $options = $this->getServiceLocator()
+            ->getServiceLocator()->get('UthandoBlogOptions');
+
         $hydrator = $form->getHydrator();
         /* @var DateTime $dateTimeStrategy */
         $dateTimeStrategy = $hydrator->getStrategy('dateCreated');
-        $dateTimeStrategy->setHydrateFormat('d/m/Y H:i:s');
+        $dateTimeStrategy->setHydrateFormat($options->getDateFormat());
         $dateTimeStrategy = $hydrator->getStrategy('dateModified');
-        $dateTimeStrategy->setHydrateFormat('d/m/Y H:i:s');
+        $dateTimeStrategy->setHydrateFormat($options->getDateFormat());
 
         $form->setValidationGroup([
             'postId', 'userId', 'title', 'slug',

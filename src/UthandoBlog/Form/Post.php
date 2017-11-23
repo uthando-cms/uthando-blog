@@ -23,16 +23,24 @@ use Zend\Form\Element\Select;
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Textarea;
 use Zend\Form\Form;
+use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * Class Post
  *
  * @package UthandoBlog\Form
  */
-class Post extends Form
+class Post extends Form implements ServiceLocatorAwareInterface
 {
+    use ServiceLocatorAwareTrait;
+
     public function init()
     {
+        /* @var \UthandoBlog\Options\BlogOptions $options */
+        $options = $this->getServiceLocator()
+            ->getServiceLocator()->get('UthandoBlogOptions');
+
         $this->add([
             'type'  => Select::class,
             'name' => 'status',
@@ -222,7 +230,7 @@ class Post extends Form
                 'label_attributes' => [
                     'class' => 'col-sm-2',
                 ],
-                'format' => 'd/m/Y H:i:s'
+                'format' => $options->getDateFormat(),
             ],
             'attributes' => [
                 'step' => 'any',
@@ -239,7 +247,7 @@ class Post extends Form
                 'label_attributes' => [
                     'class' => 'col-sm-2',
                 ],
-                'format' => 'd/m/Y H:i:s'
+                'format' => $options->getDateFormat(),
             ],
             'attributes' => [
                 'disabled'  => true,

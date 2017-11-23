@@ -83,9 +83,9 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'CategoryHelper' => Categories::class,
-            'PostHelper' => PostHelper::class,
-            'TagHelper'  => Tags::class
+            'CategoryHelper'    => Categories::class,
+            'PostHelper'        => PostHelper::class,
+            'TagHelper'         => Tags::class
         ],
     ],
     'view_manager' => [
