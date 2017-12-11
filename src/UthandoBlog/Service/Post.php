@@ -141,9 +141,6 @@ class Post extends AbstractRelationalMapperService
         $e->setParam('post', $post);
     }
 
-    /**
-     * @param Event $e
-     */
     public function saveTags(Event $e)
     {
         $model      = $e->getParam('model', new PostModel());

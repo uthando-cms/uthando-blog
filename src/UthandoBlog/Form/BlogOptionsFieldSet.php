@@ -11,7 +11,7 @@
 namespace UthandoBlog\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
-use UthandoNews\Options\NewsOptions;
+use UthandoBlog\Options\BlogOptions;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\Filter\ToInt;
@@ -30,7 +30,7 @@ class BlogOptionsFieldSet extends Fieldset implements InputFilterProviderInterfa
         parent::__construct($name, $options);
 
         $this->setHydrator(new ClassMethods())
-            ->setObject(new NewsOptions());
+            ->setObject(new BlogOptions());
     }
 
     public function init()
