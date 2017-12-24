@@ -11,7 +11,7 @@
 namespace UthandoBlog\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
-use UthandoNews\Options\FeedOptions;
+use UthandoBlog\Options\FeedOptions;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\Form\Element\Text;
