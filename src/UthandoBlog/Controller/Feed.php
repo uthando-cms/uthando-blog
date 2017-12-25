@@ -52,6 +52,7 @@ class Feed extends AbstractActionController
 
         /* @var \UthandoNews\Model\News $item */
         foreach ($newsItems as $item) {
+            
             $entry = $feed->createEntry();
             $entry->addAuthor([
                 'name' => $item->getUser()->getFullName(),
@@ -60,7 +61,11 @@ class Feed extends AbstractActionController
             $entry->setLink($base . $this->url()->fromRoute('blog', [
                     'post-item' => $item->getSlug(),
                 ]));
-            $entry->setDescription($item->getDescription());
+
+            if ($item->getDescription()) {
+                $entry->setDescription($item->getDescription());
+            }
+
             $entry->setDateModified($item->getDateModified()->getTimestamp());
             $entry->setDateCreated($item->getDateCreated()->getTimestamp());
 
