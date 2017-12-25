@@ -20,6 +20,7 @@
   ],
   "require": {
     "php": ">=7.0",
+    "zendframework/zend-feed": "2.*",
     "zendframework/zend-inputfilter": "2.*",
     "zendframework/zend-tag": "2.*",
     "uthando-cms/uthando-common": "2.*"
