@@ -4,6 +4,7 @@ return [
     'uthando-blog/settings/index' => __DIR__ . '/./view/uthando-blog/settings/index.phtml',
     'uthando-blog/comment/list' => __DIR__ . '/./view/uthando-blog/comment/list.phtml',
     'uthando-blog/comment/edit' => __DIR__ . '/./view/uthando-blog/comment/edit.phtml',
+    'uthando-blog/comment/disqus' => __DIR__ . '/./view/uthando-blog/comment/disqus.phtml',
     'uthando-blog/comment/index' => __DIR__ . '/./view/uthando-blog/comment/index.phtml',
     'uthando-blog/comment/add' => __DIR__ . '/./view/uthando-blog/comment/add.phtml',
     'uthando-blog/post-admin/list' => __DIR__ . '/./view/uthando-blog/post-admin/list.phtml',

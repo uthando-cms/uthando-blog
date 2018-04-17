@@ -10,10 +10,12 @@
 
 namespace UthandoBlog\Event;
 
+use UthandoNavigation\Service\SiteMap;
 use Zend\EventManager\Event;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\EventManager\ListenerAggregateTrait;
+use Zend\Navigation\Navigation;
 
 /**
  * Class SiteMapListener
@@ -24,22 +26,22 @@ class SiteMapListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    public function attach(EventManagerInterface $events)
+    public function attach(EventManagerInterface $events): void
     {
         $events = $events->getSharedManager();
 
         $this->listeners[] = $events->attach([
-            'UthandoNavigation\Service\SiteMap',
-        ], ['uthando.site-map'], [$this, 'addPages']);
+            SiteMap::class,
+        ], 'uthando.site-map', [$this, 'addPages']);
     }
 
     public function addPages(Event $e)
     {
-        /* @var \Zend\Navigation\Navigation $navigation */
+        /* @var Navigation $navigation */
         $navigation = $e->getParam('navigation');
 
         /* @var \UthandoBlog\Service\Post $blogService */
-        $blogService = $e->getTarget()->getService('UthandoPost');
+        $blogService = $e->getTarget()->getService('UthandoBlogPost');
 
         /* @var \UthandoNavigation\Service\Menu $menuService */
         $menuService = $e->getTarget()->getService('UthandoNavigationMenu');
@@ -62,7 +64,7 @@ class SiteMapListener implements ListenerAggregateInterface
         }
 
         // find shop page
-        $newsPage = $navigation->findOneByRoute('post-list');
+        $newsPage = $navigation->findOneBy('route','post-list');
 
         // add categories to shop page
         $newsPage->addPages($menuService->preparePages($pages));

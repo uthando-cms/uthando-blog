@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  * 
@@ -24,23 +24,21 @@ class Module implements ConfigInterface
 {
     use ConfigTrait;
 
-    /**
-     * @param MvcEvent $e
-     */
-    public function onBootStrap(MvcEvent $e)
+    public function onBootStrap(MvcEvent $e): void
     {
-        $app = $e->getApplication();
-        $eventManager = $app->getEventManager();
+        $app            = $e->getApplication();
+        $eventManager   = $app->getEventManager();
+        $event          = new SiteMapListener();
 
-        $eventManager->attachAggregate(new SiteMapListener());
+        $event->attach($eventManager);
     }
 
-    public function getConfig()
+    public function getConfig(): array
     {
         return include __DIR__ . '/config/module.config.php';
     }
 
-    public function getAutoloaderConfig()
+    public function getAutoloaderConfig(): array
     {
         return [
             'Zend\Loader\ClassMapAutoloader' => [

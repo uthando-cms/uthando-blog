@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * Uthando CMS (http://www.shaunfreeman.co.uk/)
  *
@@ -10,16 +10,14 @@
 
 namespace UthandoBlog\Controller;
 
-use UthandoCommon\Controller\AbstractCrudController;
+use UthandoCommon\Service\ServiceTrait;
+use Zend\Mvc\Controller\AbstractActionController;
 
 /**
  * Class Comment
  * @package UthandoBlog\Controller
  */
-class Comment extends AbstractCrudController
+class Comment extends AbstractActionController
 {
-    protected $controllerSearchOverrides = ['sort' => 'commentId'];
-    protected $serviceName = 'UthandoBlogComment';
-    protected $route = 'admin/blog/comment';
-    protected $routes = [];
+    use ServiceTrait;
 }

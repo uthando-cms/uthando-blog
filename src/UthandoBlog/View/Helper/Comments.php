@@ -10,13 +10,29 @@
 
 namespace UthandoBlog\View\Helper;
 
+use UthandoBlog\Model\Post;
+use UthandoCommon\View\AbstractViewHelper;
+
 
 /**
  * Class Comments
  *
  * @package UthandoBlog\View\Helper
  */
-class Comments
+class Comments extends AbstractViewHelper
 {
+    public function disqus(Post $post): string
+    {
+        $config = $this->getConfig('uthando_blog');
 
+        if ($config['disqus']['enabled']) {
+            return $this->getView()->partial(
+                'uthando-blog/comment/disqus', [
+                'shortName' => $config['disqus']['short_name'],
+                'post'      => $post,
+            ]);
+        }
+
+        return '';
+    }
 }

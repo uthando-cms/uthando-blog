@@ -45,5 +45,17 @@ class BlogSettings extends Form
                 'class' => 'col-md-6',
             ],
         ]);
+
+        $this->add([
+            'type' => DisqusFieldSet::class,
+            'name' => 'disqus',
+            'options' => [
+                'label' => 'Disqus',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+            ],
+            'attributes' => [
+                'class' => 'col-md-6',
+            ],
+        ]);
     }
 }

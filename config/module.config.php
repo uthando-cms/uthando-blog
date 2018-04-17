@@ -1,9 +1,9 @@
 <?php
 
-use UthandoBlog\Form\Element\CategoryItemRadio;
-use UthandoBlog\Form\Element\CategorySelect;
-use UthandoBlog\Form\Element\TagSelect;
+use UthandoBlog\Options\DisqusOptions;
+use UthandoBlog\Service\DisqusOptionsFactory;
 use UthandoBlog\View\Helper\Categories;
+use UthandoBlog\View\Helper\Comments;
 use UthandoBlog\View\Helper\PostHelper;
 use UthandoBlog\View\Helper\Tags;
 
@@ -28,10 +28,6 @@ return [
             'UthandoBlogFeedFieldSet'       => 'UthandoBlog\Form\BlogFeedFieldSet',
             'UthandoBlogOptionsFieldSet'    => 'UthandoBlog\Form\BlogOptionsFieldSet',
             'UthandoBlogSettings'           => 'UthandoBlog\Form\BlogSettings',
-
-            CategoryItemRadio::class        => CategoryItemRadio::class,
-            CategorySelect::class           => CategorySelect::class,
-            TagSelect::class                => TagSelect::class,
         ],
     ],
     'hydrators' => [
@@ -54,6 +50,8 @@ return [
         'factories' => [
             'UthandoBlogFeedOptions'    => 'UthandoBlog\Service\BlogFeedOptionsFactory',
             'UthandoBlogOptions'        => 'UthandoBlog\Service\BlogOptionsFactory',
+
+            DisqusOptions::class        => DisqusOptionsFactory::class,
         ]
     ],
     'uthando_mappers' => [
@@ -84,6 +82,7 @@ return [
     'view_helpers' => [
         'invokables' => [
             'CategoryHelper'    => Categories::class,
+            'CommentHelper'     => Comments::class,
             'PostHelper'        => PostHelper::class,
             'TagHelper'         => Tags::class
         ],

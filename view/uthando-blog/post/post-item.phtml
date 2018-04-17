@@ -68,3 +68,5 @@ $next = $this->postHelper()->getNext($this->model->getPostId());
         ]);?>">Next &rarr;</a>
     </li>
 </ul>
+
+<?=$this->CommentHelper()->disqus($this->model);?>
