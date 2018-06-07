@@ -92,6 +92,11 @@ class Post implements ModelInterface
     protected $lead;
 
     /**
+     * @var bool
+     */
+    protected $enableComments;
+
+    /**
      * @var Category
      */
     protected $category;
@@ -299,6 +304,32 @@ class Post implements ModelInterface
     public function setLead($lead)
     {
         $this->lead = $lead;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnableComments()
+    {
+        return $this->enableComments;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getEnableComments()
+    {
+        return $this->isEnableComments();
+    }
+
+    /**
+     * @param bool $enableComments
+     * @return Post
+     */
+    public function setEnableComments($enableComments)
+    {
+        $this->enableComments = $enableComments;
         return $this;
     }
 

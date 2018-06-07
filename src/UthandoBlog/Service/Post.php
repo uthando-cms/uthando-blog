@@ -133,7 +133,7 @@ class Post extends AbstractRelationalMapperService
             'postId', 'userId', 'title', 'slug',
             'content', 'description', 'categoryId',
             'tags', 'image', 'lead', 'layout', 'status',
-            'dateCreated'
+            'dateCreated', 'enableComments',
         ]);
 
         $form->setData($post);

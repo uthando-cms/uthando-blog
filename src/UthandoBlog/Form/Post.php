@@ -16,6 +16,7 @@ use UthandoBlog\Form\Element\CategorySelect;
 use UthandoBlog\Form\Element\TagSelect;
 use UthandoBlog\Model\Post as PostModel;
 use Zend\Form\Element\Button;
+use Zend\Form\Element\Checkbox;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Element\DateTime;
 use Zend\Form\Element\Hidden;
@@ -55,6 +56,21 @@ class Post extends Form implements ServiceLocatorAwareInterface
                     PostModel::STATUS_DRAFT => 'Draft',
                     PostModel::STATUS_PUBLISHED => 'Published',
                 ]
+            ],
+        ]);
+
+        $this->add([
+            'type' => Checkbox::class,
+            'name' => 'enableComments',
+            'options' => [
+                'label' => 'Enable Comments',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+                'use_hidden_element' => true,
+                'required' => false,
+                'checked_value' => '1',
+                'unchecked_value' => '0',
+                'column-size' => 'md-10 col-md-offset-2',
+                'help-block' => 'Enable/Disable Comments.',
             ],
         ]);
 

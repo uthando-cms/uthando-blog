@@ -24,8 +24,13 @@ class Comments extends AbstractViewHelper
     public function disqus(Post $post): string
     {
         $config = $this->getConfig('uthando_blog');
+        $enabled = false;
 
         if ($config['disqus']['enabled']) {
+            $enabled = $post->isEnableComments();
+        }
+
+        if ($enabled) {
             return $this->getView()->partial(
                 'uthando-blog/comment/disqus', [
                 'shortName' => $config['disqus']['short_name'],

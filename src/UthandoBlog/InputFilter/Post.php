@@ -13,10 +13,10 @@ namespace UthandoBlog\InputFilter;
 
 use UthandoCommon\Filter\HtmlPurifierFilter;
 use UthandoCommon\Filter\Slug;
+use Zend\Filter\Boolean;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\Filter\ToInt;
-use Zend\Validator\Date;
 use Zend\InputFilter\InputFilter;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -73,6 +73,19 @@ class Post extends InputFilter implements ServiceLocatorAwareInterface
             ],
             'validators'    => [
                 ['name' => Digits::class],
+            ],
+        ]);
+
+        $this->add([
+            'name' => 'enableComments',
+            'required' => true,
+            'allow_empty' => true,
+            'filters' => [
+                ['name' => StringTrim::class],
+                ['name' => StripTags::class,],
+                ['name' => Boolean::class, 'options' => [
+                    'type' => Boolean::TYPE_ZERO_STRING,
+                ]],
             ],
         ]);
 

@@ -15,6 +15,7 @@ use UthandoCommon\Hydrator\AbstractHydrator;
 use UthandoCommon\Hydrator\Strategy\DateTime as DateTimeStrategy;
 use UthandoBlog\Model\Post as PostModel;
 use UthandoCommon\Hydrator\Strategy\NullStrategy;
+use UthandoCommon\Hydrator\Strategy\TrueFalse;
 
 /**
  * Class Blog
@@ -32,6 +33,7 @@ class Post extends AbstractHydrator
         $this->addStrategy('dateCreated', $dateTime);
         $this->addStrategy('dateModified', $dateTime);
         $this->addStrategy('categoryId', new NullStrategy());
+        $this->addStrategy('enableComments', new TrueFalse());
 
         return $this;
     }
@@ -45,20 +47,21 @@ class Post extends AbstractHydrator
     public function extract($object)
     {
         return [
-            'postId'        => $object->getPostId(),
-            'userId'        => $object->getUserId(),
-            'categoryId'    => $this->extractValue('categoryId',$object->getCategoryId()),
-            'title'         => $object->getTitle(),
-            'slug'          => $object->getSlug(),
-            'content'       => $object->getContent(),
-            'description'   => $object->getDescription(),
-            'hits'          => $object->getHits(),
-            'image'         => $object->getImage(),
-            'layout'        => $object->getLayout(),
-            'lead'          => $object->getLead(),
-            'dateCreated'   => $this->extractValue('dateCreated', $object->getDateCreated()),
-            'dateModified'  => $this->extractValue('dateModified', $object->getDateModified()),
-            'status'        => $object->getStatus(),
+            'postId'            => $object->getPostId(),
+            'userId'            => $object->getUserId(),
+            'categoryId'        => $this->extractValue('categoryId',$object->getCategoryId()),
+            'title'             => $object->getTitle(),
+            'slug'              => $object->getSlug(),
+            'content'           => $object->getContent(),
+            'description'       => $object->getDescription(),
+            'hits'              => $object->getHits(),
+            'image'             => $object->getImage(),
+            'layout'            => $object->getLayout(),
+            'lead'              => $object->getLead(),
+            'dateCreated'       => $this->extractValue('dateCreated', $object->getDateCreated()),
+            'dateModified'      => $this->extractValue('dateModified', $object->getDateModified()),
+            'status'            => $object->getStatus(),
+            'enableComments'    => $this->extractValue('enableComments', $object->getEnableComments()),
         ];
     }
 }
