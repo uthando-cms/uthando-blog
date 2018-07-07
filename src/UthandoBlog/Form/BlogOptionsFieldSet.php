@@ -12,6 +12,7 @@ namespace UthandoBlog\Form;
 
 use TwbBundle\Form\View\Helper\TwbBundleForm;
 use UthandoBlog\Options\BlogOptions;
+use UthandoTwitter\Form\SocialMediaFieldSet;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
 use Zend\Filter\ToInt;
@@ -72,6 +73,18 @@ class BlogOptionsFieldSet extends Fieldset implements InputFilterProviderInterfa
                    'class' => 'col-md-4',
                ],
            ],
+        ]);
+
+        $this->add([
+            'type' => SocialMediaFieldSet::class,
+            'name' => 'auto_post',
+            'options' => [
+                'label' => 'Auto Post To:',
+                'twb-layout' => TwbBundleForm::LAYOUT_HORIZONTAL,
+            ],
+            'attributes' => [
+                'class' => 'col-md-12',
+            ],
         ]);
     }
 

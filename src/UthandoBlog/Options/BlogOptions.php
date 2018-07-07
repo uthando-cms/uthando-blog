@@ -35,6 +35,11 @@ class BlogOptions extends AbstractOptions
     protected $dateFormat;
 
     /**
+     * @var array
+     */
+    protected $autoPost = [];
+
+    /**
      * @return string
      */
     public function getSortOrder()
@@ -85,6 +90,27 @@ class BlogOptions extends AbstractOptions
     public function setDateFormat(string $dateFormat): BlogOptions
     {
         $this->dateFormat = $dateFormat;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAutoPost(): array
+    {
+        return $this->autoPost;
+    }
+
+    /**
+     * @param array $autoPost
+     * @return BlogOptions
+     */
+    public function setAutoPost(array $autoPost): BlogOptions
+    {
+        foreach ($autoPost as $key => $value) {
+            if ('0' === $value) unset($autoPost[$key]);
+        }
+        $this->autoPost = $autoPost;
         return $this;
     }
 }

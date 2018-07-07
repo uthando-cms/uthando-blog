@@ -12,6 +12,7 @@
 namespace UthandoBlog\Service;
 
 use UthandoBlog\Model\Tag as TagModel;
+use UthandoBlog\Options\BlogOptions;
 use UthandoCommon\Service\AbstractRelationalMapperService;
 use UthandoBlog\Mapper\Post as PostMapper;
 use UthandoBlog\Model\Post as PostModel;
@@ -67,6 +68,10 @@ class Post extends AbstractRelationalMapperService
         $this->getEventManager()->attach([
             'post.add', 'post.edit'
         ], [$this, 'saveTags']);
+
+        $this->getEventManager()->attach([
+            'post.add', 'post.edit'
+        ], [$this, 'autoPost']);
     }
 
     public function setTagsArray(Event $e)
@@ -139,6 +144,39 @@ class Post extends AbstractRelationalMapperService
         $form->setData($post);
 
         $e->setParam('post', $post);
+    }
+
+    public function autoPost(Event $e)
+    {
+        /* @var $model PostModel */
+        $model      = $e->getParam('model', new PostModel());
+        $post       = $e->getParam('post');
+        $saved      = $e->getParam('saved');
+
+        if (PostModel::STATUS_PUBLISHED === $model->getStatus()) {
+            /* @var $options BlogOptions */
+            $options = $this->getService(BlogOptions::class);
+
+            $viewManager = $this->getServiceLocator()
+                ->get('ViewHelperManager');
+
+            $url = $viewManager->get('Url');
+            $scheme = $viewManager->get('ServerUrl');
+
+            $url = $url('blog', [
+                'post-item'    => $model->getSlug(),
+            ]);
+
+            $string = sprintf('%s %s', $model->getTitle(), $scheme($url));
+
+            $argv   = compact('string');
+            $argv   = $this->prepareEventArguments($argv);
+
+            foreach ($options->getAutoPost() as $event) {
+                $this->getEventManager()->trigger($event, $this, $argv);
+            }
+
+        }
     }
 
     public function saveTags(Event $e)

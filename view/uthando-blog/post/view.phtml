@@ -24,7 +24,7 @@
                     <a href="<?=$this->url('blog', [
                         'post-item' => $this->escapeHtml($postItem->getSlug()),
                     ]);?>" class="thumbnail">
-                        <img src="<?=$this->escapeHtml($postItem->getImage());?>" alt="<?=$this->escapeHtml($postItem->getTitle());?>">
+                        <img src="<?=$this->basePath($this->escapeHtml($postItem->getImage()));?>" alt="<?=$this->escapeHtml($postItem->getTitle());?>">
                     </a>
                 </div>
                 <div class="col-xs-6 col-sm-9">
