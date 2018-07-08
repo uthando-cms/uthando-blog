@@ -50,7 +50,7 @@ class Feed extends AbstractActionController
         $feed->setLink($base . $this->url()->fromRoute('home'));
         $feed->setDateModified(time());
 
-        /* @var \UthandoNews\Model\News $item */
+        /* @var \UthandoBlog\Model\Post $item */
         foreach ($newsItems as $item) {
             
             $entry = $feed->createEntry();
