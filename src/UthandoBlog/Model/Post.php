@@ -157,10 +157,12 @@ class Post implements ModelInterface
 
     /**
      * @param int $status
+     * @return Post
      */
-    public function setStatus($status)
+    public function setStatus(int $status)
     {
         $this->status = $status;
+        return $this;
     }
 
     /**

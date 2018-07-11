@@ -1,6 +1,8 @@
 <?php
 
+use UthandoBlog\Options\BlogOptions;
 use UthandoBlog\Options\DisqusOptions;
+use UthandoBlog\Service\BlogOptionsFactory;
 use UthandoBlog\Service\DisqusOptionsFactory;
 use UthandoBlog\View\Helper\Categories;
 use UthandoBlog\View\Helper\Comments;
@@ -47,10 +49,13 @@ return [
         ],
     ],
     'service_manager' => [
+        'aliases' => [
+            'UthandoBlogOptions'        => BlogOptions::class,
+        ],
         'factories' => [
             'UthandoBlogFeedOptions'    => 'UthandoBlog\Service\BlogFeedOptionsFactory',
-            'UthandoBlogOptions'        => 'UthandoBlog\Service\BlogOptionsFactory',
 
+            BlogOptions::class          => BlogOptionsFactory::class,
             DisqusOptions::class        => DisqusOptionsFactory::class,
         ]
     ],

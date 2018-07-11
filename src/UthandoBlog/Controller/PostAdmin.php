@@ -21,6 +21,8 @@ class PostAdmin extends AbstractCrudController
 {
     protected $controllerSearchOverrides = ['sort' => 'postId'];
     protected $serviceName = 'UthandoBlogPost';
-    protected $route = 'admin/blog';
-    protected $routes = [];
+    protected $route = 'admin/blog/post';
+    protected $routes = [
+        'edit' => 'admin/blog/post/edit',
+    ];
 }

@@ -29,6 +29,8 @@ class Post extends AbstractRelationalMapperService
 {
     protected $serviceAlias = 'UthandoBlogPost';
 
+    protected $autoPost = false;
+
     /**
      * @var array
      */
@@ -70,8 +72,12 @@ class Post extends AbstractRelationalMapperService
         ], [$this, 'saveTags']);
 
         $this->getEventManager()->attach([
-            'post.add', 'post.edit'
-        ], [$this, 'autoPost']);
+            'post.edit'
+        ], [$this, 'autoPostEdit']);
+
+        $this->getEventManager()->attach([
+            'post.add',
+        ], [$this, 'autoPostAdd']);
     }
 
     public function setTagsArray(Event $e)
@@ -116,6 +122,7 @@ class Post extends AbstractRelationalMapperService
 
         if (PostModel::STATUS_PUBLISHED == $post['status'] && PostModel::STATUS_DRAFT == $model->getStatus()) {
             $post['dateCreated'] = '';
+            $this->autoPost = true;
             $model->setDateCreated();
         }
 
@@ -146,14 +153,25 @@ class Post extends AbstractRelationalMapperService
         $e->setParam('post', $post);
     }
 
-    public function autoPost(Event $e)
+    public function autoPostAdd(Event $e)
     {
-        /* @var $model PostModel */
-        $model      = $e->getParam('model', new PostModel());
-        $post       = $e->getParam('post');
-        $saved      = $e->getParam('saved');
+        $id         = $e->getParam('saved');
+        $model      = $this->getById($id);
 
-        if (PostModel::STATUS_PUBLISHED === $model->getStatus()) {
+        $this->autoPost($model);
+    }
+
+    public function autoPostEdit(Event $e)
+    {
+        $model      = $e->getParam('model');
+
+        $this->autoPost($model);
+    }
+
+    public function autoPost(PostModel $model)
+    {
+        if (PostModel::STATUS_PUBLISHED === $model->getStatus() && true === $this->autoPost) {
+
             /* @var $options BlogOptions */
             $options = $this->getService(BlogOptions::class);
 
@@ -175,7 +193,6 @@ class Post extends AbstractRelationalMapperService
             foreach ($options->getAutoPost() as $event) {
                 $this->getEventManager()->trigger($event, $this, $argv);
             }
-
         }
     }
 

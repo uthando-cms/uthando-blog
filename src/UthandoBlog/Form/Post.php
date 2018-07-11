@@ -282,6 +282,14 @@ class Post extends Form implements ServiceLocatorAwareInterface
         ]);
 
         $this->add([
+            'name' => 'redirectToEdit',
+            'type' => Hidden::class,
+            'attributes' => [
+                'value'  => 1,
+            ],
+        ]);
+
+        $this->add([
             'name' => 'security',
             'type' => Csrf::class,
         ]);
