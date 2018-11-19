@@ -23,7 +23,7 @@ class BlogSettings extends Form
     public function init()
     {
         $this->add([
-            'type' => 'UthandoBlogOptionsFieldSet',
+            'type' => BlogOptionsFieldSet::class,
             'name' => 'options',
             'options' => [
                 'label' => 'Blog Settings',
@@ -35,7 +35,7 @@ class BlogSettings extends Form
         ]);
 
         $this->add([
-            'type' => 'UthandoBlogFeedFieldSet',
+            'type' => BlogFeedFieldSet::class,
             'name' => 'feed',
             'options' => [
                 'label' => 'Blog Feed',

@@ -10,7 +10,7 @@
 
 namespace UthandoBlogTest\Model;
 
-use UthandoBlog\Model\Post;
+use UthandoBlog\Model\PostModel;
 use UthandoBlogTest\Framework\TestCase;
 
 class PostTest extends TestCase
@@ -18,7 +18,7 @@ class PostTest extends TestCase
 
     public function testGetPostId()
     {
-        $post = new Post();
+        $post = new PostModel();
         $post->setPostId(1);
 
         $this->assertSame(1, $post->getPostId());

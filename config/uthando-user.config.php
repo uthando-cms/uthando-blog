@@ -1,5 +1,13 @@
 <?php
 
+use UthandoBlog\Controller\CategoryController;
+use UthandoBlog\Controller\CommentController;
+use UthandoBlog\Controller\FeedController;
+use UthandoBlog\Controller\PostAdminController;
+use UthandoBlog\Controller\PostController;
+use UthandoBlog\Controller\SettingsController;
+use UthandoBlog\Controller\TagController;
+
 return [
     'uthando_user' => [
         'acl' => [
@@ -8,8 +16,8 @@ return [
                     'privileges' => [
                         'allow' => [
                             'controllers' => [
-                                'UthandoBlog\Controller\Feed' => ['action' => ['feed']],
-                                'UthandoBlog\Controller\Post' => ['action' => ['view', 'post-item']],
+                                FeedController::class => ['action' => ['feed']],
+                                PostController::class => ['action' => ['view', 'post-item']],
                             ],
                         ],
                     ],
@@ -18,24 +26,24 @@ return [
                     'privileges' => [
                         'allow' => [
                             'controllers' => [
-                                'UthandoBlog\Controller\Category'   => ['action' => 'all'],
-                                'UthandoBlog\Controller\Comment'    => ['action' => 'all'],
-                                'UthandoBlog\Controller\PostAdmin'  => ['action' => 'all'],
-                                'UthandoBlog\Controller\Settings'   => ['action' => 'all'],
-                                'UthandoBlog\Controller\Tag'        => ['action' => 'all'],
+                                CategoryController::class=> ['action' => 'all'],
+                                CommentController::class => ['action' => 'all'],
+                                PostAdminController::class => ['action' => 'all'],
+                                SettingsController::class => ['action' => 'all'],
+                                TagController::class => ['action' => 'all'],
                             ],
                         ],
                     ],
                 ],
             ],
             'resources' => [
-                'UthandoBlog\Controller\Category',
-                'UthandoBlog\Controller\Comment',
-                'UthandoBlog\Controller\Feed',
-                'UthandoBlog\Controller\Post',
-                'UthandoBlog\Controller\PostAdmin',
-                'UthandoBlog\Controller\Settings',
-                'UthandoBlog\Controller\Tag',
+                CategoryController::class,
+                CommentController::class,
+                FeedController::class,
+                PostAdminController::class,
+                PostController::class,
+                SettingsController::class,
+                TagController::class,
             ],
         ],
     ],

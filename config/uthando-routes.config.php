@@ -1,5 +1,11 @@
 <?php
 
+use UthandoBlog\Controller\CategoryController;
+use UthandoBlog\Controller\CommentController;
+use UthandoBlog\Controller\PostAdminController;
+use UthandoBlog\Controller\SettingsController;
+use UthandoBlog\Controller\TagController;
+
 return [
     'router' => [
         'routes' => [
@@ -14,7 +20,7 @@ return [
                             ],
                             'defaults' => [
                                 '__NAMESPACE__' => 'UthandoBlog\Controller',
-                                'controller'    => 'PostAdmin',
+                                'controller'    => PostAdminController::class,
                                 'action'        => 'index',
                             ],
                         ],
@@ -25,7 +31,7 @@ return [
                                 'options' => [
                                     'route' => '/post',
                                     'defaults' => [
-                                        'controller' => 'PostAdmin',
+                                        'controller' => PostAdminController::class,
                                         'action' => 'index',
                                     ]
                                 ],
@@ -66,7 +72,7 @@ return [
                                 'options' => [
                                     'route' => '/category',
                                     'defaults' => [
-                                        'controller' => 'Category',
+                                        'controller' => CategoryController::class,
                                         'action' => 'index',
                                     ]
                                 ],
@@ -107,7 +113,7 @@ return [
                                 'options' => [
                                     'route' => '/comment',
                                     'defaults' => [
-                                        'controller' => 'Comment',
+                                        'controller' => CommentController::class,
                                         'action' => 'index',
                                     ]
                                 ],
@@ -148,7 +154,7 @@ return [
                                 'options' => [
                                     'route' => '/tag',
                                     'defaults' => [
-                                        'controller' => 'Tag',
+                                        'controller' => TagController::class,
                                         'action' => 'index',
                                     ]
                                 ],
@@ -189,7 +195,7 @@ return [
                                 'options' => [
                                     'route' => '/settings',
                                     'defaults' => [
-                                        'controller' => 'Settings',
+                                        'controller' => SettingsController::class,
                                         'action' => 'index',
                                     ]
                                 ],

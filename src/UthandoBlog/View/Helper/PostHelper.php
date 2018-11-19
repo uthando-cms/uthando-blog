@@ -10,9 +10,10 @@
 
 namespace UthandoBlog\View\Helper;
 
-use UthandoBlog\Model\Post as PostModel;
-use UthandoBlog\Service\Post as PostService;
+use UthandoBlog\Model\PostModel as PostModel;
+use UthandoBlog\Service\PostService as PostService;
 use UthandoCommon\Model\ModelInterface;
+use UthandoCommon\Service\ServiceManager;
 use UthandoCommon\View\AbstractViewHelper;
 
 /**
@@ -94,8 +95,8 @@ class PostHelper extends AbstractViewHelper
 
             $service = $this->getServiceLocator()
                 ->getServiceLocator()
-                ->get('UthandoServiceManager')
-                ->get('UthandoBlogPost');
+                ->get(ServiceManager::class)
+                ->get(PostService::class);
             $this->setService($service);
         }
 

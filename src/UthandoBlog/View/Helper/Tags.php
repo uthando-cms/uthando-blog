@@ -10,8 +10,9 @@
 
 namespace UthandoBlog\View\Helper;
 
-use UthandoBlog\Model\Tag as TagModel;
-use UthandoBlog\Service\Tag as TagService;
+use UthandoBlog\Model\TagModel as TagModel;
+use UthandoBlog\Service\TagService as TagService;
+use UthandoCommon\Service\ServiceManager;
 use UthandoCommon\View\AbstractViewHelper;
 use Zend\Tag\Cloud;
 
@@ -108,8 +109,8 @@ class Tags extends AbstractViewHelper
 
             $service = $this->getServiceLocator()
                 ->getServiceLocator()
-                ->get('UthandoServiceManager')
-                ->get('UthandoBlogTag');
+                ->get(ServiceManager::class)
+                ->get(TagService::class);
             $this->setService($service);
         }
 

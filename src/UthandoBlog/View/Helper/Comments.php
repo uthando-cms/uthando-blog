@@ -10,7 +10,7 @@
 
 namespace UthandoBlog\View\Helper;
 
-use UthandoBlog\Model\Post;
+use UthandoBlog\Model\PostModel;
 use UthandoCommon\View\AbstractViewHelper;
 
 
@@ -21,7 +21,7 @@ use UthandoCommon\View\AbstractViewHelper;
  */
 class Comments extends AbstractViewHelper
 {
-    public function disqus(Post $post): string
+    public function disqus(PostModel $post): string
     {
         $config = $this->getConfig('uthando_blog');
         $enabled = false;

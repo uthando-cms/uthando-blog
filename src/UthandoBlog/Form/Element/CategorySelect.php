@@ -10,6 +10,8 @@
 
 namespace UthandoBlog\Form\Element;
 
+use UthandoBlog\Service\CategoryService;
+use UthandoCommon\Service\ServiceManager;
 use Zend\Form\Element\Select;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
@@ -49,11 +51,11 @@ class CategorySelect extends Select implements ServiceLocatorAwareInterface
 
     public function getOptionList(): array
     {
-        /* @var $categoryService \UthandoBlog\Service\Category */
+        /* @var $categoryService \UthandoBlog\Service\CategoryService */
         $categoryService = $this->getServiceLocator()
             ->getServiceLocator()
-            ->get('UthandoServiceManager')
-            ->get('UthandoBlogCategory');
+            ->get(ServiceManager::class)
+            ->get(CategoryService::class);
 
         $categoryService->getMapper();
         $categories = $categoryService->fetchAll();
@@ -64,7 +66,7 @@ class CategorySelect extends Select implements ServiceLocatorAwareInterface
             $categoryOptions[0] = 'Top';
         }
 
-        /* @var $category \UthandoBlog\Model\Category */
+        /* @var $category \UthandoBlog\Model\CategoryModel */
         foreach($categories as $category) {
             $ident = ($category->getDepth() > 0) ? str_repeat('&nbsp;&nbsp;',($category->getDepth())) . '&bull;&nbsp;' : '';
             $categoryOptions[] = [

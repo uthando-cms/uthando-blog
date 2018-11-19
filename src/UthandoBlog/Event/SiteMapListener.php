@@ -10,7 +10,9 @@
 
 namespace UthandoBlog\Event;
 
-use UthandoNavigation\Service\SiteMap;
+use UthandoBlog\Service\PostService;
+use UthandoNavigation\Service\MenuService;
+use UthandoNavigation\Service\SiteMapService;
 use Zend\EventManager\Event;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
@@ -31,7 +33,7 @@ class SiteMapListener implements ListenerAggregateInterface
         $events = $events->getSharedManager();
 
         $this->listeners[] = $events->attach([
-            SiteMap::class,
+            SiteMapService::class,
         ], 'uthando.site-map', [$this, 'addPages']);
     }
 
@@ -40,11 +42,11 @@ class SiteMapListener implements ListenerAggregateInterface
         /* @var Navigation $navigation */
         $navigation = $e->getParam('navigation');
 
-        /* @var \UthandoBlog\Service\Post $blogService */
-        $blogService = $e->getTarget()->getService('UthandoBlogPost');
+        /* @var \UthandoBlog\Service\PostService $blogService */
+        $blogService = $e->getTarget()->getService(PostService::class);
 
-        /* @var \UthandoNavigation\Service\Menu $menuService */
-        $menuService = $e->getTarget()->getService('UthandoNavigationMenu');
+        /* @var \UthandoNavigation\Service\MenuService $menuService */
+        $menuService = $e->getTarget()->getService(MenuService::class);
 
         $blogItems = $blogService->search([
             'sort' => '-dateCreated',
@@ -52,7 +54,7 @@ class SiteMapListener implements ListenerAggregateInterface
 
         $pages = [];
 
-        /* @var \UthandoBlog\Model\Post $blogItem */
+        /* @var \UthandoBlog\Model\PostModel $blogItem */
         foreach ($blogItems as $blogItem) {
             $pages[$blogItem->getSlug()] = [
                 'label'     => $blogItem->getTitle(),

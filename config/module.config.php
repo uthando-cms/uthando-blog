@@ -1,9 +1,22 @@
 <?php
 
+use UthandoBlog\Controller\CategoryController;
+use UthandoBlog\Controller\CommentController;
+use UthandoBlog\Controller\FeedController;
+use UthandoBlog\Controller\PostAdminController;
+use UthandoBlog\Controller\PostController;
+use UthandoBlog\Controller\SettingsController;
+use UthandoBlog\Controller\TagController;
 use UthandoBlog\Options\BlogOptions;
 use UthandoBlog\Options\DisqusOptions;
+use UthandoBlog\Options\FeedOptions;
+use UthandoBlog\Service\BlogFeedOptionsFactory;
 use UthandoBlog\Service\BlogOptionsFactory;
+use UthandoBlog\Service\CategoryService;
+use UthandoBlog\Service\CommentService;
 use UthandoBlog\Service\DisqusOptionsFactory;
+use UthandoBlog\Service\PostService;
+use UthandoBlog\Service\TagService;
 use UthandoBlog\View\Helper\Categories;
 use UthandoBlog\View\Helper\Comments;
 use UthandoBlog\View\Helper\PostHelper;
@@ -12,84 +25,43 @@ use UthandoBlog\View\Helper\Tags;
 return [
     'controllers' => [
         'invokables' => [
-            'UthandoBlog\Controller\Category'   => 'UthandoBlog\Controller\Category',
-            'UthandoBlog\Controller\Comment'    => 'UthandoBlog\Controller\Comment',
-            'UthandoBlog\Controller\Feed'       => 'UthandoBlog\Controller\Feed',
-            'UthandoBlog\Controller\Post'       => 'UthandoBlog\Controller\Post',
-            'UthandoBlog\Controller\PostAdmin'  => 'UthandoBlog\Controller\PostAdmin',
-            'UthandoBlog\Controller\Settings'   => 'UthandoBlog\Controller\Settings',
-            'UthandoBlog\Controller\Tag'        => 'UthandoBlog\Controller\Tag',
-        ],
-    ],
-    'form_elements' => [
-        'invokables' => [
-            'UthandoBlogCategory'           => 'UthandoBlog\Form\Category',
-            'UthandoBlogComment'            => 'UthandoBlog\Form\Comment',
-            'UthandoBlogPost'               => 'UthandoBlog\Form\Post',
-            'UthandoBlogTag'                => 'UthandoBlog\Form\Tag',
-            'UthandoBlogFeedFieldSet'       => 'UthandoBlog\Form\BlogFeedFieldSet',
-            'UthandoBlogOptionsFieldSet'    => 'UthandoBlog\Form\BlogOptionsFieldSet',
-            'UthandoBlogSettings'           => 'UthandoBlog\Form\BlogSettings',
-        ],
-    ],
-    'hydrators' => [
-        'invokables' => [
-            'UthandoBlogCategory'   => 'UthandoBlog\Hydrator\Category',
-            'UthandoBlogComment'    => 'UthandoBlog\Hydrator\Comment',
-            'UthandoBlogPost'       => 'UthandoBlog\Hydrator\Post',
-            'UthandoBlogTag'        => 'UthandoBlog\Hydrator\Tag',
-        ],
-    ],
-    'input_filters' => [
-        'invokables' => [
-            'UthandoBlogCategory'   => 'UthandoBlog\InputFilter\Category',
-            'UthandoBlogComment'    => 'UthandoBlog\InputFilter\Comment',
-            'UthandoBlogPost'       => 'UthandoBlog\InputFilter\Post',
-            'UthandoBlogTag'        => 'UthandoBlog\InputFilter\Tag',
+            CategoryController::class   => CategoryController::class,
+            CommentController::class    => CommentController::class,
+            FeedController::class       => FeedController::class,
+            PostController::class       => PostController::class,
+            PostAdminController::class  => PostAdminController::class,
+            PostController::class       => PostController::class,
+            SettingsController::class   => SettingsController::class,
+            TagController::class        => TagController::class,
         ],
     ],
     'service_manager' => [
-        'aliases' => [
-            'UthandoBlogOptions'        => BlogOptions::class,
-        ],
         'factories' => [
-            'UthandoBlogFeedOptions'    => 'UthandoBlog\Service\BlogFeedOptionsFactory',
-
-            BlogOptions::class          => BlogOptionsFactory::class,
-            DisqusOptions::class        => DisqusOptionsFactory::class,
-        ]
-    ],
-    'uthando_mappers' => [
-        'invokables' => [
-            'UthandoBlogCategory'   => 'UthandoBlog\Mapper\Category',
-            'UthandoBlogComment'    => 'UthandoBlog\Mapper\Comment',
-            'UthandoBlogPost'       => 'UthandoBlog\Mapper\Post',
-            'UthandoBlogTag'        => 'UthandoBlog\Mapper\Tag',
-
-        ],
-    ],
-    'uthando_models' => [
-        'invokables' => [
-            'UthandoBlogCategory'   => 'UthandoBlog\Model\Category',
-            'UthandoBlogComment'    => 'UthandoBlog\Model\Comment',
-            'UthandoBlogPost'       => 'UthandoBlog\Model\Post',
-            'UthandoBlogTag'        => 'UthandoBlog\Model\Tag',
+            BlogOptions::class      => BlogOptionsFactory::class,
+            DisqusOptions::class    => DisqusOptionsFactory::class,
+            FeedOptions::class      => BlogFeedOptionsFactory::class,
         ]
     ],
     'uthando_services' => [
         'invokables' => [
-            'UthandoBlogCategory'   => 'UthandoBlog\Service\Category',
-            'UthandoBlogComment'    => 'UthandoBlog\Service\Comment',
-            'UthandoBlogPost'       => 'UthandoBlog\Service\Post',
-            'UthandoBlogTag'        => 'UthandoBlog\Service\Tag',
+            CategoryService::class  => CategoryService::class,
+            CommentService::class   => CommentService::class,
+            PostService::class      => PostService::class,
+            TagService::class       => TagService::class,
         ],
     ],
     'view_helpers' => [
-        'invokables' => [
+        'aliases' => [
             'CategoryHelper'    => Categories::class,
             'CommentHelper'     => Comments::class,
             'PostHelper'        => PostHelper::class,
             'TagHelper'         => Tags::class
+        ],
+        'invokables' => [
+            Categories::class   => Categories::class,
+            Comments::class     => Comments::class,
+            PostHelper::class   => PostHelper::class,
+            Tags::class         => Tags::class
         ],
     ],
     'view_manager' => [
@@ -106,7 +78,7 @@ return [
                     'route' => '/blog',
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoBlog\Controller',
-                        'controller'    => 'Post',
+                        'controller'    => PostController::class,
                         'action'        => 'view',
                     ],
                 ],
@@ -196,7 +168,7 @@ return [
                     ],
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoBlog\Controller',
-                        'controller'    => 'Post',
+                        'controller'    => PostController::class,
                         'action'        => 'post-item',
                     ],
                 ],
@@ -211,7 +183,7 @@ return [
                     ],
                     'defaults' => [
                         '__NAMESPACE__' => 'UthandoBlog\Controller',
-                        'controller'    => 'Feed',
+                        'controller'    => FeedController::class,
                         'action'        => 'feed',
                     ],
                 ],

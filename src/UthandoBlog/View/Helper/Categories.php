@@ -10,8 +10,9 @@
 
 namespace UthandoBlog\View\Helper;
 
-use UthandoBlog\Model\Category as CategoryModel;
-use UthandoBlog\Service\Category as CategoryService;
+use UthandoBlog\Model\CategoryModel as CategoryModel;
+use UthandoBlog\Service\CategoryService as CategoryService;
+use UthandoCommon\Service\ServiceManager;
 use UthandoCommon\View\AbstractViewHelper;
 
 /**
@@ -53,8 +54,8 @@ class Categories extends AbstractViewHelper
 
             $service = $this->getServiceLocator()
                 ->getServiceLocator()
-                ->get('UthandoServiceManager')
-                ->get('UthandoBlogCategory');
+                ->get(ServiceManager::class)
+                ->get(CategoryService::class);
             $this->setService($service);
         }
 

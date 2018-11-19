@@ -11,6 +11,8 @@
 namespace UthandoBlog\Form\Element;
 
 
+use UthandoBlog\Service\TagService;
+use UthandoCommon\Service\ServiceManager;
 use Zend\Form\Element\Select;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorAwareTrait;
@@ -32,13 +34,13 @@ class TagSelect extends Select implements ServiceLocatorAwareInterface
     {
         $tags = $this->getServiceLocator()
             ->getServiceLocator()
-            ->get('UthandoServiceManager')
-            ->get('UthandoBlogTag')
+            ->get(ServiceManager::class)
+            ->get(TagService::class)
             ->fetchAll();
 
         $tagOptions = [];
 
-        /* @var $tag \UthandoBlog\Model\Tag*/
+        /* @var $tag \UthandoBlog\Model\TagModel*/
         foreach($tags as $tag) {
             $tagOptions[$tag->getTagId()] = $tag->getName();
         }
