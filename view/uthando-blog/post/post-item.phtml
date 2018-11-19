@@ -13,7 +13,7 @@ $this->headMeta()
     ->appendProperty('og:title', $this->escapeHtml($this->model->getTitle()))
     ->appendProperty('og:description', $this->escapeHtml($this->model->getDescription()))
     ->appendProperty('og:site_name', $this->escapeHtml($this->themeOptions('site_name')))
-    ->appendProperty('og:image', $this->escapeHtml($this->model->getImage()))
+    ->appendProperty('og:image', $this->ServerUrl($this->escapeHtml($this->model->getImage())))
 
     // Twitter
     ->appendName('twitter:card', 'summary')

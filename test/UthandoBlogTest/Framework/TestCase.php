@@ -9,7 +9,7 @@ class TestCase extends AbstractHttpControllerTestCase
     protected function setUp()
     {
         $this->setApplicationConfig(
-            include __DIR__ . '/../../TestConfig.php.dist'
+            include __DIR__ . '/../../TestConfig.php'
         );
         parent::setUp();
     }
