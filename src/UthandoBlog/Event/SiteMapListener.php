@@ -48,9 +48,7 @@ class SiteMapListener implements ListenerAggregateInterface
         /* @var \UthandoNavigation\Service\MenuService $menuService */
         $menuService = $e->getTarget()->getService(MenuService::class);
 
-        $blogItems = $blogService->search([
-            'sort' => '-dateCreated',
-        ]);
+        $blogItems = $blogService->searchPosts([], '-dateCreated');
 
         $pages = [];
 

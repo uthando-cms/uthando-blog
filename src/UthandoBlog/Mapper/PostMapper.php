@@ -34,7 +34,8 @@ class PostMapper extends AbstractDbMapper
     public function getBySlug($slug)
     {
         $select = $this->getSelect();
-        $select->where->equalTo('slug', $slug);
+        $select->where->equalTo('slug', $slug)
+            ->and->equalTo('status', PostModel::STATUS_PUBLISHED);
 
         $rowSet = $this->fetchResult($select);
         $row = $rowSet->current();
